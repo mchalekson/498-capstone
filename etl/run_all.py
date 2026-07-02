@@ -1,0 +1,115 @@
+"""
+Run the full ETL pipeline in order:
+  1. Load raw data into raw_* tables
+  2. Clean and produce *_clean tables
+  3. Apply SQL views for analysis
+
+Usage:
+  cd etl/
+  python run_all.py
+
+Set DB credentials via environment variables before running:
+  export DB_HOST=localhost
+  export DB_NAME=capstone
+  export DB_USER=postgres
+  export DB_PASS=yourpassword
+"""
+
+import os
+import sys
+import traceback
+from sqlalchemy import create_engine, text
+from config import DATABASE_URL
+
+import load_nces
+import load_census
+import load_naep
+import load_collegeboard
+import load_ib
+import load_isbe
+import load_cps
+
+import clean_nces
+import clean_census
+import clean_naep
+import clean_isbe
+
+STEPS = [
+    # ── Stage 1: Raw loads ──────────────────────────────────────────────
+    ("Load NCES public schools",    load_nces.load_public),
+    ("Load NCES private schools",   load_nces.load_private),
+    ("Load Census finances",        load_census.load_finances),
+    ("Load Census SAIPE poverty",   load_census.load_saipe),
+    ("Load NAEP assessments",       load_naep.load_naep),
+    ("Load College Board AP",       load_collegeboard.load_collegeboard),
+    ("Load IB schools",             load_ib.load_ib),
+    ("Load ISBE report card",       load_isbe.load_isbe),
+    ("Load CPS opportunity index",  load_cps.load_cps),
+
+    # ── Stage 2: Clean ──────────────────────────────────────────────────
+    ("Clean NCES public schools",   clean_nces.clean_public),
+    ("Clean NCES private schools",  clean_nces.clean_private),
+    ("Clean Census finances",       clean_census.clean_finances),
+    ("Clean Census SAIPE poverty",  clean_census.clean_saipe),
+    ("Clean NAEP assessments",      clean_naep.clean_naep),
+    ("Clean ISBE report card",      clean_isbe.clean_isbe),
+]
+
+
+def apply_views(engine):
+    views_path = os.path.join(os.path.dirname(__file__), "views.sql")
+    with open(views_path) as f:
+        sql = f.read()
+    with engine.connect() as conn:
+        for statement in sql.split(";"):
+            stmt = statement.strip()
+            if stmt:
+                conn.execute(text(stmt))
+        conn.commit()
+    print("  SQL views applied ✓")
+
+
+def main():
+    engine = create_engine(DATABASE_URL)
+    failed = []
+
+    for name, fn in STEPS:
+        stage = "LOAD" if name.startswith("Load") else "CLEAN"
+        print(f"\n{'='*50}")
+        print(f"[{stage}] {name}")
+        print("=" * 50)
+        try:
+            fn(engine)
+        except Exception as e:
+            print(f"  ERROR: {e}")
+            traceback.print_exc()
+            failed.append(name)
+
+    print(f"\n{'='*50}")
+    print("[VIEWS] Applying SQL analytical views")
+    print("=" * 50)
+    try:
+        apply_views(engine)
+    except Exception as e:
+        print(f"  ERROR applying views: {e}")
+        traceback.print_exc()
+        failed.append("SQL views")
+
+    print(f"\n{'='*50}")
+    if failed:
+        print(f"Pipeline completed with errors in:\n  " + "\n  ".join(failed))
+        sys.exit(1)
+    else:
+        print("Pipeline completed successfully ✓")
+        print("\nTables available:")
+        print("  Raw:   nces_public_schools, nces_private_schools, census_school_finances,")
+        print("         census_saipe_poverty, naep_assessments, ap_availability,")
+        print("         ap_participation, ap_performance, ib_schools, isbe_*, cps_opportunity_index")
+        print("  Clean: nces_public_schools_clean, nces_private_schools_clean,")
+        print("         census_school_finances_clean, census_saipe_poverty_clean,")
+        print("         naep_assessments_clean, isbe_*_clean")
+        print("  Views: illinois_schools_enriched, districts_enriched, ib_nces_crosswalk")
+
+
+if __name__ == "__main__":
+    main()
