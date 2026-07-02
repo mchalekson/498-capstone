@@ -1,0 +1,495 @@
+<html xmlns:o="urn:schemas-microsoft-com:office:office"
+xmlns:x="urn:schemas-microsoft-com:office:excel"
+xmlns="http://www.w3.org/TR/REC-html40">
+
+<head>
+
+<!-- ENCRYPT:596FEA07::F0:9D:43:56:64:70:FD:62:2A:97:EB:4C:7:1F:E8:CB:CE:2C:DA:83:9B:89:92:40:4B:DA:21:C9:C2:F4:3F:8C:A5:CC:4F:2E:74:A8:86:6C:B3:A5:CB:7F:A8:4A:33:35:D8:4D:64:81:85:B7:B1:E6:65:FC:BE:81:D1:23:E6:4F:22:DC:A5:2F:E3:92:B2:F5:38:96:EB:20:E8:5D:93:82:28:FE:B6:5E:44:21:DC:22:F:1B:AE:3D:E4:98:CA:8B:9C:5B:3:27:1D:91:3B:57:6D:2B:76:5E:28:1A:B9:5D:23:2C:A:A9:74:8B:6A:CE:6C:17:38:37:C7:E7:7D:1B:52:73:3A:44:9A:6C:8F:51:56:3A:AA:11:BF:1F:66:4A:26:CB:A5:D4:40:BA:32:C:F4:1F:B5:94:2E:13:1A:3E:50:42:FE:6D:17:FF:D2:F6:AD:47:C1:1B:EA:2A:F0:42:5D:7F:40:62:59:AA:E6:EA:41:42:BF:2:9C:3E:B3:72:CC:7C:D9:39:F8:46:A7:BB:E6:33:D8:F8:99:7C:7:21:D4:34:6A:EE:A0:D0:E5:C1:93:78:94:58:D8:B5:27:7:F9:40:2E:65:32:C4:42:C8:8E:4A:24:5:DD:1F:27:46:A1:B7:84:41:3F:6B:AD:49:7E:1F:FF:B9:E2:F0:A9:B8:9:ED:57:71:4:ED:FB:43:D9:58:1F:EA:A9:FF:50:2B:91:F:8B:87:C2:C3:63:2E:58:93:BB:BB:56:35:D8:79:71:ED:18:5C:14:42:DB:D2:9D:D3:CB:D7:81:F0:27:F9:3:7:88:82:EE:15:25:6A:D8:81:E7:D7:6F:4D:96:F9:10:AE:16:E9:A4:2F:6B:6C:56:D8:C0:5D:1:35:A:5D:3C:65:DD:DA:4F:96:AE:3E:34:EF:16:C5:A9:BC:75:43:25:71:46:5A:32:6D:EF:B8:88:64:AE:4D:98:19:D0:86:AF:CC:9F:52:91:7E:8B:93:F5:7B:60:B4:85:93:AD:14:6:25:7B:5A:C:F8:B6:AB:BE:E1:F1:C4:1D:8A:2A:1A:A7:61:1A:BF:C2:48:61:4C:AF:95:36:8E:99:97:CA:B1:9D:A7:FC:3B:8B:A5:DB:66:0:BA:0:1E:41:97:12:F5:4:3C:B0:75:E7:9B:BF:1:96:21:A8:76:3D:51:C4:70:A0:DE:CC:87:E8:BE:24:4C:8E:8B:D7:DC:46:A5:92:2B:BF:21:33:E5:90:F1:ED:A3:DD:F5:69:D0:83:D6:58:22:D9:F0:D3:75:2F:BA:A1:55:CF:7D:5D:8B:67:4A:66:B2:3B:2E:DC:85:63:AD:16:D2:D:18:47:A3:40:61:57:EB:12:6A:52:73:72:63:85:A3:D3:9E:AD:99:B5:38:CB:E8:D0:4:8:85:BF:39:A6:62:A6:95:CD:35:3A:E1:8E:5C:21:23:38:4E:A9:20:58:E:5A:AC:B1:E1:98:96:69:D:36:EB:33:D2:E7:26:57:CC:77:4A:71:7A:DC:52:23:7F:AA:F0:33:AB:74:74:99:28:A8:EA:3B:86:C2:C6:42:AD:6:31:EF:B:4F:DA:E7:70:94:DA:FA:C2:B:47:A:D7:6D:98:B6:4A:59:91:BC:F7:EF:97:FA:F8:AD:8C:C5:AE:17:2D:76:46:B0:26:58:27:6C:21:1C:71:9:43:4A:D7:25:83:D8:9D:41:31:9D:E2:CF:1F:FC:81:51:1:71:6B:AA:F:B5:24:23:C6:78:51:27:ED:99:1:65:D0:B9:3B:2D:38:9B:D5:8C:71:F2:2E:B4:62:40:27:6E:94:D8:A0:2:61:20:2E:6C:A5:E1:19:22:67:6B:7F:ED:79:A6:2F:D9:4C:75:3C:DA:C0:43:80:0:41:26:F8:AB:41:41:2D:33:21:2F:14:15:FA:AF:F8:C6:8B:9F:1D:3A:D:48:1F:BA:84:D:BD:A2:90:BC:76:F3:8D:4:8:D8:9B:32:EE:9C:A:8D:B8:33:CB:5:DF:C2:57:F:D5:B4:BE:77:37:21:35:C0:4C:BF:90:7A:A4:CD:38:1F:16:B3:F:E3:92:14:A:80:60:19:66:A6:CB:93:15:E0:B8:3A:B1:44:B8:9C:DF:D4:C1:7D:38:EF:E7:E:ED:4E:B7:4E:6D:6B:B3:73:2C:8F:9:3A:56:3D:65:81:51:49:77:FB:BD:F8:8D:6E:1:EC:6F:12:26:98:47:B6:4B:5B:13:27:6B:E2:49:4:D7:C3:DC:6F:86:B1:2C:92:D1:43:86:AC:63:BC:5E:24:2D:93:F1:20:57:72:B4:2E:22:22:5:C4:A7:31:A1:42:2A:78:CD:7B:AF:54:25:21:B9:24:6F:F5:19:FD:30:38:48:8:F4:C1:EC:63:68:8B:FE:73:9D:AB:57:9C:41:66:60:71:6E:56:9D:F7:FC:76:E0:58:5A:34:1B:7F:64:7E:C3:BE:4B:A0:2A:93:DB:C3:77:1C:DB:26:62:C7:F1:CA:80:40:E3:4C:CE:59:31:45:82:44:FB:A7:24:57:D9:9B:98:DD:C8:B3:FC:AD:C3:8E:4E:47:C:C1:A0:2C:FB:59:FB:39:56:F4:A9:C5:6D:27:98:9C:57:73:6C:9A:CD:C3:DE:39:80:44:F1:9D:C6:D3:E2:28:8B:47:F0:2D:E:C0:36:4B:FF:24:E8:55:35:F:37:F:D3:B4:34:65:BC:6A:73:86:1D:D5:45:38:2D:65:E1:6C:B7:0:7A:10:6:E5:4:93:94:C5:DF:FC:CB:AF:C0:FF:78:7D:58:F:41:8E:E0:F1:74:EC:42:20:93:81:94:D1:A3:CF:9F:2:12:3E:3B:4F:5F:D3:2B:55:16:91:24:E7:A4:99:43:2E:40:E3:D6:99:1C:72:C7:2:3:C2:39:8D:21:59:CA:4C:0:E5:FD:7C:E8:A7:35:23:5A:F3:DE:A0:7E:C3:EB:CB:4:85:77:A4:46:E3:C0:A2:8D:C5:67:E8:89:46:6:F8:D5:D1:A2:B2:45:9D:31:A4:46:16:45:19:37:4:E6:7F:6:2D:BE:3D:D:41:52:DC:CD:B:E8:EE:5E:E:B9:79:BA:19:40:F1:A4:77:F7:DD:FA:67:B1:5E:8E:46:C:78:D4:DA:78:95:2F:B9:12:5F:0:27:5B:F:C8:9D:AF:53:90:61:D9:D1:A2:CE:9C:26:1B:56:DB:8:31:1F:41:2F:39:97:1E:10:87:78:F3:58:50:A7:FC:81:85:C6:C6:9B:9C:91:A5:E6:1C:59:89:96:B3:E1:75:EF:72:FA:22:82:67:43:BD:F4:B0:B6:DF:30:BC:A2:94:52:F2:18:1A:1E:18:42:D3:28:B2:5C:C5:D0:B4:84:19:8:FB:E0:BB:E8:FC:7F:89:21:1B:3C:BF:19:E6:5E:27:6B:FA:2F:25:5C:F5:25:A0:F4:A6:92:ED:1F:80:B0:B0:66:AA:BA:40:96:EE:62:30:ED:46:2C:CA:63:2A:34:E2:E9:A6:CD:7B:B6:2F:67:E5:F6:A9:D:95:C7:A:1E:69:46:EC:B:2D:4D:5D:81:23:71:DF:89:DD:CA:AF:83:58:AF:65:66:68:4:3A:5F:84:A2:4E:A2:8D:C:10:F3:EC:C7:15:E7:C6:EE:14:43:41:D9:61:36:8:FB:EC:72:B4:FF:D2:0:98:75:48:64:EC:9F:28:F1:9:9F:8A:26:F9:D9:5A:2:85:3C:9F:38:20:80:3:5E:18:89:5B:9F:2C:F7:A6:BC:E4:94:2F:E7:0:DD:75:39:F8:85:BB:A:5B:D3:EE:B5:91:B1:EB:D9:2B:B3:2B:7F:3E:B:61:FC:47:47:84:9F:7D:93:8D:94:33:8E:84:80:8F:65:90:7F:28:99:21:D:A7:1D:7D:C7:E4:F6:F0:40:3A:CB:9A:51:65:7B:E2:B8:2A:D0:45:6D:F6:D5:2:6D:CA:CF:79:61:FF:59:FC:FC:53:60:CB:42:DC:B3:2B:24:FE:4C:56:61:7C:96:33:EE:98:61:A6:6:22:B1:13:4B:3B:82:F7:A0:30:51:9B:83:DA:47:29:19:40:F7:3F:58:9D:90:FF:8B:DA:46:74:68:AC:5B:D:86:1A:F3:EC:32:4B:D5:4:B9:ED:71:2C:13:76:9E:89:AB:5B:5A:6B:FB:3E:C2:E6:40:BB:8F:A7:59:95:49:74:68:B0:B5:C0:55:75:4A:93:B5:78:F5:AD:A:88:86:22:3C:BA:3D:87:24:80:2:3C:45:CD:EE:48:B:91:7E:2E:24:5A:1A:66:B5:6D:59:74:4F:6B:26:47:81:7E:F6:53:E:BB:C:63:8C:8C:B5:51:22:18:D7:BC:43:3B:D9:6B:D8:25:5A:C5:EC:FD:76:C4:D5:4D:BE:A8:A6:A6:99:E5:9E:AA:5E:96:F4:84:67:7B:32:18:6B:E:91:1:B6:39:8D:BF:A4:50:AA:6:AF:79:95:28:5D:11:23:45:2B:CC:AE:9F:A8:1F:DE:9:F4:B8:85:B9:B4:39:36:B2:18:16:B7:F1:1B:CB:1E:BE:E2:7C:71:AC:A4:3E:63:AE:DC:32:8E:9C:2F:EE:14:8F:AD:42:92:86:94:91:66:E1:8C:4B:22:F8:3A:FF:77:31:7A:A5:DE:C4:6E:39:A2:87:8E:64:EE:72:44:9:E8:ED:27:35:59:31:9A:C6:36:A9:54:1B:6E:AD:E5:85:6B:CB:9:89:DC:76:ED:26:D3:E0:C3:9F:67:77:58:5A:1F:A7:B6:20:D6:26:E:22:C6:29:2A:75:6:ED:E6:32:8F:59:5B:59:3E:5C:6C:F6:95:C5:C0:A9:C3:65:3B:DD:A6:1F:1A:4:DA:6B:BD:E9:FE:D4:96:54:3E:94:EB:E6:B9:E3:17:64:E7:DB:4F:94:B0:33:25:A7:12:6A:77:34:A8:B4:5:F:22:A9:EB:AB:2E:DA:87:76:BE:9C:3F:6F:51:8:B1:87:AB:1D:80:91:22:B1:44:92:EA:B7:C0:14:89:B4:5E:8D:C9:D8:55:12:21:5E:E8:E7:7E:70:AE:1C:55:1F:4D:FE:A:FA:28:BB:C9:29:27:31:AE:25:5E:66:22:E4:63:46:91:CD:DD:90:81:23:14:4:88:96:48:8C:23:38:F3:6B:84:79:A3:E8:90:1D:BD:E6:D8:B9:69:1F:2:51:4A:E7:72:9A:C:0:77:C8:E1:6:38:3:83:91:5D:3A:F3:BB:B7:0:94:B4:C1:99:93:A0:88:86:5C:6B:C1:F3:D:69:5A:C8:E4:95:D2:9C:77:1E:21:FC:63:CD:CE:EE:43:58:E6:AF:BD:51:72:DF:32:6:3C:34:95:EC:E4:C0:6B:C8:E1:10:26:65:16:1B:59:36:B0:EF:7B:5D:1:BC:B6:6E:FE:AA:4E:90:6C:FE:1B:E7:F1:94:F5:1E:C4:8D:72:54:15:D:F1:72:75:83:20:28:2B:3D:7E:E8:BB:BA:5A:F6:8A:9C:EB:FD:7E:E9:A0:3E:7C:26:B3:C6:FD:3F:25:89:CB:77:EA:A:37:FD:7F:A1:EA:A3:55:7D:8B:FC:EF:70:11:8E:74:7E:3D:E1:4A:A6:45:93:18:3E:AD:FB:4D:79:C3:EB:79:D8:FD:D3:6C:D7:64:2B:FD:A5:43:A2:DB:F9:43:9B:67:60:61:F9:A6:D5:CB:31:12:83:91:B6:9B:49:6E:60:D1:9A:B2:E0:D2:7F:D2:44:C7:FD:90:7F:83:9E:78:FC:38:9E:F5:7:74:79:25:AC:B7:FB:7:35:BC:91:CC:FE:CB:34:C:C:4D:9C:DD:3F:4C:B9:8E:A8:29:73:5E:2F:80:7E:E3:72:23:D2:A2:59:6D:C9:14:ED:31:9E:BC:6:8D:BA:98:F8:58:E2:9B:5F:FA:65:CE:6B:D:6F:AA:75:F0:E7:F9:6C:80:D8:52:9E:1B:62:7A:C6:43:5:F2:30:A4:84:97:28:E7:4D:7A:CA:CB:19:4D:F9:C6:89:18:98:69:46:16:59:5F:E8:49:F5:E9:B9:3F:FB:68:71:D6:6D:AB:89:90:54:75:4F:70:34:B:E3:6A:23:36:3B:B:87:63:F3:F8:BE:90:83:66:64:2F:E0:BE:56:7D:80:F8:73:1F:BD:CF:B9:F3:D5:11:AA:81:26:BA:D3:F7:70:94:DC:BA:5B:56:3C:E9:CB:1E:DE:A2:2A:85:2D:5C:A1:C2:A8:39:1F:4A:91:E0:C5:6B:2A:49:73:6A:C3:AB:9:1C:FF:29:11:DB:F0:9E:7E:20:54:C3:25:16:32:B6:8C:C1:7E:40:D2:A7:4E:BF:E9:FD:95:B3:FD:18:2A:E6:92:C2:D2:F7:D5:DC:14:AD:86:57:C:48:32:4C:FE:14:B8:9A:91:E0:BC:DA:EE:F4:BC:99:A9:FE:D9:52:78:89:8F:A1:E6:2B:BE:EF:15:87:F6:BF:C7:96:C5:CE:D4:A6:33:8:A0:92:FE:94:2F:D8:77:DF:44:3D:22:CE:61:F2:D5:82:2:23:27:6D:58:CF:BE:A9:94:54:9E:54:3E:FC:3F:4:3C:C5:8A:66:C8:A3:CD:DC:48:B:C7:B9:B3:2C:89:1:80:59:A4:F:C3:77:3A:B8:4A:F3:FF:7D:7C:C5:BE:7B:4E:EC:9E:94:9A:48:1:CA:59:2A:B4:19:1A:62:59:28:AC:17:72:A2:67:28:7:F7:6B:3D:43:A9:F2:86:A5:D2:FA:72:40:73:7C:31:7:BA:4:98:40:D8:32:72:F7:C9:82:BD:46:E:7F:FC:B5:27:DD:6:10:2:C4:D9:E2:30:A7:75:3D:4B:D2:DD:D:70:29:16:74:13:4E:B8:CE:1F:5A:F2:54:6A:6F:E5:CF:4C:5A:DB:97:AE:18:C8:6F:F2:25:F0:1F:79:E3:83:95:11:E4:8B:3C:B0:6B:F6:83:8B:E7:DB:6E:9B:A7:3B:DB:D2:D4:DE:96:B:49:6F:C8:81:D2:96:36:91:1B:AB:3F:BD:8B:6:E3:97:D5:9E:1E:79:29:7F:99:74:EA:40:A5:1B:9F:6B:80:A8:63:A9:57:4D:3C:67:46:94:E1:FF:12:40:0:F4:6E:2A:16:41:1C:7D:BA:50:18:3A:61:C3:8C:E5:84:7D:54:47:EF:48:0:7F:73:A8:25:3A:FD:DC:51:2F:7A:D8:73:93:78:56:4D:48:98:4F:DE:D2:CA:89:E6:92:CC:82:F4:F4:10:3:87:B6:E7:30:BC:FC:E2:30:52:1E:10:D2:F:2E:DC:C3:83:B1:61:21:15:2E:1F:ED:B1:3E:A:A5:BC:EC:C7:A9:56:5F:44:19:D8:5D:32:48:C4:6B:9A:74:8A:CB:23:61:2:9E:86:17:9:FF:9A:89:76:6B:56:FE:41:3E:FF:51:37:20:6B:C7:7B:4C:99:E3:1D:94:5E:8D:EB:E7:97:FB:62:AD:90:6E:74:A8:B5:3E:78:B2:64:EE:DD:FA:F9:E6:B7:A7:5D:72:A:86:B0:6B:5:D1:5C:EE:9B:F:55:D8:76:57::561300C2:ENCRYPT -->
+<meta http-equiv=Content-Type content="text/html; charset=windows-1252">
+<meta name=ProgId content=Excel.Sheet>
+
+<title>National Center for Education Statistics</title>
+
+<style>
+<!--
+.txtcol
+	{
+	mso-number-format:"\@";
+	font-size:8pt;
+	mso-width-source:auto;
+	}
+.numcol
+	{
+	mso-number-format:"general";
+	text-align:right;
+	font-size:8pt;
+	mso-width-source:auto;
+	}
+.headrow
+	{
+	border-bottom-style: solid;
+	border-top-style: solid;
+	border-bottom-color: #000000;
+	border-top-color: #000000;
+	font-size:8pt;
+	mso-width-source:auto;
+	}
+-->
+</style>
+
+</head>
+<body>
+
+<table border=1 bordercolor=#bbbbbb cellpadding=0 cellspacing=0>
+<tr>
+  <td height=31 colspan=6 valign=bottom style="border-style: solid; border-color: #FFFFFF"><font size=5 face=impact><b>National Center for Education Statistics</font></b></td>
+</tr>
+<tr>
+  <td height=25 colspan=6 valign=bottom style="border-style: solid; border-color: #FFFFFF"><font size=3><b>PSS Private School Universe Survey data 2023-24 school year</b></font></td>
+</tr>
+<tr>
+  <td height=30 colspan=6 valign=top style="border-style: solid; border-color: #FFFFFF">The file contains (<B>5</B>) records based on your search.</td>
+</tr>
+<tr>
+  <td height=30 colspan=6 valign=top style="border-style: solid; border-color: #FFFFFF"><font size=1>NCES is not responsible for the manner in which this data is presented. This data is provided as an extra service to the user. For more information about this data, visit the PSS homepage. <strong>http://nces.ed.gov/surveys/pss</strong></font></td>
+</tr>
+<TR height=17>
+  <TD class="headrow"><b>PSS_SCHOOL_ID</b></TD>
+  <TD class="headrow"><b>PSS_INST</b></TD>
+  <TD class="headrow"><b>LoGrade</b></TD>
+  <TD class="headrow"><b>HiGrade</b></TD>
+  <TD class="headrow"><b>PSS_ADDRESS</b></TD>
+  <TD class="headrow"><b>PSS_CITY</b></TD>
+  <TD class="headrow"><b>PSS_COUNTY_NO</b></TD>
+  <TD class="headrow"><b>PSS_COUNTY_FIPS</b></TD>
+  <TD class="headrow"><b>PSS_STABB</b></TD>
+  <TD class="headrow"><b>PSS_FIPS</b></TD>
+  <TD class="headrow"><b>PSS_ZIP5</b></TD>
+  <TD class="headrow"><b>PSS_PHONE</b></TD>
+  <TD class="headrow"><b>PSS_SCH_DAYS</b></TD>
+  <TD class="headrow"><b>PSS_STU_DAY_HRS</b></TD>
+  <TD class="headrow"><b>PSS_LIBRARY</b></TD>
+  <TD class="headrow"><b>PSS_ENROLL_UG</b></TD>
+  <TD class="headrow"><b>PSS_ENROLL_PK</b></TD>
+  <TD class="headrow"><b>PSS_ENROLL_K</b></TD>
+  <TD class="headrow"><b>PSS_ENROLL_1</b></TD>
+  <TD class="headrow"><b>PSS_ENROLL_2</b></TD>
+  <TD class="headrow"><b>PSS_ENROLL_3</b></TD>
+  <TD class="headrow"><b>PSS_ENROLL_4</b></TD>
+  <TD class="headrow"><b>PSS_ENROLL_5</b></TD>
+  <TD class="headrow"><b>PSS_ENROLL_6</b></TD>
+  <TD class="headrow"><b>PSS_ENROLL_7</b></TD>
+  <TD class="headrow"><b>PSS_ENROLL_8</b></TD>
+  <TD class="headrow"><b>PSS_ENROLL_9</b></TD>
+  <TD class="headrow"><b>PSS_ENROLL_10</b></TD>
+  <TD class="headrow"><b>PSS_ENROLL_11</b></TD>
+  <TD class="headrow"><b>PSS_ENROLL_12</b></TD>
+  <TD class="headrow"><b>PSS_ENROLL_T</b></TD>
+  <TD class="headrow"><b>PSS_ENROLL_TK12</b></TD>
+  <TD class="headrow"><b>PSS_RACE_AI</b></TD>
+  <TD class="headrow"><b>PSS_RACE_AS</b></TD>
+  <TD class="headrow"><b>PSS_RACE_H</b></TD>
+  <TD class="headrow"><b>PSS_RACE_B</b></TD>
+  <TD class="headrow"><b>PSS_RACE_W</b></TD>
+  <TD class="headrow"><b>PSS_RACE_P</b></TD>
+  <TD class="headrow"><b>PSS_RACE_2</b></TD>
+  <TD class="headrow"><b>PSS_FTE_TEACH</b></TD>
+  <TD class="headrow"><b>PSS_LOCALE</b></TD>
+  <TD class="headrow"><b>PSS_COED</b></TD>
+  <TD class="headrow"><b>PSS_TYPE</b></TD>
+  <TD class="headrow"><b>PSS_LEVEL</b></TD>
+  <TD class="headrow"><b>PSS_RELIG</b></TD>
+  <TD class="headrow"><b>PSS_COMM_TYPE</b></TD>
+  <TD class="headrow"><b>PSS_INDIAN_PCT</b></TD>
+  <TD class="headrow"><b>PSS_ASIAN_PCT</b></TD>
+  <TD class="headrow"><b>PSS_HISP_PCT</b></TD>
+  <TD class="headrow"><b>PSS_BLACK_PCT</b></TD>
+  <TD class="headrow"><b>PSS_WHITE_PCT</b></TD>
+  <TD class="headrow"><b>PSS_PACISL_PCT</b></TD>
+  <TD class="headrow"><b>PSS_TWOMORE_PCT</b></TD>
+  <TD class="headrow"><b>PSS_STDTCH_RT</b></TD>
+  <TD class="headrow"><b>PSS_ORIENT</b></TD>
+  <TD class="headrow"><b>PSS_COUNTY_NAME</b></TD>
+  <TD class="headrow"><b>PSS_ASSOC_1</b></TD>
+  <TD class="headrow"><b>PSS_ASSOC_2</b></TD>
+  <TD class="headrow"><b>PSS_ASSOC_3</b></TD>
+  <TD class="headrow"><b>PSS_ASSOC_4</b></TD>
+  <TD class="headrow"><b>PSS_ASSOC_5</b></TD>
+  <TD class="headrow"><b>PSS_ASSOC_6</b></TD>
+  <TD class="headrow"><b>PSS_ASSOC_7</b></TD>
+  <TD class="headrow"><b>PSS_ASSOC_8</b></TD>
+  <TD class="headrow"><b>PSS_ASSOC_9</b></TD>
+  <TD class="headrow"><b>PSS_ASSOC_10</b></TD>
+  <TD class="headrow"><b>PSS_ASSOC_11</b></TD>
+  <TD class="headrow"><b>PSS_ASSOC_12</b></TD>
+  <TD class="headrow"><b>PSS_ASSOC_13</b></TD>
+  <TD class="headrow"><b>PSS_ASSOC_14</b></TD>
+  <TD class="headrow"><b>PSS_ASSOC_15</b></TD>
+</TR>
+
+<TR height=17>
+  <TD class="txtcol">A2190198</TD>
+  <TD class="txtcol">ARCHBISHOP CARROLL HIGH SCHOOL</TD>
+  <TD class="txtcol">14</TD>
+  <TD class="txtcol">17</TD>
+  <TD class="txtcol">4300 HAREWOOD RD</TD>
+  <TD class="txtcol">WASHINGTON</TD>
+  <TD class="txtcol">11001</TD>
+  <TD class="txtcol">001</TD>
+  <TD class="txtcol">DC</TD>
+  <TD class="txtcol">11</TD>
+  <TD class="txtcol">20017</TD>
+  <TD class="txtcol">2025290900</TD>
+  <TD class="numcol" x:num>184</TD>
+  <TD class="numcol" x:num>6.5</TD>
+  <TD class="txtcol">Yes</TD>
+  <TD class="numcol" x:num></TD>
+  <TD class="numcol" x:num></TD>
+  <TD class="numcol" x:num></TD>
+  <TD class="numcol" x:num></TD>
+  <TD class="numcol" x:num></TD>
+  <TD class="numcol" x:num></TD>
+  <TD class="numcol" x:num></TD>
+  <TD class="numcol" x:num></TD>
+  <TD class="numcol" x:num></TD>
+  <TD class="numcol" x:num></TD>
+  <TD class="numcol" x:num></TD>
+  <TD class="numcol" x:num>122</TD>
+  <TD class="numcol" x:num>101</TD>
+  <TD class="numcol" x:num>83</TD>
+  <TD class="numcol" x:num>78</TD>
+  <TD class="numcol" x:num>384</TD>
+  <TD class="numcol" x:num>384</TD>
+  <TD class="numcol" x:num>0</TD>
+  <TD class="numcol" x:num>2</TD>
+  <TD class="numcol" x:num>51</TD>
+  <TD class="numcol" x:num>297</TD>
+  <TD class="numcol" x:num>2</TD>
+  <TD class="numcol" x:num>1</TD>
+  <TD class="numcol" x:num>31</TD>
+  <TD class="numcol" x:num>28.6</TD>
+  <TD class="txtcol">11</TD>
+  <TD class="txtcol">1</TD>
+  <TD class="txtcol">1</TD>
+  <TD class="txtcol">2</TD>
+  <TD class="txtcol">1</TD>
+  <TD class="txtcol">1</TD>
+  <TD class="numcol" x:num>0</TD>
+  <TD class="numcol" x:num>0.52</TD>
+  <TD class="numcol" x:num>13.28</TD>
+  <TD class="numcol" x:num>77.34</TD>
+  <TD class="numcol" x:num>0.52</TD>
+  <TD class="numcol" x:num>0.26</TD>
+  <TD class="numcol" x:num>8.07</TD>
+  <TD class="numcol" x:num>13.42</TD>
+  <TD class="txtcol">1</TD>
+  <TD class="txtcol">DISTRICT OF COLUMBIA</TD>
+  <TD class="txtcol"></TD>
+  <TD class="txtcol"></TD>
+  <TD class="txtcol"></TD>
+  <TD class="txtcol"></TD>
+  <TD class="txtcol"></TD>
+  <TD class="txtcol"></TD>
+  <TD class="txtcol"></TD>
+  <TD class="txtcol"></TD>
+  <TD class="txtcol"></TD>
+  <TD class="txtcol"></TD>
+  <TD class="txtcol"></TD>
+  <TD class="txtcol"></TD>
+  <TD class="txtcol"></TD>
+  <TD class="txtcol"></TD>
+  <TD class="txtcol"></TD>
+</TR>
+<TR height=17>
+  <TD class="txtcol">00252659</TD>
+  <TD class="txtcol">GEORGETOWN VISITATION PREPARATORY SCHOOL</TD>
+  <TD class="txtcol">14</TD>
+  <TD class="txtcol">17</TD>
+  <TD class="txtcol">1524 35TH ST NW</TD>
+  <TD class="txtcol">WASHINGTON</TD>
+  <TD class="txtcol">11001</TD>
+  <TD class="txtcol">001</TD>
+  <TD class="txtcol">DC</TD>
+  <TD class="txtcol">11</TD>
+  <TD class="txtcol">20007</TD>
+  <TD class="txtcol">2023373350</TD>
+  <TD class="numcol" x:num>168</TD>
+  <TD class="numcol" x:num>7.16</TD>
+  <TD class="txtcol">Yes</TD>
+  <TD class="numcol" x:num></TD>
+  <TD class="numcol" x:num></TD>
+  <TD class="numcol" x:num></TD>
+  <TD class="numcol" x:num></TD>
+  <TD class="numcol" x:num></TD>
+  <TD class="numcol" x:num></TD>
+  <TD class="numcol" x:num></TD>
+  <TD class="numcol" x:num></TD>
+  <TD class="numcol" x:num></TD>
+  <TD class="numcol" x:num></TD>
+  <TD class="numcol" x:num></TD>
+  <TD class="numcol" x:num>128</TD>
+  <TD class="numcol" x:num>127</TD>
+  <TD class="numcol" x:num>124</TD>
+  <TD class="numcol" x:num>133</TD>
+  <TD class="numcol" x:num>512</TD>
+  <TD class="numcol" x:num>512</TD>
+  <TD class="numcol" x:num>0</TD>
+  <TD class="numcol" x:num>22</TD>
+  <TD class="numcol" x:num>53</TD>
+  <TD class="numcol" x:num>52</TD>
+  <TD class="numcol" x:num>319</TD>
+  <TD class="numcol" x:num>2</TD>
+  <TD class="numcol" x:num>64</TD>
+  <TD class="numcol" x:num>46</TD>
+  <TD class="txtcol">11</TD>
+  <TD class="txtcol">2</TD>
+  <TD class="txtcol">1</TD>
+  <TD class="txtcol">2</TD>
+  <TD class="txtcol">1</TD>
+  <TD class="txtcol">1</TD>
+  <TD class="numcol" x:num>0</TD>
+  <TD class="numcol" x:num>4.29</TD>
+  <TD class="numcol" x:num>10.35</TD>
+  <TD class="numcol" x:num>10.15</TD>
+  <TD class="numcol" x:num>62.3</TD>
+  <TD class="numcol" x:num>0.39</TD>
+  <TD class="numcol" x:num>12.5</TD>
+  <TD class="numcol" x:num>11.13</TD>
+  <TD class="txtcol">1</TD>
+  <TD class="txtcol">DISTRICT OF COLUMBIA</TD>
+  <TD class="txtcol">National Catholic Educational Association (NCEA)</TD>
+  <TD class="txtcol">National Association of Independent Schools (NAIS)</TD>
+  <TD class="txtcol"></TD>
+  <TD class="txtcol"></TD>
+  <TD class="txtcol"></TD>
+  <TD class="txtcol"></TD>
+  <TD class="txtcol"></TD>
+  <TD class="txtcol"></TD>
+  <TD class="txtcol"></TD>
+  <TD class="txtcol"></TD>
+  <TD class="txtcol"></TD>
+  <TD class="txtcol"></TD>
+  <TD class="txtcol"></TD>
+  <TD class="txtcol"></TD>
+  <TD class="txtcol"></TD>
+</TR>
+<TR height=17>
+  <TD class="txtcol">A9700911</TD>
+  <TD class="txtcol">MODEL SECONDARY SCHOOL FOR THE DEAF</TD>
+  <TD class="txtcol">14</TD>
+  <TD class="txtcol">17</TD>
+  <TD class="txtcol">800 FLORIDA AVE NE</TD>
+  <TD class="txtcol">WASHINGTON</TD>
+  <TD class="txtcol">11001</TD>
+  <TD class="txtcol">001</TD>
+  <TD class="txtcol">DC</TD>
+  <TD class="txtcol">11</TD>
+  <TD class="txtcol">20002</TD>
+  <TD class="txtcol">2026515000</TD>
+  <TD class="numcol" x:num>183</TD>
+  <TD class="numcol" x:num>8</TD>
+  <TD class="txtcol">Yes</TD>
+  <TD class="numcol" x:num></TD>
+  <TD class="numcol" x:num></TD>
+  <TD class="numcol" x:num></TD>
+  <TD class="numcol" x:num></TD>
+  <TD class="numcol" x:num></TD>
+  <TD class="numcol" x:num></TD>
+  <TD class="numcol" x:num></TD>
+  <TD class="numcol" x:num></TD>
+  <TD class="numcol" x:num></TD>
+  <TD class="numcol" x:num></TD>
+  <TD class="numcol" x:num></TD>
+  <TD class="numcol" x:num></TD>
+  <TD class="numcol" x:num></TD>
+  <TD class="numcol" x:num></TD>
+  <TD class="numcol" x:num></TD>
+  <TD class="numcol" x:num></TD>
+  <TD class="numcol" x:num></TD>
+  <TD class="numcol" x:num></TD>
+  <TD class="numcol" x:num></TD>
+  <TD class="numcol" x:num></TD>
+  <TD class="numcol" x:num></TD>
+  <TD class="numcol" x:num></TD>
+  <TD class="numcol" x:num></TD>
+  <TD class="numcol" x:num></TD>
+  <TD class="numcol" x:num>70</TD>
+  <TD class="txtcol">11</TD>
+  <TD class="txtcol">1</TD>
+  <TD class="txtcol">4</TD>
+  <TD class="txtcol">2</TD>
+  <TD class="txtcol">3</TD>
+  <TD class="txtcol">1</TD>
+  <TD class="numcol" x:num></TD>
+  <TD class="numcol" x:num></TD>
+  <TD class="numcol" x:num></TD>
+  <TD class="numcol" x:num></TD>
+  <TD class="numcol" x:num></TD>
+  <TD class="numcol" x:num></TD>
+  <TD class="numcol" x:num></TD>
+  <TD class="numcol" x:num></TD>
+  <TD class="txtcol">30</TD>
+  <TD class="txtcol">DISTRICT OF COLUMBIA</TD>
+  <TD class="txtcol">Other special emphasis association(s)</TD>
+  <TD class="txtcol"></TD>
+  <TD class="txtcol"></TD>
+  <TD class="txtcol"></TD>
+  <TD class="txtcol"></TD>
+  <TD class="txtcol"></TD>
+  <TD class="txtcol"></TD>
+  <TD class="txtcol"></TD>
+  <TD class="txtcol"></TD>
+  <TD class="txtcol"></TD>
+  <TD class="txtcol"></TD>
+  <TD class="txtcol"></TD>
+  <TD class="txtcol"></TD>
+  <TD class="txtcol"></TD>
+  <TD class="txtcol"></TD>
+</TR>
+<TR height=17>
+  <TD class="txtcol">A2100775</TD>
+  <TD class="txtcol">ST JEROME INSTITUTE</TD>
+  <TD class="txtcol">14</TD>
+  <TD class="txtcol">17</TD>
+  <TD class="txtcol">1800 PERRY ST NE</TD>
+  <TD class="txtcol">WASHINGTON</TD>
+  <TD class="txtcol">11001</TD>
+  <TD class="txtcol">001</TD>
+  <TD class="txtcol">DC</TD>
+  <TD class="txtcol">11</TD>
+  <TD class="txtcol">20018</TD>
+  <TD class="txtcol">2023901289</TD>
+  <TD class="numcol" x:num>175</TD>
+  <TD class="numcol" x:num>6.83</TD>
+  <TD class="txtcol">Yes</TD>
+  <TD class="numcol" x:num></TD>
+  <TD class="numcol" x:num></TD>
+  <TD class="numcol" x:num></TD>
+  <TD class="numcol" x:num></TD>
+  <TD class="numcol" x:num></TD>
+  <TD class="numcol" x:num></TD>
+  <TD class="numcol" x:num></TD>
+  <TD class="numcol" x:num></TD>
+  <TD class="numcol" x:num></TD>
+  <TD class="numcol" x:num></TD>
+  <TD class="numcol" x:num></TD>
+  <TD class="numcol" x:num>22</TD>
+  <TD class="numcol" x:num>14</TD>
+  <TD class="numcol" x:num>12</TD>
+  <TD class="numcol" x:num>13</TD>
+  <TD class="numcol" x:num>61</TD>
+  <TD class="numcol" x:num>61</TD>
+  <TD class="numcol" x:num>0</TD>
+  <TD class="numcol" x:num>4</TD>
+  <TD class="numcol" x:num>10</TD>
+  <TD class="numcol" x:num>5</TD>
+  <TD class="numcol" x:num>38</TD>
+  <TD class="numcol" x:num>1</TD>
+  <TD class="numcol" x:num>3</TD>
+  <TD class="numcol" x:num>6.5</TD>
+  <TD class="txtcol">11</TD>
+  <TD class="txtcol">1</TD>
+  <TD class="txtcol">3</TD>
+  <TD class="txtcol">2</TD>
+  <TD class="txtcol">1</TD>
+  <TD class="txtcol">1</TD>
+  <TD class="numcol" x:num>0</TD>
+  <TD class="numcol" x:num>6.55</TD>
+  <TD class="numcol" x:num>16.39</TD>
+  <TD class="numcol" x:num>8.19</TD>
+  <TD class="numcol" x:num>62.29</TD>
+  <TD class="numcol" x:num>1.63</TD>
+  <TD class="numcol" x:num>4.91</TD>
+  <TD class="numcol" x:num>9.38</TD>
+  <TD class="txtcol">1</TD>
+  <TD class="txtcol">DISTRICT OF COLUMBIA</TD>
+  <TD class="txtcol">Other religious school association(s)</TD>
+  <TD class="txtcol">Other special emphasis association(s)</TD>
+  <TD class="txtcol"></TD>
+  <TD class="txtcol"></TD>
+  <TD class="txtcol"></TD>
+  <TD class="txtcol"></TD>
+  <TD class="txtcol"></TD>
+  <TD class="txtcol"></TD>
+  <TD class="txtcol"></TD>
+  <TD class="txtcol"></TD>
+  <TD class="txtcol"></TD>
+  <TD class="txtcol"></TD>
+  <TD class="txtcol"></TD>
+  <TD class="txtcol"></TD>
+  <TD class="txtcol"></TD>
+</TR>
+<TR height=17>
+  <TD class="txtcol">00253062</TD>
+  <TD class="txtcol">ST JOHNS COLLEGE HIGH SCHOOL</TD>
+  <TD class="txtcol">14</TD>
+  <TD class="txtcol">17</TD>
+  <TD class="txtcol">2607 MILITARY RD NW</TD>
+  <TD class="txtcol">WASHINGTON</TD>
+  <TD class="txtcol">11001</TD>
+  <TD class="txtcol">001</TD>
+  <TD class="txtcol">DC</TD>
+  <TD class="txtcol">11</TD>
+  <TD class="txtcol">20015</TD>
+  <TD class="txtcol">2023632316</TD>
+  <TD class="numcol" x:num>165</TD>
+  <TD class="numcol" x:num>6.5</TD>
+  <TD class="txtcol">Yes</TD>
+  <TD class="numcol" x:num></TD>
+  <TD class="numcol" x:num></TD>
+  <TD class="numcol" x:num></TD>
+  <TD class="numcol" x:num></TD>
+  <TD class="numcol" x:num></TD>
+  <TD class="numcol" x:num></TD>
+  <TD class="numcol" x:num></TD>
+  <TD class="numcol" x:num></TD>
+  <TD class="numcol" x:num></TD>
+  <TD class="numcol" x:num></TD>
+  <TD class="numcol" x:num></TD>
+  <TD class="numcol" x:num>853</TD>
+  <TD class="numcol" x:num>292</TD>
+  <TD class="numcol" x:num>348</TD>
+  <TD class="numcol" x:num>301</TD>
+  <TD class="numcol" x:num>1794</TD>
+  <TD class="numcol" x:num>1794</TD>
+  <TD class="numcol" x:num>3</TD>
+  <TD class="numcol" x:num>63</TD>
+  <TD class="numcol" x:num>153</TD>
+  <TD class="numcol" x:num>273</TD>
+  <TD class="numcol" x:num>767</TD>
+  <TD class="numcol" x:num></TD>
+  <TD class="numcol" x:num>35</TD>
+  <TD class="numcol" x:num>91.3</TD>
+  <TD class="txtcol">11</TD>
+  <TD class="txtcol">1</TD>
+  <TD class="txtcol">1</TD>
+  <TD class="txtcol">2</TD>
+  <TD class="txtcol">1</TD>
+  <TD class="txtcol">1</TD>
+  <TD class="numcol" x:num>0.16</TD>
+  <TD class="numcol" x:num>3.51</TD>
+  <TD class="numcol" x:num>8.52</TD>
+  <TD class="numcol" x:num>15.21</TD>
+  <TD class="numcol" x:num>42.75</TD>
+  <TD class="numcol" x:num></TD>
+  <TD class="numcol" x:num>1.95</TD>
+  <TD class="numcol" x:num>19.64</TD>
+  <TD class="txtcol">1</TD>
+  <TD class="txtcol">DISTRICT OF COLUMBIA</TD>
+  <TD class="txtcol">Other religious school association(s)</TD>
+  <TD class="txtcol"></TD>
+  <TD class="txtcol"></TD>
+  <TD class="txtcol"></TD>
+  <TD class="txtcol"></TD>
+  <TD class="txtcol"></TD>
+  <TD class="txtcol"></TD>
+  <TD class="txtcol"></TD>
+  <TD class="txtcol"></TD>
+  <TD class="txtcol"></TD>
+  <TD class="txtcol"></TD>
+  <TD class="txtcol"></TD>
+  <TD class="txtcol"></TD>
+  <TD class="txtcol"></TD>
+  <TD class="txtcol"></TD>
+</TR>
+</TABLE></BODY></HTML>

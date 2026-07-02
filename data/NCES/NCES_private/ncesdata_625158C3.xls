@@ -1,0 +1,568 @@
+<html xmlns:o="urn:schemas-microsoft-com:office:office"
+xmlns:x="urn:schemas-microsoft-com:office:excel"
+xmlns="http://www.w3.org/TR/REC-html40">
+
+<head>
+
+<!-- ENCRYPT:ED68C819::90:6B:B9:E6:A2:21:87:C:0:50:9B:DB:53:99:87:6C:48:28:29:20:BE:F0:DD:9F:1:3F:A8:96:3E:47:B0:2F:C4:3D:F7:64:6F:A9:3C:F6:6A:FD:71:5F:C1:B1:D4:ED:FB:DB:FD:79:20:B4:7E:83:63:46:22:69:64:5F:D0:C4:E0:5:C8:A6:97:AE:16:27:D4:34:1B:C7:FA:C:4A:A0:84:3:38:6B:4E:92:B3:61:46:12:FE:21:9A:1C:66:E:9D:BE:2:C:B6:8F:2D:63:72:E3:F8:6F:1E:7D:42:FE:EF:5A:56:3F:C4:43:7E:41:6B:83:9E:A5:49:F2:B7:4F:B6:60:1:61:19:CB:A4:C3:FD:8B:9B:61:E6:CE:37:22:11:8D:97:9C:AF:42:92:30:60:47:82:18:2B:A:4B:64:8A:24:8D:56:E9:CA:4D:22:E7:28:2B:54:59:F0:12:6:29:7B:CA:D5:1F:BD:5F:EC:D4:E5:77:4:9:45:AF:97:F2:6E:40:D9:3E:F9:CD:E5:AC:29:1:ED:8A:25:DE:FA:B7:B5:BD:7:26:A5:8B:56:3E:85:D8:1A:2E:84:92:9A:5E:3E:4:D7:52:80:86:6A:40:41:AA:7C:9F:A7:F:E1:C8:CB:AF:1F:80:28:CE:A5:B4:58:5C:51:B8:D2:93:82:FB:B5:52:AF:D4:CB:AC:61:BD:2:3A:C5:A2:EA:8C:8:7:92:5F:F5:82:2B:F5:FE:F8:3C:1B:ED:E4:7B:C7:27:76:94:29:C8:7B:75:3F:77:A2:32:38:34:A7:27:44:85:BF:3B:78:5D:A0:5E:4C:E2:E9:C8:74:62:AA:D1:15:99:77:DB:5D:47:62:1E:1F:3C:BF:55:DE:D0:A3:67:F2:39:B2:44:6E:C6:CB:EB:5D:56:AD:26:63:65:36:D:7F:94:4F:4E:A:4F:19:BE:AC:4A:D7:12:59:90:A0:33:28:62:AE:8A:27:E:3C:79:64:83:A9:AC:10:AB:B0:B4:6C:82:5B:A:5C:A1:46:ED:8A:A3:83:CF:8E:C8:73:4F:FC:BF:BD:8B:E2:43:5B:CC:DB:DA:C3:F7:81:18:FE:A0:32:36:38:C0:AD:DA:43:55:F3:88:2C:24:C7:5D:70:B0:78:91:1A:7E:10:32:CE:C6:4F:62:F3:5B:E1:C6:5B:B6:B7:BD:4D:15:42:9F:E8:C0:66:D5:7B:37:22:1C:78:91:9B:66:9D:2B:5C:B7:51:F4:75:5A:4D:B2:D3:E2:DC:2E:6B:69:5:81:8C:D:D2:32:21:7E:F0:EF:3C:1B:91:11:B9:AF:9A:98:D4:6D:BF:EB:D0:CE:3E:6E:8E:B1:19:6A:A9:BE:E8:AC:AE:3E:D4:F2:D2:C5:30:46:F9:42:56:E0:51:82:AB:11:24:86:D0:E1:E7:56:16:CA:41:82:25:60:9C:7:50:C5:59:D:79:CD:1F:8A:1E:76:5E:9C:DB:95:F8:76:DB:93:EE:59:9C:F4:6C:27:66:C9:CD:9C:10:E2:CD:42:2E:86:BC:6C:42:58:46:8E:E2:1A:81:77:C2:51:A7:E2:2A:75:D0:E3:4A:D4:AB:4:0:F:18:34:1F:32:A:45:9F:0:11:8C:9A:C9:8A:6D:87:D5:F9:5C:16:9B:74:1E:4E:A6:26:AA:E:C6:E3:59:55:5E:E6:12:54:88:35:5C:44:99:F1:1E:CF:57:85:46:29:FD:84:DD:84:79:6C:37:26:E3:1B:F7:9D:DF:E7:82:A6:DC:61:38:72:78:84:51:BF:DE:2D:8C:3:9C:55:E0:AF:2E:B0:BA:81:15:DD:80:9E:3:AA:8:CD:84:8A:62:52:1A:86:73:77:E5:E9:E6:81:9F:A8:91:A9:FF:F6:6A:70:3A:BC:C8:38:93:14:D4:3A:9B:3A:54:8C:AC:14:D0:9E:F5:63:92:3B:D6:CD:77:ED:E1:4D:19:94:7F:D0:E7:C3:37:A9:A8:A2:5F:CE:9A:43:E:86:D2:C7:43:95:60:F:B9:E4:EF:8:A:B1:67:91:EB:5F:56:6D:D2:FE:5A:72:12:E3:6B:F8:7:3:D:2:5E:C2:D2:F1:37:7D:EF:D:AF:34:21:57:AD:4:CD:D1:5B:7C:90:58:28:C7:89:6B:7A:15:CE:C6:CA:3A:86:AD:47:D6:5F:B:2F:55:F7:76:19:18:8D:D8:C9:42:DA:3F:CB:3D:88:B4:83:50:C4:A7:97:A:8B:AB:CA:15:40:C8:FD:60:A:26:C2:E1:2B:1A:CE:F0:42:E0:85:4E:8C:4A:F4:CF:13:16:D:93:50:55:27:3E:60:FF:7F:73:7E:CF:70:6B:E6:4D:7A:8A:FF:EC:5E:72:16:34:40:B3:24:E0:25:93:F2:D5:9:DB:FE:AD:F1:25:0:65:15:BA:E6:A2:52:CA:4B:54:C3:74:44:7D:65:A1:D9:93:8C:D1:7B:27:9B:72:B9:FE:4E:45:DB:31:74:95:DE:76:D4:2D:FF:4E:3F:F7:F7:81:E7:40:F6:4A:77:1B:91:B7:E6:17:72:F4:BB:AF:48:CA:68:76:11:AD:66:D4:60:E:D4:3A:B8:7A:80:C4:83:DC:2A:11:EB:5A:FE:33:11:10:E3:F2:F3:76:58:38:B0:A3:B8:55:90:7E:23:34:A7:2E:AF:51:F1:17:1F:3D:12:9C:A1:E8:95:1A:C3:65:77:A9:FB:39:14:B:58:4C:21:27:1:66:2:6D:90:36:D9:E8:FB:87:25:CC:58:91:1:24:D3:25:71:7A:26:59:84:E5:22:C:55:75:B:56:65:53:88:66:38:FB:25:52:C8:3E:B4:FF:65:DD:E9:56:DF:43:D1:B3:D2:9F:5E:89:E6:A2:EA:FB:93:17:1B:CD:F7:E4:A3:35:2D:D5:AE:59:70:D:F7:99:7:45:86:87:A5:24:DD:3C:D6:CA:F9:D1:26:9:4E:D6:A5:C8:E3:73:77:2A:D9:73:9A:29:2D:B9:48:51:5:7C:C:E1:79:2D:DF:FB:19:2A:E2:D6:C9:A8:CE:88:8E:7D:8D:60:3C:6A:60:FD:67:60:91:18:E1:B8:65:A2:F6:6B:89:DF:2A:7A:83:40:C8:C1:49:79:6B:29:8E:18:B5:92:9E:91:7A:1C:C9:8C:B8:BC:60:55:44:F:F4:F5:1D:6A:6:3B:35:7:3E:78:51:53:B5:99:AF:90:20:47:E2:B:4C:D7:A4:6A:D:A2:BB:D2:46:35:94:63:2D:C9:C5:29:A2:29:94:46:83:E3:84:22:AE:D4:85:54:25:2:71:58:3E:90:5D:50:AF:70:EF:42:8:6D:84:2F:4B:38:DD:2D:C3:56:C7:E1:84:2B:F7:C4:79:DD:81:C8:10:D3:40:1B:9F:15:AA:C5:1C:5E:8A:EC:26:9A:CA:9D:7:85:8E:7E:7E:55:3D:62:A2:F1:32:F3:8C:FB:51:6E:AB:37:74:F1:90:B2:31:C:5E:CE:E0:7A:6F:5D:F1:76:2F:E1:C6:4A:B1:64:46:C4:48:8B:33:0:6D:D3:6E:C4:66:B:B6:1B:7E:3C:D1:7A:4B:D4:40:EB:11:1E:95:2D:2D:A3:70:4D:F8:CD:3A:65:FF:EE:6B:8A:17:59:82:5:3F:3D:69:77:A0:D1:31:DC:D6:A7:94:80:23:AF:31:7:D6:2:D2:19:3C:6D:20:5:48:A0:73:AB:90:6F:79:CB:84:2C:E8:12:70:C0:62:99:61:43:6C:72:B6:CF:EA:94:64:EF:5D:7C:7C:3:60:80:F:C3:C7:FD:DD:93:3A:FC:24:63:19:75:F9:E0:A3:4:E:C:8D:44:A:37:94:4C:B4:C2:8F:1F:97:AC:38:B4:64:DF:14:62:E5:D4:2A:C5:3D:24:46:53:DC:E5:63:2A:56:C0:30:31:2A:8C:90:87:F9:B4:D4:95:40:EB:65:66:90:DF:50:34:BD:A3:6A:30:74:B8:93:3A:7E:62:ED:13:3C:95:85:B6:1D:6A:A4:45:6C:35:F8:D7:90:33:7C:CD:5C:8:20:5:23:7F:2A:7F:8:6A:DD:98:AB:9A:FF:7A:10:C6:5B:96:2D:E4:3E:5:D3:FC:F3:86:71:43:AF:1A:2F:35:5A:F5:C4:DE:FE:DC:19:E9:B5:20:57:DF:F:27:E1:84:34:DD:74:C9:F:77:11:45:A9:9D:38:8B:30:12:E7:EC:F9:68:DA:37:29:67:41:25:B:9:57:7F:3F:B6:3D:15:31:D6:F2:5B:53:E4:D1:AA:5B:D9:36:C2:CE:9A:B6:B2:F2:E2:C1:AD:49:7C:1E:42:D9:8A:1A:EC:DE:57:5:39:5:62:D5:AE:42:1D:44:15:13:EC:4E:F2:FB:ED:E8:B8:4E:87:D5:15:9D:EA:F7:6B:A8:7F:B9:76:97:C8:C0:19:13:D4:3C:E7:A1:B8:4:11:E2:48:BF:C8:F1:4B:2D:8F:D3:11:5:5B:A:1D:52:6D:77:C8:1F:E0:75:75:45:3B:C4:2E:63:3E:28:82:1:91:8C:7F:2F:22:69:9A:B0:AD:F5:29:22:B1:AE:42:F5:CE:36:5A:E5:42:8B:DA:C8:AD:F5:59:5F:10:EE:57:3F:31:42:8A:D2:A5:78:A7:95:7D:1E:F8:F:CA:AF:4A:AF:23:2A:56:6:5C:54:19:8F:A5:35:DD:EC:6F:70:F1:B1:10:36:DF:E9:11:40:3E:E6:3D:4A:F1:44:F5:98:2C:84:A4:AD:B:77:66:FB:D3:67:8D:5:8B:75:CD:1F:4:3D:FF:33:74:A1:EA:5E:3:9F:3:AF:F7:AA:15:93:96:CF:F1:B6:23:82:B1:E1:CC:F4:D3:20:E7:4E:94:86:4F:9A:7C:97:83:3C:4C:67:58:92:6B:4B:86:D2:FB:15:FB:E1:D7:4D:10:7F:F3:36:A2:BB:FD:D:4E:81:CD:47:AD:EA:2:E3:9E:6E:ED:88:AE:9B:E:A:2F:E5:4E:17:50:E0:4E:F6:B1:4D:F2:83:88:79:ED:9F:C5:5D:9E:7C:53:AD:1F:DF:5D:93:15:66:AE:3F:CA:C9:61:88:0:AA:17:41:E0:AE:FD:CE:93:94:FE:F7:79:AA:0:55:1A:3A:BC:E3:D0:16:24:30:C8:2:E2:EA:D5:33:E9:23:16:50:EF:1F:FE:4A:B4:DC:75:B3:BF:FE:99:A8:CA:2A:92:3:DD:3F:CA:EA:1C:1C:BF:5D:7A:0:BF:EA:6C:37:BF:97:2C:E8:C5:51:35:94:AB:E:3D:79:A9:52:17:D7:D0:9:4B:76:2E:88:88:A2:E1:6E:7B:DB:92:F1:6E:F7:50:35:8E:75:44:BA:AC:25:CC:C6:99:C4:B9:7F:64:3E:6C:8F:1E:B:E7:9E:A0:43:81:9D:7A:56:C9:5F:68:30:7F:80:BF:C8:DA:71:D5:AB:72:D6:CB:A8:DB:12:97:41:DF:29:DD:4F:A4:87:2C:53:B1:D8:3F:AA:BD:C5:20:A6:8:53:28:45:7F:9C:EF:1:AB:F9:2C:BB:7:1F:E5:73:BE:27:B2:7E:D5:96:3A:9D:1D:4E:13:BC:C5:5D:A2:15:E0:30:B:4A:E2:25:E9:74:51:F5:20:2B:7:FC:C3:58:B9:96:A0:1D:A2:1A:E:E1:67:68:55:92:40:1B:D:59:5B:92:99:CF:21:AE:7:80:61:45:8D:63:42:17:1:91:33:E:59:84:13:7A:C6:34:2:94:B3:92:3E:7B:D7:45:E7:9C:C:5C:1D:F6:27:AF:97:9E:79:78:19:E:60:D1:80:55:E1:1B:D8:89:61:14:48:73:8C:97:EE:1:94:34:B3:BF:32:C4:79:4D:4A:93:5F:54:D5:88:75:79:D8:D3:55:67:25:35:22:AD:C:AB:25:31:C9:C9:4E:D7:6D:A0:86:A7:47:BD:F8:12:70:AD:2D:81:A6:65:B7:22:BF:80:1E:49:3A:3A:AA:9D:2F:EE:1:E0:A2:EC:9B:2D:A:63:86:A:37:15:BF:D1:51:9A:C2:99:63:84:86:52:41:CB:4A:E0:C4:B7:DE:F0:F8:7D:46:61:B6:68:DD:97:A0:BB:7F:A:97:6E:58:B0:FE:54:AE:EC:C9:28:78:B4:61:91:22:DA:8:D5:CD:89:50:88:66:6E:8C:6F:C1:83:4:CF:7:84:FB:A5:65:CB:26:C:5D:C6:11:B7:74:38:4A:51:7D:5A:3D:A2:B:EE:A5:D0:55:5F:89:F9:20:91:5D:1E:79:2D:1C:40:D1:3:86:F4:33:8:56:E7:69:F4:5D:BD:EC:E6:A4:3E:11:2A:5F:11:BE:30:FF:CB:13:30:78:A:3C:11:B:61:6C:B6:F5:DE:18:FC:3C:9F:7C:11:B2:C5:C4:C2:E1:FA:AA:E7:27:1A:B8:67:1A:64:B1:F8:AC:4C:A5:5A:F8:55:E1:79:63:4:D0:4B:9D:C1:10:B5:1B:5B:49:E7:DE:8D:C1:CB:F3:33:87:87:D2:6B:E8:88:61:3:9C:C2:EF:82:7:68:DB:89:CC:9A:3D:4:1D:DE:5C:27:37:2B:0:67:2B:81:F0:8F:71:75:1A:DA:E:C6:E4:65:63:3C:4C:4F:E1:DB:D0:FA:84:5C:93:DD:48:C2:5F:CA:86:62:C8:A6:F:FF:EE:1F:82:46:8E:E3:61:4F:BF:EE:2:14:90:67:52:70:5E:6E:72:ED:B3:75:6E:7A:23:E0:E5:6E:FE:11:E7:FB:67:B7:79:25:BC:96:2C:6C:D2:79:7A:FC:CA:CF:C3:F8:B1:F6:98:10:A7:38:6C:67:3C:2E:13:81:26:8:1A:0:C1:A3:EC:CC:C4:95:9:AD:FD:46:55:CD:60:62:2B:ED:F6:6C:5C:33:22:BE:C4:B2:78:A:49:AC:96:8F:C9:22:5D:33:51:3C:7E:A4:79:45:88:EA:6E:A:CA:18:83:A3:25:65:C3:FF:8A:E3:69:BF:3C:9A:F0:48:8F:4A:A:9B:D:E1:7B:A:1C:4D:B6:45:A1:1F:FE:71:6B:54:85:3A:BC:4E:56:88:9A:6:C5:55:4F:33:C6:C1:62:32:47:B:E2:AE:CA:9:A1:6A:60:74:D7:97:70:C7:7F:85:43:49:97:A7:15:7:6B:C4:6B:FF:3F:99:8E:44:5F:39:76:47:F:E5:82:43:3D:5F:22:85:5B:42:58:3D:77:A3:E0:3D:25:1A:C2:EC:1E:2A:57:27:38:BF:BF:2A:8A:BB:C6:4E:16:91:72:93:BC:55:67:4:D3:B:DC:7C:D1:63:4B:EF:55:88:B:96:E9:EF:50:84:7A:24:58:5F:B4:93:D9:DF:AB:13:8D:14:FD:F2:EF:ED:45:CF:E4:76:41:48:41:F3:B8:3C:9A:A2:5B:80:38:11:84:A9:BD:BB:65:57:3E:58:B6:E0:4F:39:97:D7:B2:AB:FF:7D:83:6B:3A:7C:59:82:39:4A:8E:6B:51:BA:6E:D3:84:BB:3C:6F:75:C3:5F:11:C4:70:2:F2:82:20:4A:9C:B1:98:1A::38E3D851:ENCRYPT -->
+<meta http-equiv=Content-Type content="text/html; charset=windows-1252">
+<meta name=ProgId content=Excel.Sheet>
+
+<title>National Center for Education Statistics</title>
+
+<style>
+<!--
+.txtcol
+	{
+	mso-number-format:"\@";
+	font-size:8pt;
+	mso-width-source:auto;
+	}
+.numcol
+	{
+	mso-number-format:"general";
+	text-align:right;
+	font-size:8pt;
+	mso-width-source:auto;
+	}
+.headrow
+	{
+	border-bottom-style: solid;
+	border-top-style: solid;
+	border-bottom-color: #000000;
+	border-top-color: #000000;
+	font-size:8pt;
+	mso-width-source:auto;
+	}
+-->
+</style>
+
+</head>
+<body>
+
+<table border=1 bordercolor=#bbbbbb cellpadding=0 cellspacing=0>
+<tr>
+  <td height=31 colspan=6 valign=bottom style="border-style: solid; border-color: #FFFFFF"><font size=5 face=impact><b>National Center for Education Statistics</font></b></td>
+</tr>
+<tr>
+  <td height=25 colspan=6 valign=bottom style="border-style: solid; border-color: #FFFFFF"><font size=3><b>PSS Private School Universe Survey data 2023-24 school year</b></font></td>
+</tr>
+<tr>
+  <td height=30 colspan=6 valign=top style="border-style: solid; border-color: #FFFFFF">The file contains (<B>6</B>) records based on your search.</td>
+</tr>
+<tr>
+  <td height=30 colspan=6 valign=top style="border-style: solid; border-color: #FFFFFF"><font size=1>NCES is not responsible for the manner in which this data is presented. This data is provided as an extra service to the user. For more information about this data, visit the PSS homepage. <strong>http://nces.ed.gov/surveys/pss</strong></font></td>
+</tr>
+<TR height=17>
+  <TD class="headrow"><b>PSS_SCHOOL_ID</b></TD>
+  <TD class="headrow"><b>PSS_INST</b></TD>
+  <TD class="headrow"><b>LoGrade</b></TD>
+  <TD class="headrow"><b>HiGrade</b></TD>
+  <TD class="headrow"><b>PSS_ADDRESS</b></TD>
+  <TD class="headrow"><b>PSS_CITY</b></TD>
+  <TD class="headrow"><b>PSS_COUNTY_NO</b></TD>
+  <TD class="headrow"><b>PSS_COUNTY_FIPS</b></TD>
+  <TD class="headrow"><b>PSS_STABB</b></TD>
+  <TD class="headrow"><b>PSS_FIPS</b></TD>
+  <TD class="headrow"><b>PSS_ZIP5</b></TD>
+  <TD class="headrow"><b>PSS_PHONE</b></TD>
+  <TD class="headrow"><b>PSS_SCH_DAYS</b></TD>
+  <TD class="headrow"><b>PSS_STU_DAY_HRS</b></TD>
+  <TD class="headrow"><b>PSS_LIBRARY</b></TD>
+  <TD class="headrow"><b>PSS_ENROLL_UG</b></TD>
+  <TD class="headrow"><b>PSS_ENROLL_PK</b></TD>
+  <TD class="headrow"><b>PSS_ENROLL_K</b></TD>
+  <TD class="headrow"><b>PSS_ENROLL_1</b></TD>
+  <TD class="headrow"><b>PSS_ENROLL_2</b></TD>
+  <TD class="headrow"><b>PSS_ENROLL_3</b></TD>
+  <TD class="headrow"><b>PSS_ENROLL_4</b></TD>
+  <TD class="headrow"><b>PSS_ENROLL_5</b></TD>
+  <TD class="headrow"><b>PSS_ENROLL_6</b></TD>
+  <TD class="headrow"><b>PSS_ENROLL_7</b></TD>
+  <TD class="headrow"><b>PSS_ENROLL_8</b></TD>
+  <TD class="headrow"><b>PSS_ENROLL_9</b></TD>
+  <TD class="headrow"><b>PSS_ENROLL_10</b></TD>
+  <TD class="headrow"><b>PSS_ENROLL_11</b></TD>
+  <TD class="headrow"><b>PSS_ENROLL_12</b></TD>
+  <TD class="headrow"><b>PSS_ENROLL_T</b></TD>
+  <TD class="headrow"><b>PSS_ENROLL_TK12</b></TD>
+  <TD class="headrow"><b>PSS_RACE_AI</b></TD>
+  <TD class="headrow"><b>PSS_RACE_AS</b></TD>
+  <TD class="headrow"><b>PSS_RACE_H</b></TD>
+  <TD class="headrow"><b>PSS_RACE_B</b></TD>
+  <TD class="headrow"><b>PSS_RACE_W</b></TD>
+  <TD class="headrow"><b>PSS_RACE_P</b></TD>
+  <TD class="headrow"><b>PSS_RACE_2</b></TD>
+  <TD class="headrow"><b>PSS_FTE_TEACH</b></TD>
+  <TD class="headrow"><b>PSS_LOCALE</b></TD>
+  <TD class="headrow"><b>PSS_COED</b></TD>
+  <TD class="headrow"><b>PSS_TYPE</b></TD>
+  <TD class="headrow"><b>PSS_LEVEL</b></TD>
+  <TD class="headrow"><b>PSS_RELIG</b></TD>
+  <TD class="headrow"><b>PSS_COMM_TYPE</b></TD>
+  <TD class="headrow"><b>PSS_INDIAN_PCT</b></TD>
+  <TD class="headrow"><b>PSS_ASIAN_PCT</b></TD>
+  <TD class="headrow"><b>PSS_HISP_PCT</b></TD>
+  <TD class="headrow"><b>PSS_BLACK_PCT</b></TD>
+  <TD class="headrow"><b>PSS_WHITE_PCT</b></TD>
+  <TD class="headrow"><b>PSS_PACISL_PCT</b></TD>
+  <TD class="headrow"><b>PSS_TWOMORE_PCT</b></TD>
+  <TD class="headrow"><b>PSS_STDTCH_RT</b></TD>
+  <TD class="headrow"><b>PSS_ORIENT</b></TD>
+  <TD class="headrow"><b>PSS_COUNTY_NAME</b></TD>
+  <TD class="headrow"><b>PSS_ASSOC_1</b></TD>
+  <TD class="headrow"><b>PSS_ASSOC_2</b></TD>
+  <TD class="headrow"><b>PSS_ASSOC_3</b></TD>
+  <TD class="headrow"><b>PSS_ASSOC_4</b></TD>
+  <TD class="headrow"><b>PSS_ASSOC_5</b></TD>
+  <TD class="headrow"><b>PSS_ASSOC_6</b></TD>
+  <TD class="headrow"><b>PSS_ASSOC_7</b></TD>
+  <TD class="headrow"><b>PSS_ASSOC_8</b></TD>
+  <TD class="headrow"><b>PSS_ASSOC_9</b></TD>
+  <TD class="headrow"><b>PSS_ASSOC_10</b></TD>
+  <TD class="headrow"><b>PSS_ASSOC_11</b></TD>
+  <TD class="headrow"><b>PSS_ASSOC_12</b></TD>
+  <TD class="headrow"><b>PSS_ASSOC_13</b></TD>
+  <TD class="headrow"><b>PSS_ASSOC_14</b></TD>
+  <TD class="headrow"><b>PSS_ASSOC_15</b></TD>
+</TR>
+
+<TR height=17>
+  <TD class="txtcol">A1301414</TD>
+  <TD class="txtcol">BISHOP HEELAN CATHOLIC HIGH SCHOOL</TD>
+  <TD class="txtcol">14</TD>
+  <TD class="txtcol">17</TD>
+  <TD class="txtcol">1231 GRANDVIEW BLVD</TD>
+  <TD class="txtcol">SIOUX CITY</TD>
+  <TD class="txtcol">19193</TD>
+  <TD class="txtcol">193</TD>
+  <TD class="txtcol">IA</TD>
+  <TD class="txtcol">19</TD>
+  <TD class="txtcol">51103</TD>
+  <TD class="txtcol">7122520573</TD>
+  <TD class="numcol" x:num>176</TD>
+  <TD class="numcol" x:num>6.88</TD>
+  <TD class="txtcol">Yes</TD>
+  <TD class="numcol" x:num></TD>
+  <TD class="numcol" x:num></TD>
+  <TD class="numcol" x:num></TD>
+  <TD class="numcol" x:num></TD>
+  <TD class="numcol" x:num></TD>
+  <TD class="numcol" x:num></TD>
+  <TD class="numcol" x:num></TD>
+  <TD class="numcol" x:num></TD>
+  <TD class="numcol" x:num></TD>
+  <TD class="numcol" x:num></TD>
+  <TD class="numcol" x:num></TD>
+  <TD class="numcol" x:num>135</TD>
+  <TD class="numcol" x:num>127</TD>
+  <TD class="numcol" x:num>147</TD>
+  <TD class="numcol" x:num>118</TD>
+  <TD class="numcol" x:num>527</TD>
+  <TD class="numcol" x:num>527</TD>
+  <TD class="numcol" x:num></TD>
+  <TD class="numcol" x:num></TD>
+  <TD class="numcol" x:num></TD>
+  <TD class="numcol" x:num></TD>
+  <TD class="numcol" x:num></TD>
+  <TD class="numcol" x:num>0</TD>
+  <TD class="numcol" x:num></TD>
+  <TD class="numcol" x:num>39</TD>
+  <TD class="txtcol">13</TD>
+  <TD class="txtcol">1</TD>
+  <TD class="txtcol">1</TD>
+  <TD class="txtcol">2</TD>
+  <TD class="txtcol">1</TD>
+  <TD class="txtcol">1</TD>
+  <TD class="numcol" x:num></TD>
+  <TD class="numcol" x:num></TD>
+  <TD class="numcol" x:num></TD>
+  <TD class="numcol" x:num></TD>
+  <TD class="numcol" x:num></TD>
+  <TD class="numcol" x:num>0</TD>
+  <TD class="numcol" x:num></TD>
+  <TD class="numcol" x:num>13.51</TD>
+  <TD class="txtcol">1</TD>
+  <TD class="txtcol">WOODBURY</TD>
+  <TD class="txtcol">National Catholic Educational Association (NCEA)</TD>
+  <TD class="txtcol"></TD>
+  <TD class="txtcol"></TD>
+  <TD class="txtcol"></TD>
+  <TD class="txtcol"></TD>
+  <TD class="txtcol"></TD>
+  <TD class="txtcol"></TD>
+  <TD class="txtcol"></TD>
+  <TD class="txtcol"></TD>
+  <TD class="txtcol"></TD>
+  <TD class="txtcol"></TD>
+  <TD class="txtcol"></TD>
+  <TD class="txtcol"></TD>
+  <TD class="txtcol"></TD>
+  <TD class="txtcol"></TD>
+</TR>
+<TR height=17>
+  <TD class="txtcol">00458139</TD>
+  <TD class="txtcol">DOWLING CATHOLIC HIGH SCHOOL</TD>
+  <TD class="txtcol">14</TD>
+  <TD class="txtcol">17</TD>
+  <TD class="txtcol">1400 BUFFALO RD</TD>
+  <TD class="txtcol">WEST DES MOINES</TD>
+  <TD class="txtcol">19153</TD>
+  <TD class="txtcol">153</TD>
+  <TD class="txtcol">IA</TD>
+  <TD class="txtcol">19</TD>
+  <TD class="txtcol">50265</TD>
+  <TD class="txtcol">5152221041</TD>
+  <TD class="numcol" x:num>175</TD>
+  <TD class="numcol" x:num>7</TD>
+  <TD class="txtcol">Yes</TD>
+  <TD class="numcol" x:num></TD>
+  <TD class="numcol" x:num></TD>
+  <TD class="numcol" x:num></TD>
+  <TD class="numcol" x:num></TD>
+  <TD class="numcol" x:num></TD>
+  <TD class="numcol" x:num></TD>
+  <TD class="numcol" x:num></TD>
+  <TD class="numcol" x:num></TD>
+  <TD class="numcol" x:num></TD>
+  <TD class="numcol" x:num></TD>
+  <TD class="numcol" x:num></TD>
+  <TD class="numcol" x:num>364</TD>
+  <TD class="numcol" x:num>324</TD>
+  <TD class="numcol" x:num>346</TD>
+  <TD class="numcol" x:num>320</TD>
+  <TD class="numcol" x:num>1354</TD>
+  <TD class="numcol" x:num>1354</TD>
+  <TD class="numcol" x:num>1</TD>
+  <TD class="numcol" x:num>75</TD>
+  <TD class="numcol" x:num>218</TD>
+  <TD class="numcol" x:num>83</TD>
+  <TD class="numcol" x:num>934</TD>
+  <TD class="numcol" x:num>3</TD>
+  <TD class="numcol" x:num>40</TD>
+  <TD class="numcol" x:num>92.6</TD>
+  <TD class="txtcol">13</TD>
+  <TD class="txtcol">1</TD>
+  <TD class="txtcol">1</TD>
+  <TD class="txtcol">2</TD>
+  <TD class="txtcol">1</TD>
+  <TD class="txtcol">1</TD>
+  <TD class="numcol" x:num>0.07</TD>
+  <TD class="numcol" x:num>5.53</TD>
+  <TD class="numcol" x:num>16.1</TD>
+  <TD class="numcol" x:num>6.12</TD>
+  <TD class="numcol" x:num>68.98</TD>
+  <TD class="numcol" x:num>0.22</TD>
+  <TD class="numcol" x:num>2.95</TD>
+  <TD class="numcol" x:num>14.62</TD>
+  <TD class="txtcol">1</TD>
+  <TD class="txtcol">POLK</TD>
+  <TD class="txtcol">National Catholic Educational Association (NCEA)</TD>
+  <TD class="txtcol"></TD>
+  <TD class="txtcol"></TD>
+  <TD class="txtcol"></TD>
+  <TD class="txtcol"></TD>
+  <TD class="txtcol"></TD>
+  <TD class="txtcol"></TD>
+  <TD class="txtcol"></TD>
+  <TD class="txtcol"></TD>
+  <TD class="txtcol"></TD>
+  <TD class="txtcol"></TD>
+  <TD class="txtcol"></TD>
+  <TD class="txtcol"></TD>
+  <TD class="txtcol"></TD>
+  <TD class="txtcol"></TD>
+</TR>
+<TR height=17>
+  <TD class="txtcol">00459697</TD>
+  <TD class="txtcol">PELLA CHRISTIAN HIGH SCHOOL</TD>
+  <TD class="txtcol">14</TD>
+  <TD class="txtcol">17</TD>
+  <TD class="txtcol">300 EAGLE LN</TD>
+  <TD class="txtcol">PELLA</TD>
+  <TD class="txtcol">19125</TD>
+  <TD class="txtcol">125</TD>
+  <TD class="txtcol">IA</TD>
+  <TD class="txtcol">19</TD>
+  <TD class="txtcol">50219</TD>
+  <TD class="txtcol">6416284440</TD>
+  <TD class="numcol" x:num>177</TD>
+  <TD class="numcol" x:num>7</TD>
+  <TD class="txtcol">Yes</TD>
+  <TD class="numcol" x:num></TD>
+  <TD class="numcol" x:num></TD>
+  <TD class="numcol" x:num></TD>
+  <TD class="numcol" x:num></TD>
+  <TD class="numcol" x:num></TD>
+  <TD class="numcol" x:num></TD>
+  <TD class="numcol" x:num></TD>
+  <TD class="numcol" x:num></TD>
+  <TD class="numcol" x:num></TD>
+  <TD class="numcol" x:num></TD>
+  <TD class="numcol" x:num></TD>
+  <TD class="numcol" x:num>78</TD>
+  <TD class="numcol" x:num>70</TD>
+  <TD class="numcol" x:num>66</TD>
+  <TD class="numcol" x:num>58</TD>
+  <TD class="numcol" x:num>272</TD>
+  <TD class="numcol" x:num>272</TD>
+  <TD class="numcol" x:num>0</TD>
+  <TD class="numcol" x:num>2</TD>
+  <TD class="numcol" x:num>1</TD>
+  <TD class="numcol" x:num>4</TD>
+  <TD class="numcol" x:num>262</TD>
+  <TD class="numcol" x:num>0</TD>
+  <TD class="numcol" x:num>3</TD>
+  <TD class="numcol" x:num>22.1</TD>
+  <TD class="txtcol">32</TD>
+  <TD class="txtcol">1</TD>
+  <TD class="txtcol">1</TD>
+  <TD class="txtcol">2</TD>
+  <TD class="txtcol">2</TD>
+  <TD class="txtcol">3</TD>
+  <TD class="numcol" x:num>0</TD>
+  <TD class="numcol" x:num>0.73</TD>
+  <TD class="numcol" x:num>0.36</TD>
+  <TD class="numcol" x:num>1.47</TD>
+  <TD class="numcol" x:num>96.32</TD>
+  <TD class="numcol" x:num>0</TD>
+  <TD class="numcol" x:num>1.1</TD>
+  <TD class="numcol" x:num>12.3</TD>
+  <TD class="txtcol">7</TD>
+  <TD class="txtcol">MARION</TD>
+  <TD class="txtcol">Christian Schools International (CSI)</TD>
+  <TD class="txtcol"></TD>
+  <TD class="txtcol"></TD>
+  <TD class="txtcol"></TD>
+  <TD class="txtcol"></TD>
+  <TD class="txtcol"></TD>
+  <TD class="txtcol"></TD>
+  <TD class="txtcol"></TD>
+  <TD class="txtcol"></TD>
+  <TD class="txtcol"></TD>
+  <TD class="txtcol"></TD>
+  <TD class="txtcol"></TD>
+  <TD class="txtcol"></TD>
+  <TD class="txtcol"></TD>
+  <TD class="txtcol"></TD>
+</TR>
+<TR height=17>
+  <TD class="txtcol">A1501696</TD>
+  <TD class="txtcol">TRINITY CHRISTIAN HIGH SCHOOL</TD>
+  <TD class="txtcol">14</TD>
+  <TD class="txtcol">17</TD>
+  <TD class="txtcol">1811 HAYES AVE</TD>
+  <TD class="txtcol">HULL</TD>
+  <TD class="txtcol">19167</TD>
+  <TD class="txtcol">167</TD>
+  <TD class="txtcol">IA</TD>
+  <TD class="txtcol">19</TD>
+  <TD class="txtcol">51239</TD>
+  <TD class="txtcol">7124391921</TD>
+  <TD class="numcol" x:num>180</TD>
+  <TD class="numcol" x:num>7</TD>
+  <TD class="txtcol">Yes</TD>
+  <TD class="numcol" x:num></TD>
+  <TD class="numcol" x:num></TD>
+  <TD class="numcol" x:num></TD>
+  <TD class="numcol" x:num></TD>
+  <TD class="numcol" x:num></TD>
+  <TD class="numcol" x:num></TD>
+  <TD class="numcol" x:num></TD>
+  <TD class="numcol" x:num></TD>
+  <TD class="numcol" x:num></TD>
+  <TD class="numcol" x:num></TD>
+  <TD class="numcol" x:num></TD>
+  <TD class="numcol" x:num>15</TD>
+  <TD class="numcol" x:num>15</TD>
+  <TD class="numcol" x:num>23</TD>
+  <TD class="numcol" x:num>16</TD>
+  <TD class="numcol" x:num>69</TD>
+  <TD class="numcol" x:num>69</TD>
+  <TD class="numcol" x:num>0</TD>
+  <TD class="numcol" x:num>0</TD>
+  <TD class="numcol" x:num>0</TD>
+  <TD class="numcol" x:num>1</TD>
+  <TD class="numcol" x:num>68</TD>
+  <TD class="numcol" x:num>0</TD>
+  <TD class="numcol" x:num>0</TD>
+  <TD class="numcol" x:num>8.5</TD>
+  <TD class="txtcol">42</TD>
+  <TD class="txtcol">1</TD>
+  <TD class="txtcol">1</TD>
+  <TD class="txtcol">2</TD>
+  <TD class="txtcol">2</TD>
+  <TD class="txtcol">4</TD>
+  <TD class="numcol" x:num>0</TD>
+  <TD class="numcol" x:num>0</TD>
+  <TD class="numcol" x:num>0</TD>
+  <TD class="numcol" x:num>1.44</TD>
+  <TD class="numcol" x:num>98.55</TD>
+  <TD class="numcol" x:num>0</TD>
+  <TD class="numcol" x:num>0</TD>
+  <TD class="numcol" x:num>8.11</TD>
+  <TD class="txtcol">7</TD>
+  <TD class="txtcol">SIOUX</TD>
+  <TD class="txtcol">State or regional independent school association</TD>
+  <TD class="txtcol"></TD>
+  <TD class="txtcol"></TD>
+  <TD class="txtcol"></TD>
+  <TD class="txtcol"></TD>
+  <TD class="txtcol"></TD>
+  <TD class="txtcol"></TD>
+  <TD class="txtcol"></TD>
+  <TD class="txtcol"></TD>
+  <TD class="txtcol"></TD>
+  <TD class="txtcol"></TD>
+  <TD class="txtcol"></TD>
+  <TD class="txtcol"></TD>
+  <TD class="txtcol"></TD>
+  <TD class="txtcol"></TD>
+</TR>
+<TR height=17>
+  <TD class="txtcol">00459584</TD>
+  <TD class="txtcol">UNITY CHRISTIAN HIGH SCHOOL</TD>
+  <TD class="txtcol">14</TD>
+  <TD class="txtcol">17</TD>
+  <TD class="txtcol">216 MICHIGAN AVE SW</TD>
+  <TD class="txtcol">ORANGE CITY</TD>
+  <TD class="txtcol">19167</TD>
+  <TD class="txtcol">167</TD>
+  <TD class="txtcol">IA</TD>
+  <TD class="txtcol">19</TD>
+  <TD class="txtcol">51041</TD>
+  <TD class="txtcol">7127374114</TD>
+  <TD class="numcol" x:num>177</TD>
+  <TD class="numcol" x:num>7.08</TD>
+  <TD class="txtcol">Yes</TD>
+  <TD class="numcol" x:num></TD>
+  <TD class="numcol" x:num></TD>
+  <TD class="numcol" x:num></TD>
+  <TD class="numcol" x:num></TD>
+  <TD class="numcol" x:num></TD>
+  <TD class="numcol" x:num></TD>
+  <TD class="numcol" x:num></TD>
+  <TD class="numcol" x:num></TD>
+  <TD class="numcol" x:num></TD>
+  <TD class="numcol" x:num></TD>
+  <TD class="numcol" x:num></TD>
+  <TD class="numcol" x:num>91</TD>
+  <TD class="numcol" x:num>74</TD>
+  <TD class="numcol" x:num>94</TD>
+  <TD class="numcol" x:num>68</TD>
+  <TD class="numcol" x:num>327</TD>
+  <TD class="numcol" x:num>327</TD>
+  <TD class="numcol" x:num>0</TD>
+  <TD class="numcol" x:num>7</TD>
+  <TD class="numcol" x:num>5</TD>
+  <TD class="numcol" x:num>15</TD>
+  <TD class="numcol" x:num>300</TD>
+  <TD class="numcol" x:num>0</TD>
+  <TD class="numcol" x:num>0</TD>
+  <TD class="numcol" x:num>22.6</TD>
+  <TD class="txtcol">41</TD>
+  <TD class="txtcol">1</TD>
+  <TD class="txtcol">1</TD>
+  <TD class="txtcol">2</TD>
+  <TD class="txtcol">2</TD>
+  <TD class="txtcol">4</TD>
+  <TD class="numcol" x:num>0</TD>
+  <TD class="numcol" x:num>2.14</TD>
+  <TD class="numcol" x:num>1.52</TD>
+  <TD class="numcol" x:num>4.58</TD>
+  <TD class="numcol" x:num>91.74</TD>
+  <TD class="numcol" x:num>0</TD>
+  <TD class="numcol" x:num>0</TD>
+  <TD class="numcol" x:num>14.46</TD>
+  <TD class="txtcol">7</TD>
+  <TD class="txtcol">SIOUX</TD>
+  <TD class="txtcol">Christian Schools International (CSI)</TD>
+  <TD class="txtcol">Other special emphasis association(s)</TD>
+  <TD class="txtcol"></TD>
+  <TD class="txtcol"></TD>
+  <TD class="txtcol"></TD>
+  <TD class="txtcol"></TD>
+  <TD class="txtcol"></TD>
+  <TD class="txtcol"></TD>
+  <TD class="txtcol"></TD>
+  <TD class="txtcol"></TD>
+  <TD class="txtcol"></TD>
+  <TD class="txtcol"></TD>
+  <TD class="txtcol"></TD>
+  <TD class="txtcol"></TD>
+  <TD class="txtcol"></TD>
+</TR>
+<TR height=17>
+  <TD class="txtcol">A9901924</TD>
+  <TD class="txtcol">XAVIER HIGH SCHOOL</TD>
+  <TD class="txtcol">14</TD>
+  <TD class="txtcol">17</TD>
+  <TD class="txtcol">6300 42ND ST NE</TD>
+  <TD class="txtcol">CEDAR RAPIDS</TD>
+  <TD class="txtcol">19113</TD>
+  <TD class="txtcol">113</TD>
+  <TD class="txtcol">IA</TD>
+  <TD class="txtcol">19</TD>
+  <TD class="txtcol">52411</TD>
+  <TD class="txtcol">3192946635</TD>
+  <TD class="numcol" x:num></TD>
+  <TD class="numcol" x:num></TD>
+  <TD class="txtcol"></TD>
+  <TD class="numcol" x:num></TD>
+  <TD class="numcol" x:num></TD>
+  <TD class="numcol" x:num></TD>
+  <TD class="numcol" x:num></TD>
+  <TD class="numcol" x:num></TD>
+  <TD class="numcol" x:num></TD>
+  <TD class="numcol" x:num></TD>
+  <TD class="numcol" x:num></TD>
+  <TD class="numcol" x:num></TD>
+  <TD class="numcol" x:num></TD>
+  <TD class="numcol" x:num></TD>
+  <TD class="numcol" x:num>144</TD>
+  <TD class="numcol" x:num>164</TD>
+  <TD class="numcol" x:num>122</TD>
+  <TD class="numcol" x:num>163</TD>
+  <TD class="numcol" x:num>593</TD>
+  <TD class="numcol" x:num>593</TD>
+  <TD class="numcol" x:num>0</TD>
+  <TD class="numcol" x:num></TD>
+  <TD class="numcol" x:num></TD>
+  <TD class="numcol" x:num></TD>
+  <TD class="numcol" x:num></TD>
+  <TD class="numcol" x:num>0</TD>
+  <TD class="numcol" x:num></TD>
+  <TD class="numcol" x:num></TD>
+  <TD class="txtcol">12</TD>
+  <TD class="txtcol">1</TD>
+  <TD class="txtcol">-1</TD>
+  <TD class="txtcol">2</TD>
+  <TD class="txtcol">1</TD>
+  <TD class="txtcol">1</TD>
+  <TD class="numcol" x:num>0</TD>
+  <TD class="numcol" x:num></TD>
+  <TD class="numcol" x:num></TD>
+  <TD class="numcol" x:num></TD>
+  <TD class="numcol" x:num></TD>
+  <TD class="numcol" x:num>0</TD>
+  <TD class="numcol" x:num></TD>
+  <TD class="numcol" x:num></TD>
+  <TD class="txtcol">-1</TD>
+  <TD class="txtcol">LINN</TD>
+  <TD class="txtcol"></TD>
+  <TD class="txtcol"></TD>
+  <TD class="txtcol"></TD>
+  <TD class="txtcol"></TD>
+  <TD class="txtcol"></TD>
+  <TD class="txtcol"></TD>
+  <TD class="txtcol"></TD>
+  <TD class="txtcol"></TD>
+  <TD class="txtcol"></TD>
+  <TD class="txtcol"></TD>
+  <TD class="txtcol"></TD>
+  <TD class="txtcol"></TD>
+  <TD class="txtcol"></TD>
+  <TD class="txtcol"></TD>
+  <TD class="txtcol"></TD>
+</TR>
+</TABLE></BODY></HTML>
