@@ -57,6 +57,18 @@ STEPS = [
 ]
 
 
+def drop_views(engine):
+    # Re-running the pipeline against an already-loaded database otherwise
+    # fails: to_sql(if_exists="replace") issues DROP TABLE, and Postgres
+    # refuses to drop a table these views depend on. Views are recreated
+    # by apply_views() at the end of the run.
+    with engine.connect() as conn:
+        conn.execute(text(
+            "DROP VIEW IF EXISTS illinois_schools_enriched, districts_enriched, ib_nces_crosswalk"
+        ))
+        conn.commit()
+
+
 def apply_views(engine):
     views_path = os.path.join(os.path.dirname(__file__), "views.sql")
     with open(views_path) as f:
@@ -73,6 +85,8 @@ def apply_views(engine):
 def main():
     engine = create_engine(DATABASE_URL)
     failed = []
+
+    drop_views(engine)
 
     for name, fn in STEPS:
         stage = "LOAD" if name.startswith("Load") else "CLEAN"
