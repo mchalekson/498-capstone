@@ -173,6 +173,45 @@ def _state_finance_poverty_context(engine):
     return saipe.merge(finance, on="fips_state", how="outer")
 
 
+def _isbe_extra_metrics(engine):
+    """
+    A handful of unambiguous, already-total-level metrics from the ISBE
+    sheets beyond isbe_general (ACT scores, IAR proficiency, CTE
+    concentrators, per-pupil finance). Note: isbe_discipline_clean,
+    isbe_sped_clean, and isbe_kids_clean only break totals down by
+    race/disability/measure subgroup with no single overall column, so
+    summing them ourselves would require assumptions the data doesn't
+    support cleanly -- skipped rather than guessed at. All 9 ISBE sheets
+    can still be joined to these tables via rcdts if needed for deeper
+    analysis; joining every column from every sheet into one table isn't
+    possible anyway (~4,276 columns combined, over Postgres's 1,600 limit).
+    """
+    act = pd.read_sql(
+        "SELECT rcdts, act_ela_average_score_grade_11, act_math_average_score_grade_11, "
+        "act_science_average_score_grade_11 FROM isbe_act_clean",
+        engine,
+    )
+    iar = pd.read_sql(
+        "SELECT rcdts, iar_ela_proficiency_rate_total, iar_math_proficiency_rate_total FROM isbe_iar_clean",
+        engine,
+    )
+    cte = pd.read_sql("SELECT rcdts, count_cte_concentrators_total FROM isbe_cte_clean", engine)
+    finance = pd.read_sql(
+        "SELECT rcdts, total_per_pupil_expenditures_federal, total_per_pupil_expenditures_state_local "
+        "FROM isbe_finance_clean",
+        engine,
+    )
+    finance = finance.drop_duplicates(subset=["rcdts"], keep="first")
+
+    for df in (act, iar, cte):
+        for col in df.columns:
+            if col != "rcdts":
+                df[col] = pd.to_numeric(df[col], errors="coerce")
+
+    ctx = act.merge(iar, on="rcdts", how="outer").merge(cte, on="rcdts", how="outer").merge(finance, on="rcdts", how="outer")
+    return ctx
+
+
 def build_public_schools_enriched(engine):
     print("Combining public_schools_enriched (nationwide)...")
     n = pd.read_sql("SELECT * FROM nces_public_schools_clean", engine)
@@ -202,6 +241,7 @@ def build_public_schools_enriched(engine):
     naep_ctx = _state_naep_context(engine)
     fin_ctx = _state_finance_poverty_context(engine)
     fin_ctx["state_upper"] = fin_ctx["fips_state"].astype(str)  # joined below via ansi code instead
+    isbe_extra = _isbe_extra_metrics(engine)
 
     df = df.merge(ap_ctx, on="state_upper", how="left")
     df = df.merge(naep_ctx, on="state_upper", how="left")
@@ -211,6 +251,7 @@ def build_public_schools_enriched(engine):
         right_on="fips_state",
         how="left",
     )
+    df = df.merge(isbe_extra, on="rcdts", how="left")
 
     df.to_sql("public_schools_enriched", engine, if_exists="replace", index=False,
               method=db_utils.psql_insert_copy)
@@ -271,10 +312,16 @@ def build_private_schools_enriched(engine):
     ap_ctx = _state_ap_context(engine)
     naep_ctx = _state_naep_context(engine)
     fin_ctx = _state_finance_poverty_context(engine)
+    isbe_extra = _isbe_extra_metrics(engine)
 
     df = df.merge(ap_ctx, on="state_upper", how="left")
     df = df.merge(naep_ctx, on="state_upper", how="left")
     df = df.merge(fin_ctx, left_on="pss_fips", right_on="fips_state", how="left")
+    # Only pull in detailed ISBE metrics for confidently-matched schools —
+    # attaching them to an unverified fuzzy match would misrepresent a guess as data.
+    df["_confident_rcdts"] = df["isbe_rcdts"].where(df["isbe_match_tier"] == "auto_accept")
+    df = df.merge(isbe_extra, left_on="_confident_rcdts", right_on="rcdts", how="left", suffixes=("", "_isbe_extra"))
+    df = df.drop(columns=["_confident_rcdts"])
 
     df.to_sql("private_schools_enriched", engine, if_exists="replace", index=False,
               method=db_utils.psql_insert_copy)
