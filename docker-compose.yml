@@ -1,0 +1,37 @@
+services:
+  db:
+    image: postgres:16
+    container_name: capstone-db
+    environment:
+      POSTGRES_DB: capstone
+      POSTGRES_USER: capstone
+      POSTGRES_PASSWORD: capstone
+    ports:
+      - "5433:5432"
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U capstone -d capstone"]
+      interval: 5s
+      timeout: 5s
+      retries: 10
+
+  etl:
+    build:
+      context: .
+      dockerfile: etl/Dockerfile
+    container_name: capstone-etl
+    depends_on:
+      db:
+        condition: service_healthy
+    environment:
+      DB_HOST: db
+      DB_PORT: 5432
+      DB_NAME: capstone
+      DB_USER: capstone
+      DB_PASS: capstone
+    volumes:
+      - ./data:/app/data:ro
+
+volumes:
+  pgdata:
