@@ -8,7 +8,8 @@ Issues addressed:
   - Duplicate NCESSCH rows → keep first occurrence
   - Column names normalized to snake_case (already done in load step)
 
-Produces tables: nces_public_schools_clean, nces_private_schools_clean
+Produces tables: nces_public_schools_clean, nces_private_schools_clean,
+                 nces_private_merged_clean
 """
 
 import re
@@ -99,7 +100,44 @@ def clean_private(engine):
         conn.commit()
 
 
+def clean_private_merged(engine):
+    """
+    Cleaning to-dos from the EDA (EDA_NCES_private_EN.md):
+      - drop fully-empty columns (10 PSS_ENROLL_* grade columns that don't
+        apply to high schools, plus 3 unused PSS_ASSOC_* slots)
+      - -1 is PSS's missing-data sentinel on pss_coed, pss_type, pss_orient -> NULL
+      - numeric columns are already typed correctly by pandas/Postgres, no cast needed
+      - student/teacher ratio outliers (up to 409.9): checked against
+        enrollment/FTE directly (e.g. 6353 students / 15.5 FTE teachers ~= 409.87)
+        and are consistent, not data errors -> kept as-is
+      - race-percentage backfill from ELSI (nces_private_schools_clean): skipped.
+        ELSI reports one combined "asian_or_asian_pacific_islander" figure while
+        PSS keeps Asian and Pacific Islander as separate categories, so backfilling
+        would conflate two distinct groups rather than fill in a missing one
+    """
+    print("Cleaning NCES private schools (49-state PSS merge)...")
+    df = pd.read_sql("SELECT * FROM nces_private_merged", engine)
+
+    empty_cols = df.columns[df.isna().all()].tolist()
+    df = df.drop(columns=empty_cols)
+    print(f"  Dropped {len(empty_cols)} fully-empty columns: {empty_cols}")
+
+    for col in ("pss_coed", "pss_type", "pss_orient"):
+        n = (df[col] == -1).sum()
+        df[col] = df[col].replace(-1, pd.NA)
+        print(f"  {col}: {n} sentinel -1 values -> NULL")
+
+    df.to_sql("nces_private_merged_clean", engine, if_exists="replace",
+              index=False, method="multi", chunksize=500)
+    print(f"  {len(df):,} rows → nces_private_merged_clean ✓")
+
+    with engine.connect() as conn:
+        conn.execute(text("ALTER TABLE nces_private_merged_clean ADD PRIMARY KEY (pss_school_id)"))
+        conn.commit()
+
+
 if __name__ == "__main__":
     engine = create_engine(DATABASE_URL)
     clean_public(engine)
     clean_private(engine)
+    clean_private_merged(engine)

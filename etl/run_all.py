@@ -39,6 +39,7 @@ STEPS = [
     ("Load NCES public schools",    load_nces.load_public),
     ("Load NCES private schools",   load_nces.load_private),
     ("Load NCES public HS (9-12)",  load_nces.load_public_hs912),
+    ("Load NCES private merged",    load_nces.load_private_merged),
     ("Load Census finances",        load_census.load_finances),
     ("Load Census SAIPE poverty",   load_census.load_saipe),
     ("Load NAEP assessments",       load_naep.load_naep),
@@ -50,6 +51,7 @@ STEPS = [
     # ── Stage 2: Clean ──────────────────────────────────────────────────
     ("Clean NCES public schools",   clean_nces.clean_public),
     ("Clean NCES private schools",  clean_nces.clean_private),
+    ("Clean NCES private merged",   clean_nces.clean_private_merged),
     ("Clean Census finances",       clean_census.clean_finances),
     ("Clean Census SAIPE poverty",  clean_census.clean_saipe),
     ("Clean NAEP assessments",      clean_naep.clean_naep),
@@ -118,11 +120,12 @@ def main():
         print("Pipeline completed successfully ✓")
         print("\nTables available:")
         print("  Raw:   nces_public_schools, nces_private_schools, nces_public_hs_grades_9_12,")
-        print("         census_school_finances, census_saipe_poverty, naep_assessments, ap_availability,")
-        print("         ap_participation, ap_performance, ib_schools, isbe_*, cps_opportunity_index")
+        print("         nces_private_merged, census_school_finances, census_saipe_poverty,")
+        print("         naep_assessments, ap_availability, ap_participation, ap_performance,")
+        print("         ib_schools, isbe_*, cps_opportunity_index")
         print("  Clean: nces_public_schools_clean, nces_private_schools_clean,")
-        print("         census_school_finances_clean, census_saipe_poverty_clean,")
-        print("         naep_assessments_clean, isbe_*_clean")
+        print("         nces_private_merged_clean, census_school_finances_clean,")
+        print("         census_saipe_poverty_clean, naep_assessments_clean, isbe_*_clean")
         print("  Views: illinois_schools_enriched, districts_enriched, ib_nces_crosswalk")
 
 
