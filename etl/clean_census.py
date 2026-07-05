@@ -14,6 +14,7 @@ Issues addressed:
 Produces tables: census_school_finances_clean, census_saipe_poverty_clean
 """
 
+import numpy as np
 import pandas as pd
 from sqlalchemy import create_engine, text
 from config import DATABASE_URL
@@ -93,9 +94,11 @@ def clean_saipe(engine):
         "distid":          "fips_distid",
     })
 
-    # Compute poverty rate
+    # Compute poverty rate (np.nan, not pd.NA, to keep the Series float64
+    # instead of upcasting to object dtype, which breaks .round())
+    denom = df["child_population_5_17"].astype(float).replace(0, np.nan)
     df["pct_child_poverty"] = (
-        df["child_poverty_estimate"] / df["child_population_5_17"].replace(0, pd.NA) * 100
+        df["child_poverty_estimate"].astype(float) / denom * 100
     ).round(2)
 
     df.to_sql("census_saipe_poverty_clean", engine, if_exists="replace",

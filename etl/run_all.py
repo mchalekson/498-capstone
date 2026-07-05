@@ -38,6 +38,7 @@ STEPS = [
     # ── Stage 1: Raw loads ──────────────────────────────────────────────
     ("Load NCES public schools",    load_nces.load_public),
     ("Load NCES private schools",   load_nces.load_private),
+    ("Load NCES public HS (9-12)",  load_nces.load_public_hs912),
     ("Load Census finances",        load_census.load_finances),
     ("Load Census SAIPE poverty",   load_census.load_saipe),
     ("Load NAEP assessments",       load_naep.load_naep),
@@ -102,8 +103,8 @@ def main():
     else:
         print("Pipeline completed successfully ✓")
         print("\nTables available:")
-        print("  Raw:   nces_public_schools, nces_private_schools, census_school_finances,")
-        print("         census_saipe_poverty, naep_assessments, ap_availability,")
+        print("  Raw:   nces_public_schools, nces_private_schools, nces_public_hs_grades_9_12,")
+        print("         census_school_finances, census_saipe_poverty, naep_assessments, ap_availability,")
         print("         ap_participation, ap_performance, ib_schools, isbe_*, cps_opportunity_index")
         print("  Clean: nces_public_schools_clean, nces_private_schools_clean,")
         print("         census_school_finances_clean, census_saipe_poverty_clean,")

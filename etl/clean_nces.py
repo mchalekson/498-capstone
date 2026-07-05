@@ -79,7 +79,7 @@ def clean_public(engine):
     with engine.connect() as conn:
         conn.execute(text("ALTER TABLE nces_public_schools_clean ADD PRIMARY KEY (ncessch)"))
         conn.execute(text("CREATE INDEX IF NOT EXISTS idx_pub_leaid ON nces_public_schools_clean (leaid)"))
-        conn.execute(text("CREATE INDEX IF NOT EXISTS idx_pub_state ON nces_public_schools_clean (location_state_abbr_latest_available_year)"))
+        conn.execute(text("CREATE INDEX IF NOT EXISTS idx_pub_state ON nces_public_schools_clean (location_state_abbr_2024_25)"))
         conn.commit()
 
 
