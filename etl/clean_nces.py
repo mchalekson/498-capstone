@@ -16,6 +16,7 @@ import re
 import pandas as pd
 from sqlalchemy import create_engine, text
 from config import DATABASE_URL
+import db_utils
 
 # NCES standard suppression codes
 SUPPRESSED = {"†", "‡", "–", "-", "n/a", "na", "not applicable", "not available"}
@@ -74,7 +75,7 @@ def clean_public(engine):
             df[col] = coerce_numeric(df[col])
 
     df.to_sql("nces_public_schools_clean", engine, if_exists="replace",
-              index=False, method="multi", chunksize=500)
+              index=False, method=db_utils.psql_insert_copy)
     print(f"  {len(df):,} rows → nces_public_schools_clean ✓")
 
     with engine.connect() as conn:
@@ -92,7 +93,7 @@ def clean_private(engine):
     df = df.drop_duplicates(subset=["ncessch"], keep="first")
 
     df.to_sql("nces_private_schools_clean", engine, if_exists="replace",
-              index=False, method="multi", chunksize=500)
+              index=False, method=db_utils.psql_insert_copy)
     print(f"  {len(df):,} rows → nces_private_schools_clean ✓")
 
     with engine.connect() as conn:
@@ -128,7 +129,7 @@ def clean_private_merged(engine):
         print(f"  {col}: {n} sentinel -1 values -> NULL")
 
     df.to_sql("nces_private_merged_clean", engine, if_exists="replace",
-              index=False, method="multi", chunksize=500)
+              index=False, method=db_utils.psql_insert_copy)
     print(f"  {len(df):,} rows → nces_private_merged_clean ✓")
 
     with engine.connect() as conn:

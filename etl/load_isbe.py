@@ -14,6 +14,7 @@ import re
 import pandas as pd
 from sqlalchemy import create_engine
 from config import DATABASE_URL, DATA_DIR
+import db_utils
 
 # Sheets to load (skip documentation/revision sheets)
 SHEETS_TO_LOAD = [
@@ -89,7 +90,7 @@ def load_isbe(engine):
 
         table_name = f"isbe_{sheet.lower().replace(' ', '_').replace('(', '').replace(')', '')}"
         df.to_sql(table_name, engine, if_exists="replace", index=False,
-                  method="multi", chunksize=500)
+                  method=db_utils.psql_insert_copy)
         print(f"    {len(df):,} rows → {table_name} ✓")
 
 

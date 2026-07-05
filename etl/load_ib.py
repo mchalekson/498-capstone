@@ -13,6 +13,7 @@ import os
 import pandas as pd
 from sqlalchemy import create_engine, text
 from config import DATABASE_URL, DATA_DIR
+import db_utils
 
 
 def load_ib(engine):
@@ -23,7 +24,7 @@ def load_ib(engine):
 
     print(f"  {len(df):,} rows, {len(df.columns)} columns")
     df.to_sql("ib_schools", engine, if_exists="replace", index=False,
-              method="multi", chunksize=500)
+              method=db_utils.psql_insert_copy)
     print("  Loaded ib_schools ✓")
 
     with engine.connect() as conn:

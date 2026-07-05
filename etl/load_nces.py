@@ -14,6 +14,7 @@ import re
 import pandas as pd
 from sqlalchemy import create_engine, text
 from config import DATABASE_URL, DATA_DIR
+import db_utils
 
 
 def clean_col(name: str) -> str:
@@ -43,7 +44,7 @@ def load_public(engine):
 
     print(f"  {len(df):,} rows, {len(df.columns)} columns")
     df.to_sql("nces_public_schools", engine, if_exists="replace", index=False,
-              method="multi", chunksize=500)
+              method=db_utils.psql_insert_copy)
     print("  Loaded nces_public_schools ✓")
 
     with engine.connect() as conn:
@@ -67,7 +68,7 @@ def load_private(engine):
 
     print(f"  {len(df):,} rows, {len(df.columns)} columns")
     df.to_sql("nces_private_schools", engine, if_exists="replace", index=False,
-              method="multi", chunksize=500)
+              method=db_utils.psql_insert_copy)
     print("  Loaded nces_private_schools ✓")
 
     with engine.connect() as conn:
@@ -92,7 +93,7 @@ def load_public_hs912(engine):
 
     print(f"  {len(df):,} rows, {len(df.columns)} columns")
     df.to_sql("nces_public_hs_grades_9_12", engine, if_exists="replace", index=False,
-              method="multi", chunksize=500)
+              method=db_utils.psql_insert_copy)
     print("  Loaded nces_public_hs_grades_9_12 ✓")
 
     with engine.connect() as conn:
@@ -110,7 +111,7 @@ def load_private_merged(engine):
 
     print(f"  {len(df):,} rows, {len(df.columns)} columns")
     df.to_sql("nces_private_merged", engine, if_exists="replace", index=False,
-              method="multi", chunksize=500)
+              method=db_utils.psql_insert_copy)
     print("  Loaded nces_private_merged ✓")
 
     with engine.connect() as conn:

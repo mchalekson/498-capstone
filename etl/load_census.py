@@ -11,6 +11,7 @@ import re
 import pandas as pd
 from sqlalchemy import create_engine, text
 from config import DATABASE_URL, DATA_DIR
+import db_utils
 
 
 def clean_col(name: str) -> str:
@@ -32,7 +33,7 @@ def load_finances(engine):
 
     print(f"  {len(df):,} rows, {len(df.columns)} columns")
     df.to_sql("census_school_finances", engine, if_exists="replace", index=False,
-              method="multi", chunksize=500)
+              method=db_utils.psql_insert_copy)
     print("  Loaded census_school_finances ✓")
 
     with engine.connect() as conn:
@@ -48,7 +49,7 @@ def load_saipe(engine):
 
     print(f"  {len(df):,} rows, {len(df.columns)} columns")
     df.to_sql("census_saipe_poverty", engine, if_exists="replace", index=False,
-              method="multi", chunksize=500)
+              method=db_utils.psql_insert_copy)
     print("  Loaded census_saipe_poverty ✓")
 
     with engine.connect() as conn:

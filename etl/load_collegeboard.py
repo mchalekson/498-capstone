@@ -15,6 +15,7 @@ import os
 import pandas as pd
 from sqlalchemy import create_engine
 from config import DATABASE_URL, DATA_DIR
+import db_utils
 
 RACE_SUBGROUPS = {
     "asian", "hispanic/latino", "white", "black/african american",
@@ -222,7 +223,7 @@ def load_collegeboard(engine):
         df = parser(path)
         print(f"  {len(df):,} rows")
         df.to_sql(table, engine, if_exists="replace", index=False,
-                  method="multi", chunksize=500)
+                  method=db_utils.psql_insert_copy)
         print(f"  Loaded {table} ✓")
 
 

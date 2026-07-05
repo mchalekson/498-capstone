@@ -14,6 +14,7 @@ import re
 import pandas as pd
 from sqlalchemy import create_engine, text
 from config import DATABASE_URL
+import db_utils
 
 SUPPRESSED = {"*", "n/a", "na", "†", "‡", "–"}
 
@@ -71,7 +72,7 @@ def clean_isbe_table(engine, table: str):
 
     clean_table = f"{table}_clean"
     df.to_sql(clean_table, engine, if_exists="replace", index=False,
-              method="multi", chunksize=500)
+              method=db_utils.psql_insert_copy)
     print(f"  {len(df):,} rows → {clean_table} ✓")
 
     if "rcdts" in df.columns:

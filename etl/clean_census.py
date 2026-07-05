@@ -18,6 +18,7 @@ import numpy as np
 import pandas as pd
 from sqlalchemy import create_engine, text
 from config import DATABASE_URL
+import db_utils
 
 # Subset of Census finance columns we care about (full codebook has 150+)
 # Values are in $1,000s per Census documentation
@@ -65,7 +66,7 @@ def clean_finances(engine):
     df = df[df["total_revenue_000s"] > 0]
 
     df.to_sql("census_school_finances_clean", engine, if_exists="replace",
-              index=False, method="multi", chunksize=500)
+              index=False, method=db_utils.psql_insert_copy)
     print(f"  {len(df):,} rows → census_school_finances_clean ✓")
 
     with engine.connect() as conn:
@@ -102,7 +103,7 @@ def clean_saipe(engine):
     ).round(2)
 
     df.to_sql("census_saipe_poverty_clean", engine, if_exists="replace",
-              index=False, method="multi", chunksize=500)
+              index=False, method=db_utils.psql_insert_copy)
     print(f"  {len(df):,} rows → census_saipe_poverty_clean ✓")
 
     with engine.connect() as conn:

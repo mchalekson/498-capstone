@@ -13,6 +13,7 @@ Produces table: naep_assessments_clean
 import pandas as pd
 from sqlalchemy import create_engine, text
 from config import DATABASE_URL
+import db_utils
 
 # States and territories that are valid NAEP jurisdictions (not subgroups)
 VALID_JURISDICTIONS = {
@@ -48,7 +49,7 @@ def clean_naep(engine):
     print(f"  Removed {before - len(df)} duplicate rows")
 
     df.to_sql("naep_assessments_clean", engine, if_exists="replace",
-              index=False, method="multi", chunksize=500)
+              index=False, method=db_utils.psql_insert_copy)
     print(f"  {len(df):,} rows → naep_assessments_clean ✓")
 
     with engine.connect() as conn:

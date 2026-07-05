@@ -11,6 +11,7 @@ import os
 import pandas as pd
 from sqlalchemy import create_engine
 from config import DATABASE_URL, DATA_DIR
+import db_utils
 
 NAEP_FILES = [
     ("naep_grade8_math_2024_bystate.xls",    8,  "math"),
@@ -61,7 +62,7 @@ def load_naep(engine):
     combined = pd.concat(frames, ignore_index=True)
     print(f"  Total: {len(combined):,} rows")
     combined.to_sql("naep_assessments", engine, if_exists="replace", index=False,
-                    method="multi", chunksize=500)
+                    method=db_utils.psql_insert_copy)
     print("  Loaded naep_assessments ✓")
 
 

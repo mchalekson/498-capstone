@@ -34,6 +34,8 @@ import clean_census
 import clean_naep
 import clean_isbe
 
+import combine_schools
+
 STEPS = [
     # ── Stage 1: Raw loads ──────────────────────────────────────────────
     ("Load NCES public schools",    load_nces.load_public),
@@ -56,6 +58,11 @@ STEPS = [
     ("Clean Census SAIPE poverty",  clean_census.clean_saipe),
     ("Clean NAEP assessments",      clean_naep.clean_naep),
     ("Clean ISBE report card",      clean_isbe.clean_isbe),
+
+    # ── Stage 3: Combine ─────────────────────────────────────────────────
+    ("Combine public schools (nationwide)",  combine_schools.build_public_schools_enriched),
+    ("Combine private schools (nationwide)", combine_schools.build_private_schools_enriched),
+    ("Combine CPS-NCES crosswalk",           combine_schools.build_cps_nces_crosswalk),
 ]
 
 
@@ -91,7 +98,7 @@ def main():
     drop_views(engine)
 
     for name, fn in STEPS:
-        stage = "LOAD" if name.startswith("Load") else "CLEAN"
+        stage = "LOAD" if name.startswith("Load") else ("COMBINE" if name.startswith("Combine") else "CLEAN")
         print(f"\n{'='*50}")
         print(f"[{stage}] {name}")
         print("=" * 50)
@@ -126,6 +133,7 @@ def main():
         print("  Clean: nces_public_schools_clean, nces_private_schools_clean,")
         print("         nces_private_merged_clean, census_school_finances_clean,")
         print("         census_saipe_poverty_clean, naep_assessments_clean, isbe_*_clean")
+        print("  Combined: public_schools_enriched, private_schools_enriched, cps_nces_crosswalk")
         print("  Views: illinois_schools_enriched, districts_enriched, ib_nces_crosswalk")
 
 
