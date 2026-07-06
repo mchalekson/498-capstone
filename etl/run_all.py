@@ -35,6 +35,7 @@ import clean_naep
 import clean_isbe
 
 import combine_schools
+import build_ceeb_crosswalk
 
 STEPS = [
     # ── Stage 1: Raw loads ──────────────────────────────────────────────
@@ -63,6 +64,9 @@ STEPS = [
     ("Combine public schools (nationwide)",  combine_schools.build_public_schools_enriched),
     ("Combine private schools (nationwide)", combine_schools.build_private_schools_enriched),
     ("Combine CPS-NCES crosswalk",           combine_schools.build_cps_nces_crosswalk),
+
+    # ── Stage 4: CEEB crosswalk (optional — no-ops until NU master exists) ──
+    ("Build CEEB crosswalk (IB/ISBE/CPS)",   build_ceeb_crosswalk.build_all),
 ]
 
 
@@ -135,6 +139,8 @@ def main():
         print("         census_saipe_poverty_clean, naep_assessments_clean, isbe_*_clean")
         print("  Combined: public_schools_enriched, private_schools_enriched, cps_nces_crosswalk")
         print("  Views: illinois_schools_enriched, districts_enriched, ib_nces_crosswalk")
+        print("  CEEB crosswalk (only if NU master present — see data/NU-Master/README.md):")
+        print("         ib_ceeb_crosswalk, isbe_ceeb_crosswalk, cps_ceeb_crosswalk")
 
 
 if __name__ == "__main__":

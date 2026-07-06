@@ -47,13 +47,18 @@ def _tier(row, accept=(90, 85), accept_city=(88, 80), review=(80, 65)):
 
 def match_to_master(
     source_df, master_df,
-    src_name, src_state, src_id, src_city=None,
+    src_name, src_id, src_state=None, src_city=None,
     master_name="Name", master_state="Region", master_city="City", master_ceeb="CEEB",
 ):
     """Return a crosswalk DataFrame linking each source row to its best NU-master CEEB.
 
     master_df should already be filtered to the relevant scope (e.g. High School,
-    matching school type). Blocking is on exact state.
+    matching school type). Blocking is on exact state when src_state is given.
+
+    src_state=None matches every source row against the entire master with no
+    blocking (e.g. IB, which carries no state/city field at all) — expect a
+    much higher false-positive rate; treat every result as "review", never
+    auto-accept.
     """
     m = master_df.copy()
     m["_nm"] = m[master_name].map(normalize_name)
@@ -62,9 +67,11 @@ def match_to_master(
     s["_nm"] = s[src_name].map(normalize_name)
     s["_city"] = s[src_city].astype(str).str.upper().str.strip() if src_city else ""
 
+    groups = s.groupby(src_state) if src_state else [(None, s)]
+
     rows = []
-    for st, grp in s.groupby(src_state):
-        cand = m[m[master_state] == st]
+    for st, grp in groups:
+        cand = m if st is None else m[m[master_state] == st]
         if cand.empty:
             for _, r in grp.iterrows():
                 rows.append([r[src_id], r[src_name], st, r["_city"], None, None, None,
