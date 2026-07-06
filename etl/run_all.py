@@ -28,6 +28,7 @@ import load_collegeboard
 import load_ib
 import load_isbe
 import load_cps
+import load_ceeb_crosswalk
 
 import clean_nces
 import clean_census
@@ -50,6 +51,7 @@ STEPS = [
     ("Load IB schools",             load_ib.load_ib),
     ("Load ISBE report card",       load_isbe.load_isbe),
     ("Load CPS opportunity index",  load_cps.load_cps),
+    ("Load NCES-CEEB crosswalk source", load_ceeb_crosswalk.load_ceeb_crosswalk),
 
     # ── Stage 2: Clean ──────────────────────────────────────────────────
     ("Clean NCES public schools",   clean_nces.clean_public),
@@ -65,7 +67,10 @@ STEPS = [
     ("Combine private schools (nationwide)", combine_schools.build_private_schools_enriched),
     ("Combine CPS-NCES crosswalk",           combine_schools.build_cps_nces_crosswalk),
 
-    # ── Stage 4: CEEB crosswalk (optional — no-ops until NU master exists) ──
+    # ── Stage 4: CEEB junction ────────────────────────────────────────────
+    ("Build NCES<->CEEB junction",           build_ceeb_crosswalk.build_nces_junction),
+
+    # ── Stage 5: NU-master CEEB crosswalk (optional — no-ops until it exists) ──
     ("Build CEEB crosswalk (IB/ISBE/CPS)",   build_ceeb_crosswalk.build_all),
 ]
 
@@ -139,6 +144,7 @@ def main():
         print("         census_saipe_poverty_clean, naep_assessments_clean, isbe_*_clean")
         print("  Combined: public_schools_enriched, private_schools_enriched, cps_nces_crosswalk")
         print("  Views: illinois_schools_enriched, districts_enriched, ib_nces_crosswalk")
+        print("  NCES<->CEEB junction: nces_public_ceeb_crosswalk, nces_private_ceeb_crosswalk")
         print("  CEEB crosswalk (only if NU master present — see data/NU-Master/README.md):")
         print("         ib_ceeb_crosswalk, isbe_ceeb_crosswalk, cps_ceeb_crosswalk")
 

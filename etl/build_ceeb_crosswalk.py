@@ -1,18 +1,24 @@
 """
-Build CEEB crosswalks for the three sources that carry no NCES/NCESSCH ID of
-their own — IB, ISBE, and the CPS Opportunity Index — against the
-CEEB-anchored "NU master" school list (see data/NU-Master/README.md).
+Build the NCES<->CEEB junction, plus CEEB crosswalks for the three sources
+that carry no NCES/NCESSCH ID of their own (IB, ISBE, CPS).
 
-Today (see combine_schools.py) these three are fuzzy-matched directly against
-NCES tables, independently of each other. Once a current NU master exists,
-matching each source to CEEB once means they're all transitively joinable
-through a single shared ID instead of three separate ad hoc name-matches.
+build_nces_junction() is the core deliverable: matches our own NCES public
+(HS-filtered) and private tables against the UC Boulder NCES<->CEEB
+crosswalk (see data/CEEB-Crosswalk/README.md) by name+state(+city), since
+our own ncessch is only the truncated 7-digit ELSI export id and can't be
+directly ID-joined against that crosswalk's 12-digit ids yet. Runs
+unconditionally — the crosswalk file is a real, already-loaded source, not
+a placeholder.
 
-No-op if the master file isn't present (NU_MASTER_PATH in config.py) — safe
-to leave wired into run_all.py permanently. It starts producing tables the
-moment a current file is dropped in place; nothing else needs to change.
+build_all() matches IB/ISBE/CPS against a second, still-hypothetical
+CEEB-anchored "NU master" school list (see data/NU-Master/README.md) —
+today (see combine_schools.py) these three are fuzzy-matched directly
+against NCES tables, independently of each other. No-op if that file isn't
+present (NU_MASTER_PATH in config.py) — safe to leave wired into
+run_all.py permanently.
 
-Produces tables: ib_ceeb_crosswalk, isbe_ceeb_crosswalk, cps_ceeb_crosswalk
+Produces tables: nces_public_ceeb_crosswalk, nces_private_ceeb_crosswalk,
+ib_ceeb_crosswalk, isbe_ceeb_crosswalk, cps_ceeb_crosswalk
 """
 
 import os
@@ -56,6 +62,50 @@ def _write(engine, df: pd.DataFrame, table_name: str):
     with engine.connect() as conn:
         conn.execute(text(f'ALTER TABLE {table_name} ADD PRIMARY KEY (source_id)'))
         conn.commit()
+
+
+def _load_nces_ceeb_source(engine):
+    m = pd.read_sql("SELECT hs_name, hs_state, hs_city, hs_ceeb FROM nces_ceeb_crosswalk_source", engine)
+    m["hs_state"] = _to_abbr(m["hs_state"])
+    return m
+
+
+def build_nces_junction(engine):
+    print("Building NCES<->CEEB junction (UC Boulder crosswalk, name+state match)...")
+    master = _load_nces_ceeb_source(engine)
+
+    # Uses nces_public_schools_clean filtered to High/Secondary, not the
+    # separately-pulled nces_public_hs_grades_9_12 extract — spot-checking
+    # against the New Trier example (NCES 172820002975 / CEEB 144430) found
+    # that extract missing New Trier entirely (it's coded "Secondary", and
+    # split across two campus rows -- Winnetka/Northfield -- for one CEEB
+    # code), while this broader table has it.
+    public = pd.read_sql(
+        "SELECT ncessch, school_name_2024_25 AS name, location_city_2024_25 AS city, "
+        "state_name_2024_25 AS state FROM nces_public_schools_clean "
+        "WHERE school_level_2024_25 IN ('High', 'Secondary')", engine,
+    )
+    public["state"] = public["state"].str.strip().str.upper().map(STATE_NAME_TO_ABBR)
+    public_cw = match_to_master(public, master, src_name="name", src_id="ncessch",
+                                 src_state="state", src_city="city",
+                                 master_name="hs_name", master_state="hs_state",
+                                 master_city="hs_city", master_ceeb="hs_ceeb")
+    accepted = (public_cw["tier"] == "auto_accept").sum()
+    print(f"  Public HS <-> CEEB: {accepted}/{len(public_cw)} auto-accepted")
+    _write(engine, public_cw, "nces_public_ceeb_crosswalk")
+
+    private = pd.read_sql(
+        "SELECT pss_school_id, pss_inst AS name, pss_city AS city, pss_stabb AS state "
+        "FROM nces_private_merged_clean", engine,
+    )
+    private["state"] = _to_abbr(private["state"])
+    private_cw = match_to_master(private, master, src_name="name", src_id="pss_school_id",
+                                  src_state="state", src_city="city",
+                                  master_name="hs_name", master_state="hs_state",
+                                  master_city="hs_city", master_ceeb="hs_ceeb")
+    accepted = (private_cw["tier"] == "auto_accept").sum()
+    print(f"  Private HS <-> CEEB: {accepted}/{len(private_cw)} auto-accepted")
+    _write(engine, private_cw, "nces_private_ceeb_crosswalk")
 
 
 def build_all(engine):

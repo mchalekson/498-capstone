@@ -52,6 +52,10 @@ def normalize_name(s) -> str:
     s = re.sub(r"&", " AND ", s)
     s = re.sub(r"[^A-Z0-9 ]", " ", s)
     s = re.sub(r"\s+", " ", s).strip()
+    # "H S" / "HS" -> "HIGH SCHOOL": common NCES abbreviation that otherwise
+    # drops real matches below threshold.
+    s = re.sub(r"\bH S\b", "HIGH SCHOOL", s)
+    s = re.sub(r"\bHS\b", "HIGH SCHOOL", s)
     return s
 
 
