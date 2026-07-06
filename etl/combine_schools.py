@@ -274,13 +274,35 @@ def build_private_schools_enriched(engine):
     matched = df["elsi_ncessch"].notna().sum()
     print(f"  ELSI direct-ID join: {matched}/{len(df)} matched")
 
+    # Backfill missing PSS race counts from ELSI counts, where available.
+    # pss_race_* are raw student headcounts, not percentages (they sum
+    # exactly to pss_enroll_tk12 for every row) despite being described as
+    # "%" in the original EDA doc — verified against the data before wiring
+    # this up. ELSI only carries hispanic/two-or-more-races counts (not the
+    # full white/black/asian/AI/PI breakdown PSS has), so this covers 2 of
+    # PSS's 7 race columns — a full backfill isn't possible without
+    # re-pulling ELSI with the rest of the race count columns selected.
+    elsi_hispanic_ct = pd.to_numeric(df["elsi_hispanic_students_2019_20"], errors="coerce")
+    elsi_two_or_more_ct = pd.to_numeric(df["elsi_two_or_more_races_students_2019_20"], errors="coerce")
+    backfilled_h = df["pss_race_h"].isna() & elsi_hispanic_ct.notna()
+    backfilled_2 = df["pss_race_2"].isna() & elsi_two_or_more_ct.notna()
+    df["pss_race_h"] = df["pss_race_h"].fillna(elsi_hispanic_ct)
+    df["pss_race_2"] = df["pss_race_2"].fillna(elsi_two_or_more_ct)
+    print(f"  Race count backfill from ELSI: {backfilled_h.sum()} hispanic, {backfilled_2.sum()} two-or-more-races rows filled")
+
     # IB flag — fuzzy name match, nationwide (IB data has no state/city field to
     # block on). This is not safe to auto-accept: e.g. 4 different "Mercy High
     # School"s in 4 different states all scored a perfect 100/100 match against
     # the same single IB record, since common institutional names legitimately
     # repeat nationwide and there's no state to disambiguate them. Every match
     # is capped at "review" regardless of score — a human still needs to confirm.
-    ib = pd.read_sql("SELECT school_id AS ib_school_id, name AS ib_name, offers_any_ib FROM ib_schools", engine)
+    # Filtered to DP/CP (the ~934 secondary-level schools) — the other ~950
+    # IB schools are PK-8 (PYP/MYP only) and can't legitimately match a high
+    # school, so leaving them in only adds noise to the candidate pool.
+    ib = pd.read_sql(
+        "SELECT school_id AS ib_school_id, name AS ib_name, offers_any_ib FROM ib_schools "
+        "WHERE offers_dp OR offers_cp", engine,
+    )
     ib_match = fuzzy_match(df, ib, src_name="pss_inst", master_name="ib_name", master_id="ib_school_id")
     df["ib_school_id"] = ib_match["match_id"]
     df["ib_match_score_set"] = ib_match["match_score_set"]

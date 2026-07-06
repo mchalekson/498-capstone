@@ -98,7 +98,7 @@ Backbone unchanged: **NU master (CEEB, 40k HS) → NCES School ID via fuzzy matc
 
 ## Cleaning To-Dos
 
-1. **IB:** filter to `offers_dp | offers_cp` (934 HS) before matching; repair the 6 rows with `offers_any_ib=True` but no programme; build the fuzzy name+state matcher (rapidfuzz) with a manual-review queue for low-confidence pairs.
+1. **IB:** ~~filter to `offers_dp | offers_cp` (934 HS) before matching~~ — done, `combine_schools.py` now filters to DP/CP before the private-school fuzzy match. ~~repair the 6 rows with `offers_any_ib=True` but no programme~~ — re-checked against the current `ib_us.csv`: 0 such rows exist today, nothing to repair. Fuzzy name+state matcher (rapidfuzz) with a manual-review queue — done, see `crosswalk_matcher.py` / `combine_schools.fuzzy_match`.
 2. **Finance:** cast `V33`/`TCURELSC` numeric; ×1,000 for dollars; compute per-pupil; keep `UNIT_TYPE==5` for standard districts; pre-join SAIPE on LEAID into one district funding+poverty table.
 3. **SAIPE:** build LEAID via zero-padding; derive `child_poverty_rate`.
 4. **NAEP:** strip rows 0–8 and the 2 footer rows; keep `Jurisdiction`+`Average scale score`; pivot the four files into one state table (G8 math, G8 reading) + a national benchmark row (G12).
