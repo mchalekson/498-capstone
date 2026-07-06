@@ -28,26 +28,45 @@ CSV in `csv_exports/` — open `public_schools_enriched.csv` or
 | NCES public schools ↔ district finance | via `leaid` | **Broken today** — see below, has a fix |
 | IB, ISBE, CPS ↔ everything else | fuzzy name/city matching, confidence-tiered (`auto_accept`/`review`/`reject`) | **Best-effort**, has a path to solid — see below |
 
-## Three concrete asks, in order of what unblocks the most
+## Two things only Bob can unblock, one thing that's on us
 
-### 1. The updated "NU master" CEEB list
+### 1. Bob's NU Admissions school list (the "NU master") — genuinely needs Bob, not just a nice-to-have
 IB, ISBE, and CPS have no NCES ID at all in their raw data — only fuzzy name
 matching connects them today. The intended fix, per the original EDA
-(`EDA.md`) and a teammate's `crosswalk_matcher.py`, is a **CEEB-anchored
-master list of ~40k high schools**: match IB/ISBE/CPS to it once, and every
-source becomes joinable through one shared ID (CEEB) instead of three
-separate guesses.
+(`EDA.md`) and a teammate's `crosswalk_matcher.py`, is to match everything
+to a single **CEEB-anchored master list**, so every source becomes joinable
+through one shared ID instead of separate guesses.
 
-Bob has a previous copy of this file, but flagged it as stale. **The
-pipeline is already wired to consume it the moment a current version shows
-up** — see `data/NU-Master/README.md` for the exact file format expected.
-Drop it in `data/NU-Master/nu_master.csv`, re-run the pipeline (or just
-`python etl/build_ceeb_crosswalk.py`), and three new crosswalk tables appear
-(`ib_ceeb_crosswalk`, `isbe_ceeb_crosswalk`, `cps_ceeb_crosswalk`), each
-flagged with a confidence tier so low-confidence matches get human review
-before anyone trusts them.
+We looked into whether we could source CEEB codes ourselves instead of
+waiting on Bob, the same way we self-sourced NCES/Census/NAEP/IB/ISBE. We
+can't: College Board has no bulk export of K-12 school CEEB codes — only a
+one-at-a-time search tool (school name + state → single code). CEEB codes
+aren't published centrally at all; each college accumulates its own list
+over years of applications. That means NU Admissions' own ~45,000-school
+recruiting list — even Bob's outdated copy — is the only real bulk source
+of CEEB codes available to us. It's also literally the "existing dataset"
+the proposal's own **Gap Detection** deliverable is meant to diff against,
+so we need it either way.
 
-### 2. Re-pull the NCES public school export with the 12-digit ID
+**The pipeline is already wired to consume it the moment a current version
+shows up** — see `data/NU-Master/README.md` for the exact file format
+expected. Drop it in `data/NU-Master/nu_master.csv`, re-run the pipeline (or
+just `python etl/build_ceeb_crosswalk.py`), and three new crosswalk tables
+appear (`ib_ceeb_crosswalk`, `isbe_ceeb_crosswalk`, `cps_ceeb_crosswalk`),
+each flagged with a confidence tier so low-confidence matches get human
+review before anyone trusts them.
+
+Note: this covers IB/ISBE/CPS ↔ CEEB. The core **NCES ↔ CEEB junction**
+itself (the proposal's #2 deliverable, Qifan's RACI item) still needs to be
+built the same way once the file arrives — that piece hasn't been coded yet.
+
+### 2. The College Board institutional-access escalation (Bob's own item)
+Right now AP data is only national/state aggregates (`ap_availability`,
+`ap_participation`, `ap_performance`) — there's no school-level AP data
+until Bob's institutional-access request with College Board comes through.
+This is already risk #1 in the proposal's own risk log, not a new ask.
+
+### 3. Re-pull the NCES public school export with the 12-digit ID — ours to fix, not Bob's
 The public-school data (`data/NCES/ELSI_public_school_grades_9-12_only.csv`)
 was pulled from NCES's ELSI tool with a column literally labeled `"School ID
 (7-digit) – NCES Assigned"`. That's a truncated ID — the real NCES standard
@@ -58,19 +77,12 @@ school; we're aggregating to state level as a workaround.
 
 **Fix:** re-pull from https://nces.ed.gov/ccd/elsi/tableGenerator.aspx and
 add the **"School ID (12-digit) – NCES Assigned"** field (and/or "Agency ID
-(7-digit) – NCES Assigned" for `LEAID` directly) to the export. That turns
-the public-school → district link into a real per-school join instead of a
-state-level aggregate.
-
-### 3. The College Board institutional-access escalation (Bob's own item)
-Right now AP data is only national/state aggregates (`ap_availability`,
-`ap_participation`, `ap_performance`) — there's no school-level AP data
-until Bob's institutional-access request with College Board comes through.
-This sets the national baseline the rigor model is calibrated against in
-the meantime.
+(7-digit) – NCES Assigned" for `LEAID` directly) to the export. Per the
+RACI, "master database & data pulls" is Max/Qifan's workstream — this is
+just a to-do, not something to bring to Bob.
 
 ## Bottom line for Bob
 
-Nothing here is blocked on engineering time — it's blocked on two files
-(an updated master list, a re-pulled ELSI export) and one external
-process (College Board access) that only Bob can move forward.
+Two things are on you: a current copy of NU's school list, and the College
+Board access escalation you're already chasing. The ELSI re-pull is on us
+and doesn't need your time.
