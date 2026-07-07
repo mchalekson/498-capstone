@@ -67,16 +67,27 @@ until Bob's institutional-access request with College Board comes through.
 This is already risk #1 in the proposal's own risk log, not a new ask.
 
 ### 3. Re-pull the NCES public school export with the 12-digit ID — ours to fix, not Bob's
-The public-school data (`data/NCES/ELSI_public_school_grades_9-12_only.csv`)
-was pulled from NCES's ELSI tool with a column literally labeled `"School ID
-(7-digit) – NCES Assigned"`. That's a truncated ID — the real NCES standard
-is a 12-digit `NCESSCH` (7-digit district `LEAID` + 5-digit in-district
-code). Because we only have the 7-digit version, `etl/views.sql` already
-flags that the district-finance join comes back `NULL` for every public
-school; we're aggregating to state level as a workaround.
+The public-school data was pulled from NCES's ELSI tool with a column
+literally labeled `"School ID (7-digit) – NCES Assigned"`. That's a
+truncated ID — the real NCES standard is a 12-digit `NCESSCH` (7-digit
+district `LEAID` + 5-digit in-district code). Because we only have the
+7-digit version, `etl/views.sql` already flags that the district-finance
+join comes back `NULL` for every public school; we're aggregating to state
+level as a workaround.
 
-**Fix:** re-pull from https://nces.ed.gov/ccd/elsi/tableGenerator.aspx and
-add the **"School ID (12-digit) – NCES Assigned"** field (and/or "Agency ID
+**Still open.** A re-pull with the 12-digit ID was added
+(`data/NCES/ELSI_csv_new_updated.csv` → `nces_public_hs_grades_9_12`), but
+that's a re-pull of the wrong export — the join that's actually broken
+(`illinois_schools_enriched`, `public_schools_enriched`, the CEEB junction)
+runs against `nces_public_schools_clean`, built from the much larger
+**`data/NCES/nces-public-schools.csv`** (all grade levels, 101k rows), which
+still only has the 7-digit ID. `nces_public_hs_grades_9_12` isn't used in
+that join at all — see the comment in `etl/build_ceeb_crosswalk.py` on why
+(it's missing schools the broader table has, e.g. New Trier).
+
+**Fix:** re-pull `nces-public-schools.csv` itself (not the 9-12-filtered
+extract) from https://nces.ed.gov/ccd/elsi/tableGenerator.aspx and add the
+**"School ID (12-digit) – NCES Assigned"** field (and/or "Agency ID
 (7-digit) – NCES Assigned" for `LEAID` directly) to the export. Per the
 RACI, "master database & data pulls" is Max/Qifan's workstream — this is
 just a to-do, not something to bring to Bob.

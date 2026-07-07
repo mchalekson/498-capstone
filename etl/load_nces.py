@@ -79,9 +79,9 @@ def load_private(engine):
 
 
 def load_public_hs912(engine):
-    path = os.path.join(DATA_DIR, "NCES", "ELSI_public_school_grades_9-12_only.csv")
+    path = os.path.join(DATA_DIR, "NCES", "ELSI_csv_new_updated.csv")
     print("Reading NCES public high schools (grades 9-12)...")
-    df = pd.read_csv(path, low_memory=False)
+    df = pd.read_csv(path, skiprows=6, low_memory=False)
     df.columns = [clean_col(c) for c in df.columns]
 
     id_col = next(c for c in df.columns if "school_id" in c or "nces" in c)
