@@ -28,37 +28,25 @@ CSV in `csv_exports/` — open `public_schools_enriched.csv` or
 | NCES public schools ↔ district finance | via `leaid` | **Broken today** — see below, has a fix |
 | IB, ISBE, CPS ↔ everything else | fuzzy name/city matching, confidence-tiered (`auto_accept`/`review`/`reject`) | **Best-effort**, has a path to solid — see below |
 
-## Two things only Bob can unblock, one thing that's on us
+## One thing Bob already unblocked, one thing still on him
 
-### 1. Bob's NU Admissions school list (the "NU master") — genuinely needs Bob, not just a nice-to-have
-IB, ISBE, and CPS have no NCES ID at all in their raw data — only fuzzy name
-matching connects them today. The intended fix, per the original EDA
-(`EDA.md`) and a teammate's `crosswalk_matcher.py`, is to match everything
-to a single **CEEB-anchored master list**, so every source becomes joinable
-through one shared ID instead of separate guesses.
-
-We looked into whether we could source CEEB codes ourselves instead of
-waiting on Bob, the same way we self-sourced NCES/Census/NAEP/IB/ISBE. We
-can't: College Board has no bulk export of K-12 school CEEB codes — only a
-one-at-a-time search tool (school name + state → single code). CEEB codes
-aren't published centrally at all; each college accumulates its own list
-over years of applications. That means NU Admissions' own ~45,000-school
-recruiting list — even Bob's outdated copy — is the only real bulk source
-of CEEB codes available to us. It's also literally the "existing dataset"
-the proposal's own **Gap Detection** deliverable is meant to diff against,
-so we need it either way.
-
-**The pipeline is already wired to consume it the moment a current version
-shows up** — see `data/NU-Master/README.md` for the exact file format
-expected. Drop it in `data/NU-Master/nu_master.csv`, re-run the pipeline (or
-just `python etl/build_ceeb_crosswalk.py`), and three new crosswalk tables
-appear (`ib_ceeb_crosswalk`, `isbe_ceeb_crosswalk`, `cps_ceeb_crosswalk`),
-each flagged with a confidence tier so low-confidence matches get human
-review before anyone trusts them.
+### 1. Bob's NU Admissions school list (the "NU master") — RESOLVED 2026-07-14
+Bob's export (`Capstone Org Data 20260624-093658.xlsx`, ~44,900 orgs) is now
+loaded at `data/NU-Master/nu_master.xlsx` — see `data/NU-Master/README.md`
+for the full breakdown. This unblocked the three crosswalk tables that were
+previously no-ops: `ib_ceeb_crosswalk`, `isbe_ceeb_crosswalk`,
+`cps_ceeb_crosswalk` (each confidence-tiered — `ib_ceeb_crosswalk` has 0
+auto-accepts by design, see that README). It also enabled a new
+`schools_org_enriched` table: a nationwide schools export (already carrying
+CEEB via a separate UC Boulder crosswalk — `data/CEEB-Crosswalk/README.md`)
+left-joined directly to Bob's org data on CEEB, matching 18,580/25,577
+schools (73%).
 
 Note: this covers IB/ISBE/CPS ↔ CEEB. The core **NCES ↔ CEEB junction**
-itself (the proposal's #2 deliverable, Qifan's RACI item) still needs to be
-built the same way once the file arrives — that piece hasn't been coded yet.
+(the proposal's #2 deliverable, Qifan's RACI item) is a separate piece,
+already built against the UC Boulder crosswalk in
+`etl/build_ceeb_crosswalk.py`'s `build_nces_junction()` —
+`nces_public_ceeb_crosswalk` / `nces_private_ceeb_crosswalk`.
 
 ### 2. The College Board institutional-access escalation (Bob's own item)
 Right now AP data is only national/state aggregates (`ap_availability`,
@@ -94,6 +82,6 @@ just a to-do, not something to bring to Bob.
 
 ## Bottom line for Bob
 
-Two things are on you: a current copy of NU's school list, and the College
+The NU school list is in — thanks. One thing still on you: the College
 Board access escalation you're already chasing. The ELSI re-pull is on us
 and doesn't need your time.

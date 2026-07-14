@@ -29,6 +29,8 @@ import load_ib
 import load_isbe
 import load_cps
 import load_ceeb_crosswalk
+import load_nu_master
+import load_schools_ceeb
 
 import clean_nces
 import clean_census
@@ -52,6 +54,8 @@ STEPS = [
     ("Load ISBE report card",       load_isbe.load_isbe),
     ("Load CPS opportunity index",  load_cps.load_cps),
     ("Load NCES-CEEB crosswalk source", load_ceeb_crosswalk.load_ceeb_crosswalk),
+    ("Load NU master org data",     load_nu_master.load_nu_master),
+    ("Load schools+CEEB export",    load_schools_ceeb.load_schools_ceeb),
 
     # ── Stage 2: Clean ──────────────────────────────────────────────────
     ("Clean NCES public schools",   clean_nces.clean_public),
@@ -66,6 +70,7 @@ STEPS = [
     ("Combine public schools (nationwide)",  combine_schools.build_public_schools_enriched),
     ("Combine private schools (nationwide)", combine_schools.build_private_schools_enriched),
     ("Combine CPS-NCES crosswalk",           combine_schools.build_cps_nces_crosswalk),
+    ("Combine schools + NU org data on CEEB", combine_schools.build_schools_org_enriched),
 
     # ── Stage 4: CEEB junction ────────────────────────────────────────────
     ("Build NCES<->CEEB junction",           build_ceeb_crosswalk.build_nces_junction),
@@ -138,14 +143,16 @@ def main():
         print("  Raw:   nces_public_schools, nces_private_schools, nces_public_hs_grades_9_12,")
         print("         nces_private_merged, census_school_finances, census_saipe_poverty,")
         print("         naep_assessments, ap_availability, ap_participation, ap_performance,")
-        print("         ib_schools, isbe_*, cps_opportunity_index")
+        print("         ib_schools, isbe_*, cps_opportunity_index, nu_master_org_data,")
+        print("         schools_combined_enriched_ceeb")
         print("  Clean: nces_public_schools_clean, nces_private_schools_clean,")
         print("         nces_private_merged_clean, census_school_finances_clean,")
         print("         census_saipe_poverty_clean, naep_assessments_clean, isbe_*_clean")
-        print("  Combined: public_schools_enriched, private_schools_enriched, cps_nces_crosswalk")
+        print("  Combined: public_schools_enriched, private_schools_enriched, cps_nces_crosswalk,")
+        print("         schools_org_enriched")
         print("  Views: illinois_schools_enriched, districts_enriched, ib_nces_crosswalk")
         print("  NCES<->CEEB junction: nces_public_ceeb_crosswalk, nces_private_ceeb_crosswalk")
-        print("  CEEB crosswalk (only if NU master present — see data/NU-Master/README.md):")
+        print("  CEEB crosswalk (NU master):")
         print("         ib_ceeb_crosswalk, isbe_ceeb_crosswalk, cps_ceeb_crosswalk")
 
 

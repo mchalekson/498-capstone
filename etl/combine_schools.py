@@ -404,8 +404,41 @@ def build_cps_nces_crosswalk(engine):
         conn.commit()
 
 
+def build_schools_org_enriched(engine):
+    """
+    Left-join schools_combined_enriched_ceeb (Sheng's nationwide school
+    export, load_schools_ceeb.py) to nu_master_org_data (Bob's NU master org
+    list, load_nu_master.py) on CEEB — the shared exact-match key, since
+    both sides already carry CEEB directly (no fuzzy matching needed here).
+    nu_master_org_data.CEEB is unique, so this is a clean 1:1 attach with no
+    row fan-out; ~1,400 CEEB codes on the schools side cover more than one
+    school row (see ceeb_match_tier/ceeb_needs_review there for why), each
+    of which independently picks up the same org row.
+    """
+    print("Combining schools_org_enriched (schools_combined_enriched_ceeb + nu_master_org_data on CEEB)...")
+    schools = pd.read_sql("SELECT * FROM schools_combined_enriched_ceeb", engine)
+    # Exclude null CEEB rows before merging: unlike SQL, pandas' merge treats
+    # NaN keys as equal to each other, so every CEEB-less school would
+    # otherwise fan out against every CEEB-less org row (2 non-school junk
+    # rows here — "Explore Colleges", "Model United Nations").
+    org = pd.read_sql("SELECT * FROM nu_master_org_data WHERE ceeb IS NOT NULL", engine).add_prefix("nu_")
+
+    df = schools.merge(org, left_on="ceeb", right_on="nu_ceeb", how="left")
+    matched = df["nu_guid"].notna().sum()
+    print(f"  CEEB match: {matched:,}/{len(df):,} schools matched to NU master org data")
+
+    df.to_sql("schools_org_enriched", engine, if_exists="replace", index=False,
+              method=db_utils.psql_insert_copy)
+    print(f"  {len(df):,} rows → schools_org_enriched ✓")
+
+    with engine.connect() as conn:
+        conn.execute(text("ALTER TABLE schools_org_enriched ADD PRIMARY KEY (school_id)"))
+        conn.commit()
+
+
 if __name__ == "__main__":
     engine = create_engine(DATABASE_URL)
     build_public_schools_enriched(engine)
     build_private_schools_enriched(engine)
     build_cps_nces_crosswalk(engine)
+    build_schools_org_enriched(engine)
