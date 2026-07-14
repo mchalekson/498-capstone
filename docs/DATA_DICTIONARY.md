@@ -1,18 +1,38 @@
-# Data dictionary — `schools_org_enriched`
+# Data dictionary — `schools_org_enriched` / `schools_org_all`
 
 Full field-by-field detail is in
 [`data_dictionary_schools_org_enriched.csv`](data_dictionary_schools_org_enriched.csv)
 (variable, data type, source dataset, grain, vintage, confidence, description,
-notes). This doc is the short version — scope, match rate, and the open
-questions worth sending to Bob/Sheng before trusting specific fields.
+notes) — the column set is identical between the two tables below, so this
+one CSV covers both. This doc is the short version — scope, match rate, and
+the open questions worth sending to Bob/Sheng before trusting specific fields.
 
-**Scope:** this covers `schools_org_enriched` only — the table produced by
-combining Sheng's nationwide schools export
+**Scope:** this covers the two `schools_org_*` tables only — both combine
+Sheng's nationwide schools export
 (`data/updated-sheng/schools_combined_enriched_ceeb.csv`) with Bob's NU
-Admissions org export (`data/NU-Master/nu_master.xlsx`) on CEEB. It does not
-yet cover the other ~30 tables in the pipeline (`public_schools_enriched`,
-ISBE raw sheets, CRDC raw, etc.) — extend the same CSV format to those next
-if useful.
+Admissions org export (`data/NU-Master/nu_master.xlsx`) on CEEB, differing
+only in join type (see below). It does not yet cover the other ~30 tables in
+the pipeline (`public_schools_enriched`, ISBE raw sheets, CRDC raw, etc.) —
+extend the same CSV format to those next if useful.
+
+## Two tables, two join types
+
+- **`schools_org_enriched`** (`etl/combine_schools.py:build_schools_org_enriched`)
+  — **left join**, anchored on Sheng's 25,577 schools. One row per school;
+  NU columns are null where no CEEB match exists. Bob's orgs that never
+  matched a school row (see below) don't appear here at all.
+- **`schools_org_all`** (`etl/combine_schools.py:build_schools_org_all`) —
+  **full outer join**, everything from both files. 53,966 rows total:
+  18,580 matched both sides (identical to the match count below), 6,997
+  school-only rows (Sheng schools with no CEEB match in Bob's file, NU
+  columns null), and 28,389 NU-org-only rows (Bob orgs with no matching
+  school row, school-side columns null). No dedup step was needed —
+  `nu_master_org_data.ceeb` is unique, so the join can't fan out rows on
+  either side.
+
+Use `schools_org_enriched` for school-level analysis (one row per school is
+usually what you want); use `schools_org_all` if you need to see or count
+every org in Bob's file, including the ones with no matching school record.
 
 ## Match rate
 
@@ -22,6 +42,14 @@ unmatched schools upstream) or a CEEB that isn't in Bob's list. This is an
 exact-match join (both sides carry CEEB directly) — no fuzzy matching in this
 specific combination, so the match rate is a ceiling on coverage, not a
 matching-confidence question.
+
+Symmetrically, of Bob's 44,899 orgs, **18,580 (41%) matched a school row**;
+the other 59% (28,389 orgs) have a CEEB that isn't in Sheng's schools export
+(or, for 2 rows, no CEEB at all — "Explore Colleges" and "Model United
+Nations", non-school entities excluded from the join). A low match rate on
+this side is expected, not a data-quality problem: Bob's org export is
+broader than "high schools with a CEEB Sheng's source recognizes" — it likely
+includes colleges and other org types out of scope for this join.
 
 ## Vintage — the real gap
 

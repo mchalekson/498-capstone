@@ -436,9 +436,46 @@ def build_schools_org_enriched(engine):
         conn.commit()
 
 
+def build_schools_org_all(engine):
+    """
+    Full outer join of schools_combined_enriched_ceeb and nu_master_org_data
+    on CEEB — everything from both files, not just what matched.
+
+    schools_org_enriched (build_schools_org_enriched, above) is anchored on
+    Sheng's 25,577 schools, so the ~26,319 of Bob's 44,899 orgs that never
+    matched a school row are silently dropped from it. This table keeps
+    those rows too, with the school-side columns null for org-only rows
+    (and vice versa for school-only rows).
+
+    No dedup step is needed beyond the merge itself: nu_master_org_data.ceeb
+    is unique (enforced by its own primary key on guid plus a 1:1 CEEB
+    relationship — see load_nu_master.py), so each schools row matches at
+    most one org row, and a plain outer merge on a key that's unique on one
+    side cannot fan out or duplicate rows on that side.
+    """
+    print("Combining schools_org_all (schools_combined_enriched_ceeb OUTER JOIN nu_master_org_data on CEEB)...")
+    schools = pd.read_sql("SELECT * FROM schools_combined_enriched_ceeb", engine)
+    org = pd.read_sql("SELECT * FROM nu_master_org_data WHERE ceeb IS NOT NULL", engine).add_prefix("nu_")
+
+    df = schools.merge(org, left_on="ceeb", right_on="nu_ceeb", how="outer")
+    # Outer join leaves two separate CEEB columns (each null on the rows the
+    # other side contributed) - coalesce into one.
+    df["ceeb"] = df["ceeb"].fillna(df["nu_ceeb"])
+
+    both = int((df["school_id"].notna() & df["nu_guid"].notna()).sum())
+    school_only = int((df["school_id"].notna() & df["nu_guid"].isna()).sum())
+    org_only = int((df["school_id"].isna() & df["nu_guid"].notna()).sum())
+    print(f"  {both:,} matched both sides, {school_only:,} school-only, {org_only:,} NU-org-only ({len(df):,} total)")
+
+    df.to_sql("schools_org_all", engine, if_exists="replace", index=False,
+              method=db_utils.psql_insert_copy)
+    print(f"  {len(df):,} rows → schools_org_all ✓")
+
+
 if __name__ == "__main__":
     engine = create_engine(DATABASE_URL)
     build_public_schools_enriched(engine)
     build_private_schools_enriched(engine)
     build_cps_nces_crosswalk(engine)
     build_schools_org_enriched(engine)
+    build_schools_org_all(engine)

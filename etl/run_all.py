@@ -71,6 +71,7 @@ STEPS = [
     ("Combine private schools (nationwide)", combine_schools.build_private_schools_enriched),
     ("Combine CPS-NCES crosswalk",           combine_schools.build_cps_nces_crosswalk),
     ("Combine schools + NU org data on CEEB", combine_schools.build_schools_org_enriched),
+    ("Combine schools + NU org data, outer join (all rows)", combine_schools.build_schools_org_all),
 
     # ── Stage 4: CEEB junction ────────────────────────────────────────────
     ("Build NCES<->CEEB junction",           build_ceeb_crosswalk.build_nces_junction),
@@ -149,7 +150,7 @@ def main():
         print("         nces_private_merged_clean, census_school_finances_clean,")
         print("         census_saipe_poverty_clean, naep_assessments_clean, isbe_*_clean")
         print("  Combined: public_schools_enriched, private_schools_enriched, cps_nces_crosswalk,")
-        print("         schools_org_enriched")
+        print("         schools_org_enriched, schools_org_all")
         print("  Views: illinois_schools_enriched, districts_enriched, ib_nces_crosswalk")
         print("  NCES<->CEEB junction: nces_public_ceeb_crosswalk, nces_private_ceeb_crosswalk")
         print("  CEEB crosswalk (NU master):")
