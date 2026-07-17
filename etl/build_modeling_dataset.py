@@ -95,6 +95,11 @@ METADATA = {
                         "CRDC AP enrollment / enrollment_9_12, winsorized 1/99pct (Goal 8, fallback measure)"),
     "ap_intensity_src": ("Derived in build_features.py", "school", "n/a (derived flag)", "derived",
                         "Provenance of the best available AP intensity signal for this row"),
+    "dual_enrollment_offered": ("CRDC", "school", "School Year 2021-2022", "confirmed",
+                               "1 if CRDC reports the school offers dual enrollment"),
+    "dual_enrollment_rate": ("CRDC", "school", "School Year 2021-2022", "confirmed",
+                             "CRDC dual enrollment / enrollment_9_12, winsorized 1/99pct -- distinct "
+                             "CRDC advanced-coursework indicator from AP, per report section 4.1"),
     "testtaker_rate": ("CRDC", "school", "School Year 2021-2022", "confirmed",
                        "CRDC SAT/ACT takers / enrollment_9_12, winsorized 1/99pct (Goal 6)"),
     "sat_participation_nu": ("NU org export", "school", NU_EXPORT_VINTAGE, NU_EXPORT_CONF,

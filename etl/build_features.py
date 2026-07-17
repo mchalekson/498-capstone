@@ -153,6 +153,10 @@ def build(df, finance_df=None, saipe_df=None):
         [out["ap_tests_taken"].notna(), out["ap_participation"].notna(), out["ap_offered"] == 1],
         ["nu_tests_taken", "crdc_participation", "offered_flag_only"], default="none")
 
+    # ---- CRDC advanced-coursework indicator beyond AP (dual enrollment) -------
+    out["dual_enrollment_offered"] = (num("crdc_dual_enr_offered") == 1).astype("Int64")
+    out["dual_enrollment_rate"] = winsorize(np.where(enr > 0, num("crdc_dual_enrollment") / enr, np.nan))
+
     # ---- SAT / ACT ------------------------------------------------------------
     out["testtaker_rate"] = winsorize(np.where(enr > 0, num("crdc_satact_takers") / enr, np.nan))
     out["sat_participation_nu"] = num("nu_pct_seniors_taking_sat")
