@@ -5,8 +5,9 @@ platform (Sections 3-4 of `written-report-iterations/MSDS_498_version-wk3.pdf`).
 a generic template — every scenario below is grounded in a specific, real risk already found
 in this pipeline (several of them actual bugs fixed during development; see the "why this
 test exists" notes throughout). A runnable test suite backing this plan lives in `tests/`
-(55 automated tests, all passing as of this writing — see Test Execution Plan for how to run
-them).
+(57 automated tests, all passing as of this writing — 55 unit/integration/CSV-system tests
+plus 2 that bring up the real Docker/Postgres pipeline end to end — see Test Execution Plan
+for how to run them).
 
 ---
 
@@ -18,28 +19,40 @@ Four testing types, matched to where risk actually concentrates in this project:
 |---|---|---|
 | **Unit** | Individual functions in `etl/build_features.py`, `etl/combine_schools.py` (its two pure-Python helpers only — see gap below), `etl/build_rigor_classification.py`, `etl/build_modeling_dataset.py` | This is where the real bugs have lived: sector misclassification, IB match-tier gating, LEAID derivation, the CEEB fan-out — all were logic errors inside single functions, catchable in isolation |
 | **Integration** | How the CSV-driven pipeline stages compose (`build_features.build()` → `build_modeling_dataset`'s freeze steps) | Catches column-contract breaks between stages that unit tests on either side, run alone, can't see |
-| **System** | The five-script CSV pipeline run end to end against the real exported data (`csv_exports/`) | Confirms the whole CSV-driven chain actually runs, not just that each piece is individually correct; this is also where the missing `scikit-learn` dependency (see §4) was caught |
+| **System** | The five-script CSV pipeline run end to end against the real exported data (`csv_exports/`), **and** the full Docker/Postgres pipeline (`docker compose up`, `etl/run_all.py`) against a freshly started database | Confirms the whole thing actually runs, not just that each piece is individually correct; this is also where the missing `scikit-learn` dependency (see §4) was caught |
 | **User Acceptance (UAT)** | Planned reviews of the two data dictionaries, `modeling_dataset.csv`, and the rigor/clustering/benchmarking outputs, by the project client (Bob Henkins, NU Undergraduate Admissions, and Adam) and, per the assignment's "we may engage the other team," a second student team | The platform's entire purpose (per the report's Section 1) is serving admissions officers standardized, auditable context — correctness by our own tests is necessary but not sufficient; the client has to find the output usable |
 
-**Two coverage gaps, stated plainly rather than glossed over:**
+**Update 2026-07-17, verified**: the Docker/Postgres pipeline was brought up and run end to
+end for the first time while finalizing this plan — `docker compose up -d db`, then
+`docker compose run --rm etl`, completed successfully in ~106 seconds against the raw data
+under `data/updated-sheng/`. `schools_org_all`'s CEEB match count (16,508) matched the
+CSV-path result exactly, cross-validating both paths compute the same result from the same
+join logic. This is now covered by an automated test, `tests/test_docker_pipeline.py`, which
+skips (not fails) when Docker isn't reachable or the raw data isn't present — the same pattern
+`test_system_pipeline.py` already used for the CSV-only path.
 
-1. **`etl/combine_schools.py`'s actual join logic is untested.** Only its two pure-Python
-   helpers (`resolve_ceeb_ties`, `normalize_name`) have unit tests. The functions that do the
-   real work — `build_schools_org_enriched`, `build_schools_org_all`,
-   `build_public_schools_enriched`, `build_private_schools_enriched`,
-   `build_cps_nces_crosswalk` — run SQL against a live Postgres database and have **zero**
-   automated coverage, and no documented manual verification procedure either. This is the
-   riskiest code in the pipeline (multi-table joins, state-context merges, IB/ISBE/CPS fuzzy
-   matching) and it's currently the least tested. See §4 for why, and §5/§6 for the plan to
-   close this.
-2. **The Docker/Postgres system test is not currently automatable or reproducible from a
-   fresh clone**, for a deliberate, correct reason (not an oversight — see §4): the raw source
-   files that database-backed step needs (`data/updated-sheng/`) total roughly 2.6 GB
-   (a single CRDC data folder alone is 794 MB, two EDFacts assessment folders are 1.7 GB and
-   1.8 GB) and were intentionally excluded from git as impractical to version, not just
-   over GitHub's per-file limit. A fresh `git clone` of this repo has no way to obtain them,
-   so `docker compose up` + `etl/run_all.py` cannot currently be exercised as an automated
-   test. Documented as a real, standing limitation in §4, not worked around silently.
+**One coverage gap remains, stated plainly rather than glossed over:**
+
+The reproducibility gap for a genuinely fresh clone is still real, and running the pipeline
+once locally doesn't remove it. `data/updated-sheng/` — Sheng's combined schools export, the
+client's org export, and the raw CRDC/EDFacts data — is gitignored, correctly: the directory
+totals roughly 2.6 GB (a single CRDC folder alone is 794 MB, two EDFacts assessment folders
+are 1.7 GB and 1.8 GB), far past what's reasonable to version in git. A new team member or a
+CI runner cloning this repo fresh still has no way to obtain that data, so
+`test_docker_pipeline.py` will correctly skip for them until it's provisioned some other way.
+The verification above confirms the pipeline *itself* is correct and runnable; it does not
+change the fact that only machines with that data already present locally can run it. See §4
+for the remediation options (a sanitized fixture, or documented manual provisioning) — neither
+has been done yet, so this test only runs today on development machines that already have the
+full data, not in any automated CI context.
+
+`etl/combine_schools.py`'s SQL-backed join functions (`build_schools_org_enriched`,
+`build_schools_org_all`, `build_public_schools_enriched`, `build_private_schools_enriched`,
+`build_cps_nces_crosswalk`) are now exercised end-to-end by `test_docker_pipeline.py` and its
+row-count cross-check — a real improvement over having zero coverage — but this is still
+system-level ("did the whole run succeed with the right row count"), not unit-level coverage
+of each function's specific join semantics. Dedicated unit tests for these functions, isolated
+from a live database, remain a gap.
 
 Explicitly **not** covered by this plan (documented, not silently skipped):
 - Load/performance testing — out of scope; this is a batch ETL pipeline re-run at most annually
@@ -101,22 +114,26 @@ Explicitly **not** covered by this plan (documented, not silently skipped):
   of bug the real CEEB fan-out was).
 
 ### System test scenarios (automated, verified)
-- Each of the five pipeline scripts (`build_features.py`, `build_modeling_dataset.py`,
+- Each of the five CSV pipeline scripts (`build_features.py`, `build_modeling_dataset.py`,
   `build_rigor_classification.py`, `build_clustering.py`, `build_benchmarking.py`) runs to
   completion against the real `csv_exports/` data and produces output of the expected shape
   (row-count floor, required columns present, categorical outputs constrained to their valid
   value sets). Verified: all 5 pass as of this writing.
-
-### System test scenario NOT currently achievable — a real, standing gap
 - `docker compose up` bringing up Postgres 16 and the ETL container, followed by
-  `etl/run_all.py` completing against a freshly created database, **cannot currently be run
-  as an automated test.** It was never executed as part of building this suite. On a fresh
-  clone it would fail at the loader step: `etl/load_schools_ceeb.py` and
-  `etl/combine_schools.py` need files under `data/updated-sheng/` that are gitignored and
-  were never committed (correctly — see §4 for the actual sizes involved). Closing this gap
-  needs a decision, not a workaround: either commit a small sanitized fixture version of
-  those files for testing purposes, or document exactly where the real files live and how a
-  new contributor obtains them, and accept that this system test stays manual until then.
+  `etl/run_all.py` completing against it, then `schools_org_all`'s row count matching the
+  CSV-path result. Verified: both pass, completing in ~106 seconds. **Only runs when Docker
+  is reachable and the raw data is present locally** — auto-skips otherwise, since neither
+  holds on a fresh clone (see the gap below and §4).
+
+### Remaining gap — not this pipeline's correctness, but who can run it
+- The Docker/Postgres system test above is real and passing, but only on machines that
+  already have `data/updated-sheng/`'s ~2.6 GB present locally (correctly gitignored, not a
+  bug — see §4). A fresh clone, or a CI runner, still can't run it. Closing that needs a
+  decision, not a workaround: either commit a small sanitized fixture version of those files
+  for testing purposes, or document exactly where the real files live and how a new
+  contributor obtains them. Until one of those happens, this test is verified-but-manual in
+  the sense that it depends on local data placement, even though the test itself is
+  automated.
 
 ### UAT scenarios (planned — none of these have happened yet)
 - Bob/Adam can locate, in `data_dictionary_schools_org_enriched.csv` and
@@ -145,6 +162,8 @@ rubric asks for (steps / data input / expected result):
 | UT-04 | `test_keeps_the_best_tier_match` | Two schools sharing CEEB `050222`: one `auto_accept` exact-name match, one `review`-tier different school | Call `resolve_ceeb_ties(df)` | `auto_accept` row keeps the CEEB; `review` row's CEEB is nulled and flagged |
 | IT-01 | `test_full_chain_on_fixture` | 4-row fixture (public HS, 2 private HS variants, 1 org-only) | `build()` → `restrict_to_hs_universe()` → `apply_min_size_freeze()` | Only public/private rows remain; each is public XOR private; the pss_id-only private school survived the chain |
 | ST-01 | `test_build_rigor_classification` (system) | Real `modeling_dataset_v1_*.csv` (34,392 rows) | Run `build_rigor_classification.py` via subprocess | Exit code 0; output has `rigor_tier_label`; every non-null value is one of the five valid tier names |
+| ST-02 | `test_full_pipeline_completes_successfully` (`tests/test_docker_pipeline.py`) | Raw data under `data/updated-sheng/` — present on this development machine, not on a fresh clone (~2.6 GB, gitignored) | Bring up Postgres via `docker compose up -d db`, wait healthy, `docker compose run --rm etl` | Exit code 0; "Pipeline completed successfully" in output. Auto-skips if Docker or the raw data isn't present, so it's automated where its precondition holds rather than manual everywhere |
+| ST-03 | `test_schools_org_all_row_count_matches_csv_path` (`tests/test_docker_pipeline.py`) | Same as ST-02 | Query `schools_org_all` row count from the live database after ST-02 | Matches the CSV-path row count (53,966) — cross-validates both paths independently |
 
 Adding a test case: any new bug found gets a regression test named for the bug, not just the
 function — matches the pattern already used throughout (see `test_build_features.py`'s
@@ -166,19 +185,24 @@ docstring, which explains this convention directly).
    anyone re-deriving `csv_exports/` from raw source data rather than reading the already-
    exported CSVs.
 
-   **Not currently reproducible from a fresh clone, on purpose, not by accident.**
+   **Verified working end-to-end 2026-07-17** — `docker compose up -d db`, then
+   `docker compose run --rm etl`, completed successfully in ~106 seconds and produced a
+   `schools_org_all` row count matching the CSV path exactly. Covered by an automated test
+   (`tests/test_docker_pipeline.py`).
+
+   **Reproducible only where the raw data already exists locally, not from a fresh clone.**
    `data/updated-sheng/` — Sheng's combined schools export, Bob's org export, and the raw
    CRDC/EDFacts assessment data — is gitignored. This was a deliberate call, not an
    oversight: the directory is roughly **2.6 GB** (CRDC data alone is 794 MB; two EDFacts
    assessment folders are 1.7 GB and 1.8 GB), far past what's reasonable to version in git
-   regardless of GitHub's 100 MB per-file limit. The real consequence: anyone testing the
-   Docker/Postgres path needs these files placed manually, from wherever the team currently
-   shares them, before `etl/run_all.py` can run at all — and that hand-off isn't documented
-   anywhere yet. Recommendation: either (a) generate and commit a small, sanitized fixture
-   version of each file, scoped to just enough rows to exercise the joins, purely for testing
-   — or (b) write down, in this repo, exactly where the real files live and how to get them.
-   Until one of those happens, the Docker/Postgres path is tested manually and
-   inconsistently, not automatically.
+   regardless of GitHub's 100 MB per-file limit. The consequence: this environment, and the
+   test that exercises it, only work on a machine that already has that data — a new
+   contributor or a CI runner starting from a fresh clone has no way to obtain it, and that
+   hand-off isn't documented anywhere yet. Recommendation: either (a) generate and commit a
+   small, sanitized fixture version of each file, scoped to just enough rows to exercise the
+   joins, purely for testing — or (b) write down, in this repo, exactly where the real files
+   live and how to get them. Until one of those happens, this environment is real and working,
+   just not portable to a new machine without manual data placement.
 
 **Test-specific dependencies**: `requirements-test.txt` (pytest 9.1.1) — kept separate from
 `etl/requirements.txt` since pytest is a development/test-time dependency, not a pipeline
@@ -187,7 +211,8 @@ runtime one.
 **A real environment gap this test plan already caught**: `etl/requirements.txt` was missing
 `scikit-learn`, which `build_clustering.py` requires — meaning the documented Docker
 environment could not actually run that script. Fixed as part of writing this plan (see
-`etl/requirements.txt`), not a hypothetical example.
+`etl/requirements.txt`) — confirmed fixed by the successful Docker build above, not just
+asserted.
 
 **Configuration**: `etl/config.py` reads `DB_HOST`/`DB_PORT`/`DB_NAME`/`DB_USER`/`DB_PASS`
 from environment variables (defaults: `localhost:5432/capstone/postgres`), overridden by
@@ -199,9 +224,9 @@ and `SCHOOLS_CEEB_PATH` point at the raw data files under `data/`.
 pip install -r requirements-test.txt -r etl/requirements.txt
 pytest tests/ -v
 ```
-System tests (`test_system_pipeline.py`) auto-skip if `csv_exports/schools_org_all.csv`
-isn't present, so the suite still runs (unit + integration only) on a checkout without the
-data exports.
+System tests (`test_system_pipeline.py`, `test_docker_pipeline.py`) auto-skip if their
+respective preconditions (exported CSVs, or Docker + raw data) aren't present, so the suite
+still runs (unit + integration only) on a checkout without either.
 
 ---
 
@@ -219,7 +244,7 @@ item, not silently assumed.
 |---|---|---|---|
 | Unit + integration, every commit | Ongoing, starting now (Week 4) | `pytest tests/test_build_features.py tests/test_combine_schools.py tests/test_build_rigor_classification.py tests/test_build_modeling_dataset.py tests/test_integration_pipeline.py` | Whoever touches `etl/*.py` — run locally before pushing; no CI is wired up yet (see Defect Management), so this is currently a manual discipline, not an enforced gate |
 | System test, before every new versioned dataset | Whenever `modeling_dataset_v<N>` is cut | `pytest tests/test_system_pipeline.py` | Whoever cuts the version |
-| Full Docker system test | Not currently runnable (see §4) — this row describes the target state, not a running practice | `docker compose up`, then `etl/run_all.py` end to end | Closest existing RACI scope: Max/Qifan ("master database & data pulls" per `BOB_BRIEFING.md`) — needs explicit confirmation, not assumed |
+| Full Docker system test | Before any DB-schema-affecting change ships (new table, changed join); verified passing on 2026-07-17 | `pytest tests/test_docker_pipeline.py` (`docker compose up`, `etl/run_all.py`, then a row-count cross-check) — auto-skips on machines without Docker/the raw data (see §4) | Closest existing RACI scope: Max/Qifan ("master database & data pulls" per `BOB_BRIEFING.md`) — needs explicit confirmation, not assumed |
 | Hyperparameter/validation-specific testing | Week 7 (per the project's own schedule — Section 4.6 of the report) | Train/test/validation split checks, overfitting/underfitting checks — not yet built, this plan's system/integration tests are the pre-requisite groundwork for that phase | Not assigned — no RACI line covers modeling/validation specifically; needs a decision, not a default |
 | UAT round 1 | As soon as Bob/Adam have bandwidth (not gated on a specific week) | Structured review of both data dictionaries + `modeling_dataset.csv`, using the UAT scenarios in §2 | Bob, Adam |
 | UAT round 2 (peer team) | Before Week 9 presentation prep | The engaged "other team" independently reproduces one pipeline run and reviews the rigor/clustering/benchmarking docs for clarity | Second student team + our team |
@@ -227,8 +252,8 @@ item, not silently assumed.
 **Dependencies**: system tests depend on `csv_exports/` being current (regenerate via the
 chain in §1 before running); UAT round 2 depends on round 1 feedback being incorporated
 first, so the peer team isn't reviewing something already known to be wrong. The Docker
-system test row depends on §4's fixture-or-documentation decision being made first — it
-cannot run at all until then.
+system test runs today on any machine with Docker and the raw data present, but stays
+unavailable to a fresh clone or CI runner until §4's fixture-or-documentation decision is made.
 
 **Action item surfaced by writing this plan**: a real RACI covering test ownership
 specifically doesn't exist yet. Recommend the team produce one (even a short one) rather than
@@ -274,10 +299,13 @@ not one already running.
   sector-classification bug, the IB gating bug, the LEAID derivation bug, the CEEB fan-out,
   the docstring/behavior mismatch in `parse_bucket_midpoint`) — regression here specifically
   means "did a fixed bug come back," not just "did anything change."
-- **Full-pipeline regression**: the system test suite reruns the entire five-script chain
+- **Full-pipeline regression**: the system test suite reruns the entire five-script CSV chain
   against the current `csv_exports/` data whenever any script in that chain changes, catching
   regressions that only manifest at real production scale (small-fixture unit tests can miss
   scale-dependent issues, like the quintile-tier bucketing needing a large-enough population).
+  On machines with Docker and the raw data available, `test_docker_pipeline.py` extends this
+  to the database-backed join functions too, cross-checking the DB path's row counts against
+  the CSV path's — not yet possible in CI (see §4).
 - **No CI yet**: this is a real gap, not glossed over — recommend wiring up GitHub Actions to
   run the non-system tests on every push once the team has bandwidth, so regression testing
   stops depending on individual discipline.
