@@ -31,20 +31,20 @@ join logic. This is now covered by an automated test, `tests/test_docker_pipelin
 skips (not fails) when Docker isn't reachable or the raw data isn't present — the same pattern
 `test_system_pipeline.py` already used for the CSV-only path.
 
-**One coverage gap remains, stated plainly rather than glossed over:**
+**One gap remains — not "undocumented" anymore, but still not automatic:**
 
-The reproducibility gap for a genuinely fresh clone is still real, and running the pipeline
-once locally doesn't remove it. `data/updated-sheng/` — Sheng's combined schools export, the
+The reproducibility gap for a genuinely fresh clone is real, and running the pipeline once
+locally doesn't remove it. `data/updated-sheng/` — Sheng's combined schools export, the
 client's org export, and the raw CRDC/EDFacts data — is gitignored, correctly: the directory
-totals roughly 2.6 GB (a single CRDC folder alone is 794 MB, two EDFacts assessment folders
-are 1.7 GB and 1.8 GB), far past what's reasonable to version in git. A new team member or a
-CI runner cloning this repo fresh still has no way to obtain that data, so
-`test_docker_pipeline.py` will correctly skip for them until it's provisioned some other way.
-The verification above confirms the pipeline *itself* is correct and runnable; it does not
-change the fact that only machines with that data already present locally can run it. See §4
-for the remediation options (a sanitized fixture, or documented manual provisioning) — neither
-has been done yet, so this test only runs today on development machines that already have the
-full data, not in any automated CI context.
+totals roughly 2.6 GB (a single CRDC folder alone is 794 MB, two EDFacts files are 938 MB and
+875 MB, each individually over GitHub's 100 MB per-file limit), far past what's reasonable to
+version in git. **As of 2026-07-17, this is a documented manual step, not an unwritten gap**:
+the main `README.md` now links the team's Google Drive folder holding this data and says to
+download it into `data/updated-sheng/` before running the Docker path. A new team member or a
+CI runner cloning this repo fresh still has to do that download manually — `test_docker_pipeline.py`
+will correctly skip until they do — but the hand-off itself is written down. See §4 for the
+full setup instructions, and a remaining nice-to-have (a small sanitized fixture, so this path
+could eventually run in CI without the full 2.6 GB).
 
 `etl/combine_schools.py`'s SQL-backed join functions (`build_schools_org_enriched`,
 `build_schools_org_all`, `build_public_schools_enriched`, `build_private_schools_enriched`,
@@ -128,12 +128,11 @@ Explicitly **not** covered by this plan (documented, not silently skipped):
 ### Remaining gap — not this pipeline's correctness, but who can run it
 - The Docker/Postgres system test above is real and passing, but only on machines that
   already have `data/updated-sheng/`'s ~2.6 GB present locally (correctly gitignored, not a
-  bug — see §4). A fresh clone, or a CI runner, still can't run it. Closing that needs a
-  decision, not a workaround: either commit a small sanitized fixture version of those files
-  for testing purposes, or document exactly where the real files live and how a new
-  contributor obtains them. Until one of those happens, this test is verified-but-manual in
-  the sense that it depends on local data placement, even though the test itself is
-  automated.
+  bug — see §4). A fresh clone, or a CI runner, still can't run it without a manual download
+  step first — now documented in `README.md` (a linked team Drive folder), not an unwritten
+  gap, but still a step a human has to do, not something automated. A small sanitized fixture
+  version of the data, scoped to just enough rows to exercise the joins, remains a
+  nice-to-have for eventually running this test in CI without the full 2.6 GB — not built yet.
 
 ### UAT scenarios (planned — none of these have happened yet)
 - Bob/Adam can locate, in `data_dictionary_schools_org_enriched.csv` and
@@ -190,19 +189,20 @@ docstring, which explains this convention directly).
    `schools_org_all` row count matching the CSV path exactly. Covered by an automated test
    (`tests/test_docker_pipeline.py`).
 
-   **Reproducible only where the raw data already exists locally, not from a fresh clone.**
+   **Resolved 2026-07-17 — the hand-off is now documented, not just recommended.**
    `data/updated-sheng/` — Sheng's combined schools export, Bob's org export, and the raw
-   CRDC/EDFacts assessment data — is gitignored. This was a deliberate call, not an
-   oversight: the directory is roughly **2.6 GB** (CRDC data alone is 794 MB; two EDFacts
-   assessment folders are 1.7 GB and 1.8 GB), far past what's reasonable to version in git
-   regardless of GitHub's 100 MB per-file limit. The consequence: this environment, and the
-   test that exercises it, only work on a machine that already has that data — a new
-   contributor or a CI runner starting from a fresh clone has no way to obtain it, and that
-   hand-off isn't documented anywhere yet. Recommendation: either (a) generate and commit a
-   small, sanitized fixture version of each file, scoped to just enough rows to exercise the
-   joins, purely for testing — or (b) write down, in this repo, exactly where the real files
-   live and how to get them. Until one of those happens, this environment is real and working,
-   just not portable to a new machine without manual data placement.
+   CRDC/EDFacts assessment data — is gitignored, correctly: the directory is roughly
+   **2.6 GB** (CRDC data alone is 794 MB; two EDFacts files are 938 MB and 875 MB, each
+   individually over GitHub's 100 MB per-file limit), far past what's reasonable to version
+   in git — checked directly against GitHub's 100 MB hard per-file limit before attempting
+   anything, rather than finding out via a failed push. Documented instead via a team Google
+   Drive folder (linked from the main `README.md`'s Quickstart section — request access from
+   Max if it's not visible). A new contributor or CI runner
+   still needs to download it manually before the Docker/Postgres path or
+   `tests/test_docker_pipeline.py` will do anything beyond auto-skip, but that's now a
+   documented three-minute setup step rather than an undocumented gap. A small sanitized
+   fixture (scoped to just enough rows to exercise the joins) remains a nice-to-have for
+   eventually running this path in CI without the full 2.6 GB, but isn't built yet.
 
 **Test-specific dependencies**: `requirements-test.txt` (pytest 9.1.1) — kept separate from
 `etl/requirements.txt` since pytest is a development/test-time dependency, not a pipeline
@@ -252,8 +252,9 @@ item, not silently assumed.
 **Dependencies**: system tests depend on `csv_exports/` being current (regenerate via the
 chain in §1 before running); UAT round 2 depends on round 1 feedback being incorporated
 first, so the peer team isn't reviewing something already known to be wrong. The Docker
-system test runs today on any machine with Docker and the raw data present, but stays
-unavailable to a fresh clone or CI runner until §4's fixture-or-documentation decision is made.
+system test runs today on any machine with Docker and the raw data present; a fresh clone or
+CI runner needs the manual download step documented in `README.md` first (see §4), and stays
+unavailable until a sanitized fixture removes that manual step entirely.
 
 **Action item surfaced by writing this plan**: a real RACI covering test ownership
 specifically doesn't exist yet. Recommend the team produce one (even a short one) rather than
