@@ -30,7 +30,7 @@ ORDINAL_COLS = ["nu_percent_going_to_college", "nu_percent_going_to_4yr_college"
 
 def parse_bucket_midpoint(val):
     """'80-89%' -> 84.5 ; '90% or more' -> 95 ; '10% or fewer' -> 5 ;
-       'greater than 20' -> 24 ; 'More than 1000' -> 1200 ; '01 - 02' -> 1.5"""
+       'greater than 20' -> 25 ; 'More than 1000' -> 1200 ; '01 - 02' -> 1.5"""
     if pd.isna(val):
         return np.nan
     s = str(val).lower().replace("%", "").strip()
