@@ -1,3 +1,26 @@
+## Update 2026-07-17, third pass — closing out the last two open items from the original notes
+
+Two items from the original team notes (Goal 6 SAT validation, Goal 8 IB programme count)
+were never circled back to after the first two passes below. Both done now:
+
+1. **SAT validated against IL ISBE ACT, as requested.** `spearman(nu_avg_freshman_sat,
+   act_ela_average_score_grade_11)` = **0.81**, `spearman(..., act_math...)` = **0.82**, on the
+   451-school overlap where both exist (IL only — ACT coverage nationally is 1.2%, too sparse
+   to check elsewhere). Strong, as predicted in the original notes. This is a real sanity
+   check passing, not just an assumption carried forward.
+2. **IB programme count added** (`ib_programme_count`, `build_features.py`): count of distinct
+   programmes (PYP/MYP/DP/CP) from `ib_schools.programmes`, joined via `ib_school_id` and
+   gated on the same `review`-tier match-tier logic as `ib_flag_candidate` (588 schools
+   populated, matching the same candidate count exactly — mostly 1 programme, a handful with
+   2-3, none with all 4).
+
+Both were sitting unaddressed in the original notes from the start of this work, not newly
+discovered gaps — worth a reminder that "resolved in an early pass" and "actually followed
+through on every line item" aren't the same thing; this pass was a deliberate re-check against
+the original notes specifically to catch that gap.
+
+---
+
 ## Update 2026-07-17 — LEAID fix, Goal 4 funding built, private-HS sector bug fixed
 
 Four things changed since the pass below; **the coverage numbers in §1 and the

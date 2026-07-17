@@ -171,6 +171,10 @@ METADATA = {
                           "IB scraper pull date not confirmed in repo", "inferred",
                           "1 if IB fuzzy-matched AND match tier is 'review' (never auto_accept nationwide -- "
                           "still needs human confirmation; gating added 2026-07-17, see build_features.py)"),
+    "ib_programme_count": ("IB scraper (data/IB/scrapers)", "school",
+                          "IB scraper pull date not confirmed in repo", "inferred",
+                          "Count of distinct IB programmes offered (PYP/MYP/DP/CP), gated the same way as "
+                          "ib_flag_candidate (review-tier match only) -- null for non-candidate rows, not 0"),
     "meets_min_size": ("Derived in build_modeling_dataset.py", "school", "n/a (derived flag)", "derived",
                        f"True if enrollment_9_12 >= {MIN_ENROLLMENT_9_12} or enrollment_9_12 is unknown "
                        f"(freeze gate)"),

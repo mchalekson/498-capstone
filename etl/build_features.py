@@ -104,7 +104,7 @@ def build_funding(out, df, finance_df, saipe_df):
     return out
 
 
-def build(df, finance_df=None, saipe_df=None):
+def build(df, finance_df=None, saipe_df=None, ib_df=None):
     out = pd.DataFrame(index=df.index)
     num = lambda c: pd.to_numeric(df[c], errors="coerce")
 
@@ -198,6 +198,18 @@ def build(df, finance_df=None, saipe_df=None):
     out["ib_flag_candidate"] = (
         df["ib_school_id"].notna() & (df["ib_match_tier"] == "review")
     ).astype("Int64")
+
+    # IB programme count (Goal 8, friend's note: "add IB programme count for IB schools").
+    # ib_schools.programmes is a comma-separated list (e.g. "PYP, MYP, DP") -- count of
+    # distinct programmes offered. Gated the same way as ib_flag_candidate: only for rows
+    # where the IB match is at least 'review' tier, not the unconfirmed 'reject' tier.
+    if ib_df is not None:
+        ib_lookup = ib_df.set_index("school_id")["programmes"]
+        matched_ib_id = df["ib_school_id"].where(out["ib_flag_candidate"] == 1)
+        programmes = matched_ib_id.map(ib_lookup)
+        out["ib_programme_count"] = programmes.str.split(",").str.len()
+    else:
+        out["ib_programme_count"] = np.nan
     return out
 
 
@@ -268,6 +280,15 @@ def _load_funding_inputs(input_path, no_funding):
     return finance_df, saipe_df
 
 
+def _load_ib_input(input_path):
+    base = os.path.dirname(os.path.abspath(input_path))
+    ib_path = os.path.join(base, "ib_schools.csv")
+    if not os.path.exists(ib_path):
+        print(f"[ib] ib_schools.csv not found next to {input_path} -- skipping ib_programme_count.")
+        return None
+    return pd.read_csv(ib_path, low_memory=False)
+
+
 if __name__ == "__main__":
     parser = argparse.ArgumentParser()
     parser.add_argument("path", nargs="?", default="schools_org_all.csv")
@@ -277,7 +298,8 @@ if __name__ == "__main__":
 
     df = pd.read_csv(args.path, low_memory=False)
     finance_df, saipe_df = _load_funding_inputs(args.path, args.no_funding)
-    feats = build(df, finance_df=finance_df, saipe_df=saipe_df)
+    ib_df = _load_ib_input(args.path)
+    feats = build(df, finance_df=finance_df, saipe_df=saipe_df, ib_df=ib_df)
     validate(df, feats)
     feats.to_csv("schools_features.csv", index=False)
     print(f"\nWrote schools_features.csv  ({feats.shape[0]} rows x {feats.shape[1]} cols)")
