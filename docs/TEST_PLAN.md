@@ -16,10 +16,30 @@ Four testing types, matched to where risk actually concentrates in this project:
 
 | Type | What it covers | Why it matters here |
 |---|---|---|
-| **Unit** | Individual functions in `etl/build_features.py`, `etl/combine_schools.py`, `etl/build_rigor_classification.py`, `etl/build_modeling_dataset.py` | This is where the real bugs have lived: sector misclassification, IB match-tier gating, LEAID derivation, the CEEB fan-out — all were logic errors inside single functions, catchable in isolation |
-| **Integration** | How pipeline stages compose (`build_features.build()` → `build_modeling_dataset`'s freeze steps → `build_rigor_classification` → `build_clustering` → `build_benchmarking`) | Catches column-contract breaks between stages (a rename or drop in one script silently breaking the next) that unit tests on either side, run alone, can't see |
-| **System** | The full pipeline run end to end against the real exported data (`csv_exports/`), and — where DB access is available — the Docker Postgres pipeline (`docker compose up`, `etl/run_all.py`) | Confirms the whole thing actually runs, not just that each piece is individually correct; this is also where the missing `scikit-learn` dependency (see §4) was caught |
-| **User Acceptance (UAT)** | Client-facing deliverables: the two data dictionaries, `modeling_dataset.csv`, and the rigor/clustering/benchmarking outputs, reviewed by Bob Henkins (NU Undergraduate Admissions, the project client) and Adam, and structurally by another student team acting as a second reviewer per the assignment's "we may engage the other team" | The platform's entire purpose (per the report's Section 1) is serving admissions officers standardized, auditable context — correctness by our own tests is necessary but not sufficient; the client has to find the output usable |
+| **Unit** | Individual functions in `etl/build_features.py`, `etl/combine_schools.py` (its two pure-Python helpers only — see gap below), `etl/build_rigor_classification.py`, `etl/build_modeling_dataset.py` | This is where the real bugs have lived: sector misclassification, IB match-tier gating, LEAID derivation, the CEEB fan-out — all were logic errors inside single functions, catchable in isolation |
+| **Integration** | How the CSV-driven pipeline stages compose (`build_features.build()` → `build_modeling_dataset`'s freeze steps) | Catches column-contract breaks between stages that unit tests on either side, run alone, can't see |
+| **System** | The five-script CSV pipeline run end to end against the real exported data (`csv_exports/`) | Confirms the whole CSV-driven chain actually runs, not just that each piece is individually correct; this is also where the missing `scikit-learn` dependency (see §4) was caught |
+| **User Acceptance (UAT)** | Planned reviews of the two data dictionaries, `modeling_dataset.csv`, and the rigor/clustering/benchmarking outputs, by the project client (Bob Henkins, NU Undergraduate Admissions, and Adam) and, per the assignment's "we may engage the other team," a second student team | The platform's entire purpose (per the report's Section 1) is serving admissions officers standardized, auditable context — correctness by our own tests is necessary but not sufficient; the client has to find the output usable |
+
+**Two coverage gaps, stated plainly rather than glossed over:**
+
+1. **`etl/combine_schools.py`'s actual join logic is untested.** Only its two pure-Python
+   helpers (`resolve_ceeb_ties`, `normalize_name`) have unit tests. The functions that do the
+   real work — `build_schools_org_enriched`, `build_schools_org_all`,
+   `build_public_schools_enriched`, `build_private_schools_enriched`,
+   `build_cps_nces_crosswalk` — run SQL against a live Postgres database and have **zero**
+   automated coverage, and no documented manual verification procedure either. This is the
+   riskiest code in the pipeline (multi-table joins, state-context merges, IB/ISBE/CPS fuzzy
+   matching) and it's currently the least tested. See §4 for why, and §5/§6 for the plan to
+   close this.
+2. **The Docker/Postgres system test is not currently automatable or reproducible from a
+   fresh clone**, for a deliberate, correct reason (not an oversight — see §4): the raw source
+   files that database-backed step needs (`data/updated-sheng/`) total roughly 2.6 GB
+   (a single CRDC data folder alone is 794 MB, two EDFacts assessment folders are 1.7 GB and
+   1.8 GB) and were intentionally excluded from git as impractical to version, not just
+   over GitHub's per-file limit. A fresh `git clone` of this repo has no way to obtain them,
+   so `docker compose up` + `etl/run_all.py` cannot currently be exercised as an automated
+   test. Documented as a real, standing limitation in §4, not worked around silently.
 
 Explicitly **not** covered by this plan (documented, not silently skipped):
 - Load/performance testing — out of scope; this is a batch ETL pipeline re-run at most annually
@@ -80,17 +100,25 @@ Explicitly **not** covered by this plan (documented, not silently skipped):
 - No duplicate school identities emerge from chaining these steps (a stand-in for the class
   of bug the real CEEB fan-out was).
 
-### System test scenarios
+### System test scenarios (automated, verified)
 - Each of the five pipeline scripts (`build_features.py`, `build_modeling_dataset.py`,
   `build_rigor_classification.py`, `build_clustering.py`, `build_benchmarking.py`) runs to
   completion against the real `csv_exports/` data and produces output of the expected shape
   (row-count floor, required columns present, categorical outputs constrained to their valid
-  value sets).
-- (When DB access is available) `docker compose up` brings up Postgres 16 and the ETL
-  container cleanly; `etl/run_all.py` completes without error against a freshly-created
-  database.
+  value sets). Verified: all 5 pass as of this writing.
 
-### UAT scenarios
+### System test scenario NOT currently achievable — a real, standing gap
+- `docker compose up` bringing up Postgres 16 and the ETL container, followed by
+  `etl/run_all.py` completing against a freshly created database, **cannot currently be run
+  as an automated test.** It was never executed as part of building this suite. On a fresh
+  clone it would fail at the loader step: `etl/load_schools_ceeb.py` and
+  `etl/combine_schools.py` need files under `data/updated-sheng/` that are gitignored and
+  were never committed (correctly — see §4 for the actual sizes involved). Closing this gap
+  needs a decision, not a workaround: either commit a small sanitized fixture version of
+  those files for testing purposes, or document exactly where the real files live and how a
+  new contributor obtains them, and accept that this system test stays manual until then.
+
+### UAT scenarios (planned — none of these have happened yet)
 - Bob/Adam can locate, in `data_dictionary_schools_org_enriched.csv` and
   `data_dictionary_modeling_dataset.csv`, the source, vintage, and description for any
   variable they ask about — this is literally what they asked for in the 2026-07-14 meeting.
@@ -138,6 +166,20 @@ docstring, which explains this convention directly).
    anyone re-deriving `csv_exports/` from raw source data rather than reading the already-
    exported CSVs.
 
+   **Not currently reproducible from a fresh clone, on purpose, not by accident.**
+   `data/updated-sheng/` — Sheng's combined schools export, Bob's org export, and the raw
+   CRDC/EDFacts assessment data — is gitignored. This was a deliberate call, not an
+   oversight: the directory is roughly **2.6 GB** (CRDC data alone is 794 MB; two EDFacts
+   assessment folders are 1.7 GB and 1.8 GB), far past what's reasonable to version in git
+   regardless of GitHub's 100 MB per-file limit. The real consequence: anyone testing the
+   Docker/Postgres path needs these files placed manually, from wherever the team currently
+   shares them, before `etl/run_all.py` can run at all — and that hand-off isn't documented
+   anywhere yet. Recommendation: either (a) generate and commit a small, sanitized fixture
+   version of each file, scoped to just enough rows to exercise the joins, purely for testing
+   — or (b) write down, in this repo, exactly where the real files live and how to get them.
+   Until one of those happens, the Docker/Postgres path is tested manually and
+   inconsistently, not automatically.
+
 **Test-specific dependencies**: `requirements-test.txt` (pytest 9.1.1) — kept separate from
 `etl/requirements.txt` since pytest is a development/test-time dependency, not a pipeline
 runtime one.
@@ -165,20 +207,32 @@ data exports.
 
 ## 5. Test Execution Plan
 
-Tied to the project's own weekly schedule rather than an invented cadence:
+Tied to the project's own weekly schedule rather than an invented cadence. **Ownership below
+is honest about what is and isn't formally assigned**: no RACI document exists in this repo —
+`docs/BOB_BRIEFING.md` references "per the RACI, master database & data pulls is Max/Qifan's
+workstream," which is the closest documented scope to this pipeline's code, but no RACI
+covering *testing* specifically has been written. Where a name is used below, it's inferred
+from that one existing reference, not from a formal assignment — flagged as its own action
+item, not silently assumed.
 
 | Phase | When | What runs | Who |
 |---|---|---|---|
 | Unit + integration, every commit | Ongoing, starting now (Week 4) | `pytest tests/test_build_features.py tests/test_combine_schools.py tests/test_build_rigor_classification.py tests/test_build_modeling_dataset.py tests/test_integration_pipeline.py` | Whoever touches `etl/*.py` — run locally before pushing; no CI is wired up yet (see Defect Management), so this is currently a manual discipline, not an enforced gate |
 | System test, before every new versioned dataset | Whenever `modeling_dataset_v<N>` is cut | `pytest tests/test_system_pipeline.py` | Whoever cuts the version |
-| Full Docker system test | Before any DB-schema-affecting change ships (new table, changed join) | `docker compose up`, then `etl/run_all.py` end to end | Whoever owns `combine_schools.py`/the loaders |
-| Hyperparameter/validation-specific testing | Week 7 (per the project's own schedule — Section 4.6 of the report) | Train/test/validation split checks, overfitting/underfitting checks — not yet built, this plan's system/integration tests are the pre-requisite groundwork for that phase | TBD, whoever leads modeling |
+| Full Docker system test | Not currently runnable (see §4) — this row describes the target state, not a running practice | `docker compose up`, then `etl/run_all.py` end to end | Closest existing RACI scope: Max/Qifan ("master database & data pulls" per `BOB_BRIEFING.md`) — needs explicit confirmation, not assumed |
+| Hyperparameter/validation-specific testing | Week 7 (per the project's own schedule — Section 4.6 of the report) | Train/test/validation split checks, overfitting/underfitting checks — not yet built, this plan's system/integration tests are the pre-requisite groundwork for that phase | Not assigned — no RACI line covers modeling/validation specifically; needs a decision, not a default |
 | UAT round 1 | As soon as Bob/Adam have bandwidth (not gated on a specific week) | Structured review of both data dictionaries + `modeling_dataset.csv`, using the UAT scenarios in §2 | Bob, Adam |
 | UAT round 2 (peer team) | Before Week 9 presentation prep | The engaged "other team" independently reproduces one pipeline run and reviews the rigor/clustering/benchmarking docs for clarity | Second student team + our team |
 
 **Dependencies**: system tests depend on `csv_exports/` being current (regenerate via the
 chain in §1 before running); UAT round 2 depends on round 1 feedback being incorporated
-first, so the peer team isn't reviewing something already known to be wrong.
+first, so the peer team isn't reviewing something already known to be wrong. The Docker
+system test row depends on §4's fixture-or-documentation decision being made first — it
+cannot run at all until then.
+
+**Action item surfaced by writing this plan**: a real RACI covering test ownership
+specifically doesn't exist yet. Recommend the team produce one (even a short one) rather than
+this plan inferring ownership from a single line in `BOB_BRIEFING.md`.
 
 ---
 
