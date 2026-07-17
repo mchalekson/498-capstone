@@ -1,0 +1,52 @@
+column,dtype,pct_non_null,description
+ceeb,str,88.9,College Board CEEB code (join key back to schools_org_all)
+school_name,str,100.0,"School name, school-side if matched else NU org name"
+state,str,63.5,State abbreviation
+is_school_match,bool,100.0,True if row matched both a school-side record and an NU org record
+is_public_hs,bool,100.0,"True if school-side record present and school_level in {High, Secondary}"
+is_private_hs,bool,100.0,"True if NU-flagged private type OR has a school-side pss_id, and not public"
+sector,str,100.0,public / private / other-oos -- other-oos rows are excluded from modeling_dataset
+has_nu_analytics,bool,100.0,True if nu_avg_num_ap_tests_taken or nu_avg_freshman_sat is present
+has_nu_data,bool,100.0,True if row matched any NU org record (nu_guid present) -- broader than has_nu_analytics
+crime_risk_need,float64,34.7,TODO: undocumented -- add to DESCRIPTIONS in build_modeling_dataset.py
+crime_risk_adv,float64,34.7,TODO: undocumented -- add to DESCRIPTIONS in build_modeling_dataset.py
+educational_attainment_need,float64,34.7,TODO: undocumented -- add to DESCRIPTIONS in build_modeling_dataset.py
+educational_attainment_adv,float64,34.7,TODO: undocumented -- add to DESCRIPTIONS in build_modeling_dataset.py
+family_stability_need,float64,34.7,TODO: undocumented -- add to DESCRIPTIONS in build_modeling_dataset.py
+family_stability_adv,float64,34.7,TODO: undocumented -- add to DESCRIPTIONS in build_modeling_dataset.py
+housing_stability_need,float64,34.7,TODO: undocumented -- add to DESCRIPTIONS in build_modeling_dataset.py
+housing_stability_adv,float64,34.7,TODO: undocumented -- add to DESCRIPTIONS in build_modeling_dataset.py
+median_family_income_need,float64,34.7,TODO: undocumented -- add to DESCRIPTIONS in build_modeling_dataset.py
+median_family_income_adv,float64,34.7,TODO: undocumented -- add to DESCRIPTIONS in build_modeling_dataset.py
+socio_need_index,float64,34.7,"Mean of 5 NU socio need percentiles (higher = more disadvantage; reverse-coded, see EDA 3a)"
+ap_offered,int64,100.0,1 if any AP signal present (CRDC offered/enrollment or NU tests taken/offered)
+ap_tests_taken,float64,33.0,"NU avg AP tests taken per student (Goal 8, direct measure)"
+ap_participation,float64,35.6,"CRDC AP enrollment / enrollment_9_12, winsorized 1/99pct (Goal 8, fallback measure)"
+ap_intensity_src,str,100.0,Provenance of the best available AP intensity signal for this row
+testtaker_rate,float64,54.7,"CRDC SAT/ACT takers / enrollment_9_12, winsorized 1/99pct (Goal 6)"
+sat_participation_nu,float64,31.9,NU pct of seniors taking SAT (Goal 6)
+sat_score_nu,float64,34.7,"NU avg freshman SAT score -- NOTE recruiting-selection biased, not a random sample"
+grad_rate_2021,float64,50.7,EDFacts SY2020-21 four-year adjusted cohort graduation rate
+frl_rate,float64,50.1,"Free/reduced lunch students / total_enrollment, percent"
+enrollment_9_12,float64,62.9,Grades 9-12 headcount (denominator for AP/SAT rates and the min-size freeze)
+grade_9,float64,61.6,TODO: undocumented -- add to DESCRIPTIONS in build_modeling_dataset.py
+grade_10,float64,62.1,TODO: undocumented -- add to DESCRIPTIONS in build_modeling_dataset.py
+grade_11,float64,62.4,TODO: undocumented -- add to DESCRIPTIONS in build_modeling_dataset.py
+grade_12,float64,62.4,TODO: undocumented -- add to DESCRIPTIONS in build_modeling_dataset.py
+child_poverty_saipe,float64,60.8,"County-level SAIPE child poverty percent (r=0.89 with ACS, kept as the single poverty proxy)"
+per_pupil_state_local,float64,1.9,"IL ISBE true per-pupil state+local expenditure (IL only, ~2.8% coverage)"
+leaid,float64,58.0,"District ID, derived as nces_id_12[:7] (NOT the leaid column shipped in schools_org_all -- see build_features.build_funding)"
+district_total_revenue,float64,42.5,"Census F-33 district total revenue, dollars (raw units, from $1,000s source)"
+per_resident_child_funding_total,float64,41.7,"F-33 total revenue / SAIPE school-age (5-17) population, winsorized -- a per-resident-child PROXY, not true per-pupil expenditure (Goal 4, national)"
+per_resident_child_funding_state_local,float64,41.7,"Same as above, state+local revenue only (excludes federal)"
+funding_source,str,100.0,Which funding figure is populated for this row: isbe_il_true_per_pupil / census_f33_per_resident_child_proxy / none
+percent_going_to_college_mid,float64,49.5,"NU bucketed percent going to any college, parsed to bucket midpoint"
+percent_going_to_4yr_college_mid,float64,15.0,"NU bucketed percent going to 4-year college, parsed to bucket midpoint"
+percent_federal_lunch_aid_mid,float64,9.1,"NU bucketed percent on federal lunch aid, parsed to bucket midpoint"
+percent_first_gen_college_mid,float64,4.5,"NU bucketed percent first-gen college, parsed to bucket midpoint"
+number_of_ap_classes_offered_mid,float64,15.7,"NU bucketed count of AP classes offered, parsed to bucket midpoint"
+size_of_senior_class_mid,float64,67.5,"NU bucketed senior class size, parsed to bucket midpoint"
+ap_capstone,int64,100.0,1 if NU flags this as an AP Capstone school
+setting,str,84.8,"Urban/suburban/rural setting, NU value falling back to NCES locale"
+ib_flag_candidate,int64,100.0,"1 if IB fuzzy-matched AND match tier is 'review' (never auto_accept nationwide -- still needs human confirmation, see build_features.py)"
+meets_min_size,bool,100.0,True if enrollment_9_12 >= 30 or enrollment_9_12 is unknown (freeze gate; see MIN_ENROLLMENT_9_12)

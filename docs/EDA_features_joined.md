@@ -1,3 +1,61 @@
+## Update 2026-07-17 — LEAID fix, Goal 4 funding built, private-HS sector bug fixed
+
+Four things changed since the pass below; **the coverage numbers in §1 and the
+"missing features" in §4 are now stale** for these specific items (left as-is
+below for the historical record, corrected here):
+
+1. **LEAID was wrong, not just "not built yet."** The `leaid` column that ships
+   in `schools_org_all` is 5 characters and has a **0% match rate** against
+   `census_school_finances_clean.leaid`. The standard LEAID is the first 7
+   characters of the 12-digit NCESSCH (`nces_id_12[:7]`); that gets an **87%
+   match rate**, verified directly against the finance table. This is the same
+   kind of stale truncation `views.sql` already flags for the old
+   `nces_public_schools_clean` table — it predates the 12-digit ELSI re-pull.
+2. **Goal 4 (funding) is built.** `build_features.py` now joins Census F-33
+   (`census_school_finances_clean`) and SAIPE (`census_saipe_poverty_clean`) via
+   the corrected LEAID. Public-HS funding coverage: **2.8% -> 66.0%.**
+   **Caveat, and it's a real one:** F-33 has no enrollment/membership field,
+   and there's no verified district-level enrollment source loaded in this
+   pipeline to divide by (the old `nces_public_schools_clean.leaid` has the
+   same truncation problem, so it can't be used to aggregate school-level
+   enrollment up to district). So the new `per_resident_child_funding_*`
+   fields are total/state-local revenue ÷ **SAIPE school-age (5-17) population**
+   — a standard Census companion pairing, but a **proxy for enrollment, not an
+   actual per-pupil headcount.** Only the IL ISBE `per_pupil_state_local`
+   field is true per-pupil expenditure. `funding_source` records which one
+   populated each row so the two are never silently averaged together.
+3. **The "IB flags didn't land" finding in §4 was a sector-classification bug,
+   not a bad match.** All 1,354 `ib_school_id` matches are on rows with
+   `pss_id` populated (private schools with a school-side record) and
+   `school_level = NaN` (that field is public-only by construction in Sheng's
+   export). `is_private_hs` required `school_id` to be null, which excluded
+   every one of these rows into `other/oos` — invisible to every coverage
+   check. Fixed to `(nu_type private) | pss_id.notna()`. Also: `ib_flag` is
+   now `ib_flag_candidate`, gated on `ib_match_tier == 'review'` — nationwide
+   IB name-matching has no state to block on, so nothing is ever
+   `auto_accept`; the old `ib_school_id.notna()` check was silently counting
+   766 `reject`-tier (not just 588 `review`-tier) rows as confirmed IB flags.
+4. **`has_nu_data` added** (`nu_guid.notna()`) as the broad "matched any NU org
+   record" stratum, separate from `has_nu_analytics` (AP/SAT presence
+   specifically).
+
+**Still open, not touched in this pass** — needs either DB access to rerun
+`combine_schools.py` or a team call on methodology, not a build-features-layer
+fix:
+- §3b CEEB fan-out (2,072 duplicate org rows) — confirmed still present,
+  unchanged.
+- True district enrollment for Goal 4 (would replace the SAIPE proxy above
+  with a real per-pupil number) — needs a CCD district membership file, not
+  currently loaded.
+
+`etl/build_modeling_dataset.py` is new: takes `build_features.py`'s output,
+applies the cleaning freeze (min-size >= 30 grades 9-12, restricts to the
+public+private HS universe, sentinel scrub, winsorize sanity check), and
+writes a versioned `modeling_dataset_<version>_<date>.csv` +
+`data_dictionary_modeling_dataset.csv`.
+
+---
+
 # EDA & Feature Memo — joined table (`schools_org_all` / `schools_org_enriched`)
 
 Supersedes the earlier raw-export memo. This pass measures the **joined** table
@@ -101,5 +159,11 @@ without care.
 1. Historical rigor labels available? (Goal 3)
 2. Per-variable vintage for the `nu_*` fields (dictionary confirms: undated).
 3. Confirm socio indices are need-coded / Landscape-derived (§3a).
-4. Fix `combine_schools.py` dup rows (§3b) and the IB key (§4).
+4. `combine_schools.py` dup rows (§3b) still open -- needs DB access to rerun,
+   or a call on whether to dedup org-side or resolve 1:1 CEEB on the school
+   side first. The IB key issue (§4) turned out to be a sector-classification
+   bug in `build_features.py`, not the join itself -- fixed, see update above.
 5. Reconciliation rule when CRDC AP and Bob's AP disagree.
+6. **New:** OK to ship `per_resident_child_funding_*` (F-33 revenue / SAIPE
+   population) as a national Goal 4 proxy, clearly labeled as not true
+   per-pupil? Or hold for a real CCD district-membership enrollment source?
