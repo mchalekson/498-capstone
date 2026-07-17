@@ -40,44 +40,128 @@ SENTINEL_SUSPECT_KEYWORDS = ("rate", "pct", "percent", "index", "score", "revenu
 RATIO_COLS = ["ap_participation", "testtaker_rate", "per_resident_child_funding_total",
               "per_resident_child_funding_state_local"]
 
-DESCRIPTIONS = {
-    "ceeb": "College Board CEEB code (join key back to schools_org_all)",
-    "school_name": "School name, school-side if matched else NU org name",
-    "state": "State abbreviation",
-    "is_school_match": "True if row matched both a school-side record and an NU org record",
-    "is_public_hs": "True if school-side record present and school_level in {High, Secondary}",
-    "is_private_hs": "True if NU-flagged private type OR has a school-side pss_id, and not public",
-    "sector": "public / private / other-oos -- other-oos rows are excluded from modeling_dataset",
-    "has_nu_analytics": "True if nu_avg_num_ap_tests_taken or nu_avg_freshman_sat is present",
-    "has_nu_data": "True if row matched any NU org record (nu_guid present) -- broader than has_nu_analytics",
-    "socio_need_index": "Mean of 5 NU socio need percentiles (higher = more disadvantage; reverse-coded, see EDA 3a)",
-    "ap_offered": "1 if any AP signal present (CRDC offered/enrollment or NU tests taken/offered)",
-    "ap_tests_taken": "NU avg AP tests taken per student (Goal 8, direct measure)",
-    "ap_participation": "CRDC AP enrollment / enrollment_9_12, winsorized 1/99pct (Goal 8, fallback measure)",
-    "ap_intensity_src": "Provenance of the best available AP intensity signal for this row",
-    "testtaker_rate": "CRDC SAT/ACT takers / enrollment_9_12, winsorized 1/99pct (Goal 6)",
-    "sat_participation_nu": "NU pct of seniors taking SAT (Goal 6)",
-    "sat_score_nu": "NU avg freshman SAT score -- NOTE recruiting-selection biased, not a random sample",
-    "grad_rate_2021": "EDFacts SY2020-21 four-year adjusted cohort graduation rate",
-    "frl_rate": "Free/reduced lunch students / total_enrollment, percent",
-    "enrollment_9_12": "Grades 9-12 headcount (denominator for AP/SAT rates and the min-size freeze)",
-    "child_poverty_saipe": "County-level SAIPE child poverty percent (r=0.89 with ACS, kept as the single poverty proxy)",
-    "per_pupil_state_local": "IL ISBE true per-pupil state+local expenditure (IL only, ~2.8% coverage)",
-    "leaid": "District ID, derived as nces_id_12[:7] (NOT the leaid column shipped in schools_org_all -- see build_features.build_funding)",
-    "district_total_revenue": "Census F-33 district total revenue, dollars (raw units, from $1,000s source)",
-    "per_resident_child_funding_total": "F-33 total revenue / SAIPE school-age (5-17) population, winsorized -- a per-resident-child PROXY, not true per-pupil expenditure (Goal 4, national)",
-    "per_resident_child_funding_state_local": "Same as above, state+local revenue only (excludes federal)",
-    "funding_source": "Which funding figure is populated for this row: isbe_il_true_per_pupil / census_f33_per_resident_child_proxy / none",
-    "percent_going_to_college_mid": "NU bucketed percent going to any college, parsed to bucket midpoint",
-    "percent_going_to_4yr_college_mid": "NU bucketed percent going to 4-year college, parsed to bucket midpoint",
-    "percent_federal_lunch_aid_mid": "NU bucketed percent on federal lunch aid, parsed to bucket midpoint",
-    "percent_first_gen_college_mid": "NU bucketed percent first-gen college, parsed to bucket midpoint",
-    "number_of_ap_classes_offered_mid": "NU bucketed count of AP classes offered, parsed to bucket midpoint",
-    "size_of_senior_class_mid": "NU bucketed senior class size, parsed to bucket midpoint",
-    "ap_capstone": "1 if NU flags this as an AP Capstone school",
-    "setting": "Urban/suburban/rural setting, NU value falling back to NCES locale",
-    "ib_flag_candidate": "1 if IB fuzzy-matched AND match tier is 'review' (never auto_accept nationwide -- still needs human confirmation, see build_features.py)",
-    "meets_min_size": "True if enrollment_9_12 >= 30 or enrollment_9_12 is unknown (freeze gate; see MIN_ENROLLMENT_9_12)",
+# Same 8-field schema as docs/data_dictionary_schools_org_enriched.csv (variable,
+# data_type, source_dataset, grain, vintage_as_of, vintage_confidence, description,
+# notes) so the two dictionaries read as one system -- that CSV covers the 127 raw
+# joined-table columns; this one covers the ~30 columns build_features.py derives
+# on top of it, which weren't documented anywhere before this pass. `data_type` and
+# `range`/`pct_non_null` are computed from the actual data at runtime, not hardcoded
+# here (see write_data_dictionary).
+NU_EXPORT_VINTAGE = ("File exported 2026-06-24 (from source filename timestamp) -- "
+                     "no per-variable vintage stated inside the file itself")
+NU_EXPORT_CONF = "confirmed (export date only)"
+
+# (source_dataset, grain, vintage_as_of, vintage_confidence, description)
+METADATA = {
+    "ceeb": ("Sheng's combined schools export", "school",
+             "UC Boulder source last updated 2025-01-06 upstream; unclear if Sheng used this exact version",
+             "inferred", "College Board CEEB code (join key back to schools_org_all)"),
+    "school_name": ("Sheng's combined schools export / NU org export", "school",
+                    "not confirmed in repo -- ask Sheng which pull year", "inferred",
+                    "School name, school-side if matched else NU org name"),
+    "state": ("Sheng's combined schools export", "school",
+              "not confirmed in repo -- ask Sheng", "inferred", "State abbreviation"),
+    "is_school_match": ("Derived in build_features.py", "school", "n/a (derived flag)", "derived",
+                        "True if row matched both a school-side record and an NU org record"),
+    "is_public_hs": ("Derived in build_features.py", "school", "n/a (derived flag)", "derived",
+                     "True if school-side record present and school_level in {High, Secondary}"),
+    "is_private_hs": ("Derived in build_features.py", "school", "n/a (derived flag)", "derived",
+                      "True if NU-flagged private type OR has a school-side pss_id, and not public "
+                      "-- fixed 2026-07-17, previously excluded pss_id-only rows (see EDA update)"),
+    "sector": ("Derived in build_features.py", "school", "n/a (derived flag)", "derived",
+               "public / private / other-oos -- other-oos rows are excluded from modeling_dataset"),
+    "has_nu_analytics": ("NU org export", "school", NU_EXPORT_VINTAGE, NU_EXPORT_CONF,
+                         "True if nu_avg_num_ap_tests_taken or nu_avg_freshman_sat is present"),
+    "has_nu_data": ("NU org export", "school", NU_EXPORT_VINTAGE, NU_EXPORT_CONF,
+                    "True if row matched any NU org record (nu_guid present) -- broader than has_nu_analytics"),
+    "socio_need_index": ("NU org export (Landscape-lineage, per EDA 3a)", "school", NU_EXPORT_VINTAGE, "inferred",
+                         "Mean of 5 NU socio need percentiles (higher = more disadvantage; reverse-coded)"),
+    **{
+        f"{s}_{suffix}": (
+            "NU org export (Landscape-lineage, per EDA 3a)", "school", NU_EXPORT_VINTAGE, "inferred",
+            f"{'Raw' if suffix == 'need' else 'Reverse-coded (100 - raw)'} NU {s.replace('_', ' ')} percentile "
+            f"-- raw is need-coded (high = worse), verified against external Census data (r=-0.60 vs "
+            f"county median income); {'kept for reference' if suffix == 'need' else 'advantage-oriented, use this one for modeling'}"
+        )
+        for s in ["crime_risk", "educational_attainment", "family_stability", "housing_stability", "median_family_income"]
+        for suffix in ["need", "adv"]
+    },
+    "ap_offered": ("CRDC (SY2021-22) + NU org export (undated) -- see ap_intensity_src for per-row provenance",
+                   "school", "mixed, see ap_intensity_src", "mixed",
+                   "1 if any AP signal present (CRDC offered/enrollment or NU tests taken/offered)"),
+    "ap_tests_taken": ("NU org export", "school", NU_EXPORT_VINTAGE, NU_EXPORT_CONF,
+                       "NU avg AP tests taken per student (Goal 8, direct measure)"),
+    "ap_participation": ("CRDC", "school", "School Year 2021-2022", "confirmed",
+                        "CRDC AP enrollment / enrollment_9_12, winsorized 1/99pct (Goal 8, fallback measure)"),
+    "ap_intensity_src": ("Derived in build_features.py", "school", "n/a (derived flag)", "derived",
+                        "Provenance of the best available AP intensity signal for this row"),
+    "testtaker_rate": ("CRDC", "school", "School Year 2021-2022", "confirmed",
+                       "CRDC SAT/ACT takers / enrollment_9_12, winsorized 1/99pct (Goal 6)"),
+    "sat_participation_nu": ("NU org export", "school", NU_EXPORT_VINTAGE, NU_EXPORT_CONF,
+                            "NU pct of seniors taking SAT (Goal 6)"),
+    "sat_score_nu": ("NU org export", "school", NU_EXPORT_VINTAGE, NU_EXPORT_CONF,
+                     "NU avg freshman SAT score -- NOTE recruiting-selection biased, not a random sample"),
+    "grad_rate_2021": ("EDFacts", "school", "School Year 2020-2021", "confirmed",
+                       "Four-year adjusted cohort graduation rate"),
+    "frl_rate": ("Sheng's combined schools export (NCES CCD)", "school",
+                "not confirmed in repo -- ask Sheng", "inferred",
+                "Free/reduced lunch students / total_enrollment, percent"),
+    "enrollment_9_12": ("Sheng's combined schools export (NCES CCD)", "school",
+                       "not confirmed in repo -- ask Sheng", "inferred",
+                       "Grades 9-12 headcount (denominator for AP/SAT rates and the min-size freeze)"),
+    **{
+        f"grade_{n}": ("Sheng's combined schools export (NCES CCD)", "school",
+                      "not confirmed in repo -- ask Sheng", "inferred",
+                      f"Grade {n} headcount (Goal 5 pipeline)")
+        for n in [9, 10, 11, 12]
+    },
+    "child_poverty_saipe": ("Census SAIPE (attached at county level in Sheng's export)", "county",
+                           "not confirmed in repo -- ask Sheng which SAIPE release year", "inferred",
+                           "County-level SAIPE child poverty percent (r=0.89 with ACS, kept as the single poverty proxy)"),
+    "per_pupil_state_local": ("ISBE finance", "district (IL only)",
+                              "not confirmed in repo -- ask Sheng which ISBE report-card year", "inferred",
+                              "IL ISBE true per-pupil state+local expenditure (IL only, ~2.8% coverage)"),
+    "leaid": ("Derived in build_features.py from nces_id_12[:7]", "district",
+             "n/a (derived key)", "derived",
+             "District ID -- NOT the leaid column shipped in schools_org_all, which is 5 chars and "
+             "0% match rate against Census finance data; fixed 2026-07-17, see build_funding()"),
+    "district_total_revenue": ("Census F-33 (census_school_finances_FY2024_alldistricts.xlsx)", "district",
+                               "FY2024", "confirmed (filename)",
+                               "District total revenue, dollars (raw units, from $1,000s source)"),
+    "per_resident_child_funding_total": ("Census F-33 (FY2024) / SAIPE (2024)", "district",
+                                        "FY2024 finance / 2024 SAIPE", "confirmed (filename)",
+                                        "F-33 total revenue / SAIPE school-age (5-17) population, winsorized -- "
+                                        "a per-resident-child PROXY, not true per-pupil expenditure (Goal 4, national)"),
+    "per_resident_child_funding_state_local": ("Census F-33 (FY2024) / SAIPE (2024)", "district",
+                                               "FY2024 finance / 2024 SAIPE", "confirmed (filename)",
+                                               "Same as per_resident_child_funding_total, state+local revenue only "
+                                               "(excludes federal)"),
+    "funding_source": ("Derived in build_features.py", "school", "n/a (derived flag)", "derived",
+                      "Which funding figure is populated for this row: isbe_il_true_per_pupil / "
+                      "census_f33_per_resident_child_proxy / none"),
+    "percent_going_to_college_mid": ("NU org export", "school", NU_EXPORT_VINTAGE, NU_EXPORT_CONF,
+                                     "NU bucketed percent going to any college, parsed to bucket midpoint"),
+    "percent_going_to_4yr_college_mid": ("NU org export", "school", NU_EXPORT_VINTAGE, NU_EXPORT_CONF,
+                                         "NU bucketed percent going to 4-year college, parsed to bucket midpoint"),
+    "percent_federal_lunch_aid_mid": ("NU org export", "school", NU_EXPORT_VINTAGE, NU_EXPORT_CONF,
+                                      "NU bucketed percent on federal lunch aid, parsed to bucket midpoint"),
+    "percent_first_gen_college_mid": ("NU org export", "school", NU_EXPORT_VINTAGE, NU_EXPORT_CONF,
+                                      "NU bucketed percent first-gen college, parsed to bucket midpoint"),
+    "number_of_ap_classes_offered_mid": ("NU org export", "school", NU_EXPORT_VINTAGE, NU_EXPORT_CONF,
+                                        "NU bucketed count of AP classes offered, parsed to bucket midpoint"),
+    "size_of_senior_class_mid": ("NU org export", "school", NU_EXPORT_VINTAGE, NU_EXPORT_CONF,
+                                 "NU bucketed senior class size, parsed to bucket midpoint"),
+    "ap_capstone": ("NU org export", "school", NU_EXPORT_VINTAGE, NU_EXPORT_CONF,
+                   "1 if NU flags this as an AP Capstone school"),
+    "setting": ("NU org export, falling back to NCES locale", "school", "mixed", "mixed",
+               "Urban/suburban/rural setting"),
+    "ib_flag_candidate": ("IB scraper (data/IB/scrapers) fuzzy-matched in combine_schools.py", "school",
+                          "IB scraper pull date not confirmed in repo", "inferred",
+                          "1 if IB fuzzy-matched AND match tier is 'review' (never auto_accept nationwide -- "
+                          "still needs human confirmation; gating added 2026-07-17, see build_features.py)"),
+    "meets_min_size": ("Derived in build_modeling_dataset.py", "school", "n/a (derived flag)", "derived",
+                       f"True if enrollment_9_12 >= {MIN_ENROLLMENT_9_12} or enrollment_9_12 is unknown "
+                       f"(freeze gate)"),
 }
 
 
@@ -133,15 +217,48 @@ def restrict_to_hs_universe(df):
     return universe
 
 
+def _observed_range(s):
+    """Numeric -> 'min – max'; low-cardinality categorical/bool -> value list; else n/a."""
+    s = s.dropna()
+    if s.empty:
+        return "n/a (all null)"
+    if pd.api.types.is_numeric_dtype(s) or pd.api.types.is_bool_dtype(s):
+        try:
+            return f"{s.min():g} - {s.max():g}"
+        except TypeError:
+            pass
+    uniques = s.unique()
+    if len(uniques) <= 8:
+        return ", ".join(sorted(str(v) for v in uniques))
+    return f"{len(uniques)} distinct values"
+
+
 def write_data_dictionary(df, out_path):
     rows = []
+    missing_metadata = []
     for c in df.columns:
+        meta = METADATA.get(c)
+        if meta is None:
+            missing_metadata.append(c)
+            source_dataset, grain, vintage_as_of, vintage_confidence, description = (
+                "TODO: undocumented", "unknown", "unknown", "undocumented",
+                "TODO: add to METADATA in build_modeling_dataset.py")
+        else:
+            source_dataset, grain, vintage_as_of, vintage_confidence, description = meta
         rows.append({
-            "column": c,
-            "dtype": str(df[c].dtype),
+            "variable": c,
+            "data_type": str(df[c].dtype),
+            "source_dataset": source_dataset,
+            "grain": grain,
+            "vintage_as_of": vintage_as_of,
+            "vintage_confidence": vintage_confidence,
+            "range": _observed_range(df[c]),
             "pct_non_null": round(100 * df[c].notna().mean(), 1),
-            "description": DESCRIPTIONS.get(c, "TODO: undocumented -- add to DESCRIPTIONS in build_modeling_dataset.py"),
+            "description": description,
         })
+    if missing_metadata:
+        print(f"  [dictionary] WARNING: no METADATA entry for {missing_metadata} -- "
+              f"add them to build_modeling_dataset.py")
     pd.DataFrame(rows).to_csv(out_path, index=False)
     print(f"\nWrote {out_path}")
 
