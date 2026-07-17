@@ -114,6 +114,7 @@ def build(df, finance_df=None, saipe_df=None):
     out["state"] = df["state"]
     out["latitude"] = num("nu_latitude")    # NU-sourced; coverage tracks has_nu_data
     out["longitude"] = num("nu_longitude")
+    out["us_region"] = df["nu_us_region"]   # NU-sourced region bucket, 81% coverage -- better peer-group key than raw state (50+ small groups)
     out["is_school_match"] = df["school_id"].notna() & df["nu_guid"].notna()
     out["is_public_hs"] = df["school_id"].notna() & df["school_level"].isin(["High", "Secondary"])
     # is_private_hs must also catch rows with a school-side record (pss_id) but no NU

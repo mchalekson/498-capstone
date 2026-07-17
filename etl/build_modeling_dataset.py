@@ -65,6 +65,9 @@ METADATA = {
                 "School latitude, for location-based clustering (Section 4.4)"),
     "longitude": ("NU org export", "school", NU_EXPORT_VINTAGE, NU_EXPORT_CONF,
                  "School longitude, for location-based clustering (Section 4.4)"),
+    "us_region": ("NU org export", "school", NU_EXPORT_VINTAGE, NU_EXPORT_CONF,
+                 "NU-assigned US region bucket (South/West/Midwest/Northeast/Illinois) -- "
+                 "region peer-group key for performance benchmarking (Section 4.5)"),
     "is_school_match": ("Derived in build_features.py", "school", "n/a (derived flag)", "derived",
                         "True if row matched both a school-side record and an NU org record"),
     "is_public_hs": ("Derived in build_features.py", "school", "n/a (derived flag)", "derived",
