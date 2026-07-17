@@ -112,6 +112,8 @@ def build(df, finance_df=None, saipe_df=None):
     out["ceeb"] = df["ceeb"].fillna(df["nu_ceeb"])
     out["school_name"] = df["school_name"].fillna(df["nu_name"])
     out["state"] = df["state"]
+    out["latitude"] = num("nu_latitude")    # NU-sourced; coverage tracks has_nu_data
+    out["longitude"] = num("nu_longitude")
     out["is_school_match"] = df["school_id"].notna() & df["nu_guid"].notna()
     out["is_public_hs"] = df["school_id"].notna() & df["school_level"].isin(["High", "Secondary"])
     # is_private_hs must also catch rows with a school-side record (pss_id) but no NU
