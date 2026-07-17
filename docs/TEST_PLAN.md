@@ -332,3 +332,92 @@ not one already running.
   `docs/BOB_BRIEFING.md`'s update sections (matching the existing "what we resolved
   ourselves" / "what we still need from you" structure already used there), so UAT feedback
   and technical defect tracking don't fragment into separate, hard-to-reconcile systems.
+
+---
+
+## 9. Sample Test Report
+
+Per the assignment instructions ("test reports... with sample/test data, inputs, and expected
+outputs"): the run below is real, not illustrative — captured 2026-07-17 against this
+project's actual code and data, not a mocked-up example.
+
+### Automated suite — full run
+
+```
+$ pytest tests/ -v
+...
+57 passed in 115.31s (0:01:55)
+```
+
+All 57 tests across all six test files passed: `test_build_features.py` (21),
+`test_build_modeling_dataset.py` (7), `test_build_rigor_classification.py` (11),
+`test_combine_schools.py` (9), `test_docker_pipeline.py` (2), `test_integration_pipeline.py`
+(2), `test_system_pipeline.py` (5). This run included the Docker-gated tests, meaning the raw
+source data was present and the full Postgres pipeline was exercised, not just skipped.
+
+### Sample test case, executed — UT-01 (private-school sector classification)
+
+| Field | Value |
+|---|---|
+| Test data / input | A fixture row: `school_id="S2"`, `pss_id="P1"`, `nu_type=NaN`, `school_level=NaN` (see `tests/conftest.py`) |
+| Action | `build(tiny_schools_org_all)` |
+| Expected output | `is_private_hs == True`, `sector == "private"` |
+| Actual output | `is_private_hs == True`, `sector == "private"` |
+| Result | **PASS** |
+
+### Sample test case, executed — ST-02/ST-03 (Docker/Postgres system test)
+
+| Field | Value |
+|---|---|
+| Test data / input | Raw source data under `data/updated-sheng/` (~2.6 GB — see §4); a freshly created Postgres 16 container |
+| Action | `docker compose up -d db`, wait healthy, `docker compose build etl`, `docker compose run --rm etl`, then query `schools_org_all` row count |
+| Expected output | Exit code 0; "Pipeline completed successfully" in output; `schools_org_all` row count matches the CSV-path result (53,966) |
+| Actual output | Exit code 0; pipeline completed in ~106 seconds; `schools_org_all` row count = 53,966, exactly matching the CSV path |
+| Result | **PASS** |
+
+### Sample query against the live database — real data, not a mock
+
+Demonstrates the database is genuinely queryable end to end, using two arbitrary example
+queries against `schools_org_all` (53,966 rows) in the running Postgres container:
+
+**Query 1 — schools with the highest AP-test-taking intensity:**
+```sql
+SELECT school_name, state, nu_avg_num_ap_tests_taken, nu_avg_freshman_sat
+FROM schools_org_all
+WHERE nu_avg_num_ap_tests_taken IS NOT NULL
+ORDER BY nu_avg_num_ap_tests_taken DESC
+LIMIT 5;
+```
+
+| School | State | Avg AP tests/student | Avg freshman SAT |
+|---|---|---|---|
+| School of Science and Engineering | TX | 15.49 | 1290 |
+| School for the Talented and Gifted | TX | 14.16 | 1250 |
+| BASIS Chandler | AZ | 12.33 | 1260 |
+| BASIS Peoria | AZ | 11.76 | 1200 |
+| IDEA College Preparatory Pharr | TX | 11.58 | 1080 |
+
+**Query 2 — AP course counts and graduation rates by state (public HS only, states with 500+ schools):**
+```sql
+SELECT state, COUNT(*) AS n_schools,
+       ROUND(AVG(crdc_ap_courses)::numeric, 1) AS avg_ap_courses_offered,
+       ROUND(AVG(grad_rate_2021)::numeric, 1) AS avg_grad_rate
+FROM schools_org_all
+WHERE school_level = 'High'
+GROUP BY state HAVING COUNT(*) > 500
+ORDER BY avg_grad_rate DESC LIMIT 5;
+```
+
+| State | # Schools | Avg AP courses offered | Avg grad rate |
+|---|---|---|---|
+| TX | 1,959 | 12.5 | 88.8% |
+| PA | 716 | 11.0 | 88.5% |
+| WI | 560 | 10.0 | 87.9% |
+| MO | 658 | 9.8 | 87.6% |
+| NY | 1,182 | 10.9 | 86.5% |
+
+Worth noting honestly rather than cropping out of the sample: this same query returns a null
+average grad rate for Washington state (657 schools) — not a bug, a real coverage gap already
+documented in the data dictionary (EDFacts grad-rate data isn't complete for every state).
+Including it here is deliberate: a sample test report that only shows clean rows isn't an
+honest sample.
