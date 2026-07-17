@@ -39,8 +39,9 @@ previously no-ops: `ib_ceeb_crosswalk`, `isbe_ceeb_crosswalk`,
 auto-accepts by design, see that README). It also enabled a new
 `schools_org_enriched` table: a nationwide schools export (already carrying
 CEEB via a separate UC Boulder crosswalk — `data/CEEB-Crosswalk/README.md`)
-left-joined directly to Bob's org data on CEEB, matching 18,580/25,577
-schools (73%).
+left-joined directly to Bob's org data on CEEB, matching 16,508/25,577
+schools (64.5% — corrected 2026-07-17 after fixing a CEEB fan-out bug that
+had inflated this to 18,580/73%; see `docs/DATA_DICTIONARY.md` update).
 
 Note: this covers IB/ISBE/CPS ↔ CEEB. The core **NCES ↔ CEEB junction**
 (the proposal's #2 deliverable, Qifan's RACI item) is a separate piece,
@@ -80,8 +81,49 @@ extract) from https://nces.ed.gov/ccd/elsi/tableGenerator.aspx and add the
 RACI, "master database & data pulls" is Max/Qifan's workstream — this is
 just a to-do, not something to bring to Bob.
 
+## Update 2026-07-17 — data dictionary is ready for you and Adam to review
+
+Since the meeting: fixed a district-ID bug that was blocking the per-student
+funding build (Goal 4), built that funding join, fixed a sector-classification
+bug that was hiding IB flags, and fixed the CEEB fan-out bug mentioned above
+(match rate corrected 73% -> 64.5% — the original 73% included ~2,072 false
+matches from a fuzzy-matching artifact, not real ones). Details in
+`docs/EDA_features_joined.md`'s two "Update 2026-07-17" sections if you want
+the specifics.
+
+**What's ready for you and Adam to go through now:**
+- `docs/DATA_DICTIONARY.md` + `data_dictionary_schools_org_enriched.csv` —
+  the raw joined table, 127 variables (source, grain, vintage, confidence,
+  description).
+- `csv_exports/data_dictionary_modeling_dataset.csv` — the derived/engineered
+  feature set (51 variables) actually used for modeling, same schema.
+- `csv_exports/modeling_dataset_v1_2026-07-17.csv` — the frozen, versioned
+  dataset itself (34,392 rows: public + private HS, min enrollment 30+).
+
+**What we still need from you (or Sheng), in order of how much they're
+blocking us:**
+1. Historical rigor labels, if any exist (Goal 3 — nothing is buildable here
+   without this).
+2. Per-variable vintage for the 56 `nu_*` fields — right now the dictionary
+   can only confirm the export date (2026-06-24), not when each underlying
+   stat (mean SAT, AP participation, etc.) was actually measured. This is
+   the "old section vs. new section" concern from the meeting — we have the
+   column to hold the answer, we don't have the answer.
+3. Confirm the socio-context fields (`nu_median_family_income`,
+   `nu_educational_attainment`, etc.) are Landscape-derived and need-coded
+   (we verified the need-coding externally against Census data, r=-0.60, but
+   haven't confirmed the source with you).
+4. Sign-off on the Goal 4 national funding proxy: is total district revenue
+   ÷ SAIPE school-age population an acceptable stand-in for true per-pupil
+   spending, or should we hold off until a real district-enrollment source
+   is available? (IL's ISBE figure is true per-pupil; this one isn't.)
+5. Reconciliation rule for when CRDC's AP data and your AP data disagree.
+
 ## Bottom line for Bob
 
-The NU school list is in — thanks. One thing still on you: the College
-Board access escalation you're already chasing. The ELSI re-pull is on us
-and doesn't need your time.
+The NU school list is in — thanks. The data dictionary you and Adam asked
+about is ready to review (see above). Three things still need your input
+(rigor labels, per-variable vintage, socio-field source confirmation) before
+we can go further on Goals 3 and the "old vs. new dataset" tracking. The
+College Board access escalation is still on you, separately. The ELSI re-pull
+is on us and doesn't need your time.

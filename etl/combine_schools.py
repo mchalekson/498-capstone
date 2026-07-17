@@ -404,19 +404,74 @@ def build_cps_nces_crosswalk(engine):
         conn.commit()
 
 
+def resolve_ceeb_ties(schools):
+    """
+    ~1,415 CEEB codes on the schools side cover more than one school row --
+    NOT a legitimate 1-CEEB-many-campuses relationship. Checked directly:
+    e.g. CEEB 050222 ("Vista High Continuation") fuzzy-matches 55 distinct,
+    unrelated California "___ Continuation High" schools (Abraxas, Alps
+    View, Beckwourth...) purely on the shared generic phrase "Continuation
+    High"; CEEB 240320 ("Osseo Area Learning Center") matches 31 different
+    Minnesota "___ Area Learning Center" schools the same way. Some pairs are
+    even both marked auto_accept for the same CEEB (e.g. two different
+    "Nueva Vista Continuation High" school_ids both auto_accept to 050222),
+    which is impossible in reality -- a CEEB identifies one physical school.
+    This is exactly the generic-token false-positive risk fuzzy_match()'s own
+    docstring warns about, just not caught for this particular crosswalk.
+
+    Left as-is, every row sharing a CEEB independently inherits the same NU
+    org record on the downstream join (nu_master_org_data.ceeb IS unique --
+    the fan-out is entirely from this side), which is where the 2,072
+    "duplicate org rows" flagged in EDA_features_joined.md 3b actually come
+    from.
+
+    Fix: keep exactly one canonical school per CEEB (prefer, in order,
+    ceeb_match_tier auto_accept > review > reject; then an exact
+    normalized-name match against ceeb_matched_name; then lowest school_id
+    for determinism) and null out `ceeb` on every other colliding row. Those
+    schools keep all their own data -- they just stop falsely inheriting
+    another school's NU org record.
+    """
+    tier_rank = {"auto_accept": 0, "review": 1, "reject": 2}
+    s = schools.copy()
+    s["_tier_rank"] = s["ceeb_match_tier"].map(tier_rank).fillna(3)
+    s["_exact_name"] = (
+        s["school_name"].map(normalize_name) != s["ceeb_matched_name"].map(normalize_name)
+    ).astype(int)  # 0 = exact match (sorts first), 1 = not exact
+
+    has_ceeb = s["ceeb"].notna()
+    dup_ceeb = has_ceeb & s["ceeb"].duplicated(keep=False)
+    if not dup_ceeb.any():
+        return schools.drop(columns=["_tier_rank", "_exact_name"], errors="ignore")
+
+    ranked = s[dup_ceeb].sort_values(["ceeb", "_tier_rank", "_exact_name", "school_id"])
+    keeper_idx = ranked.groupby("ceeb", sort=False).head(1).index
+    loser_idx = ranked.index.difference(keeper_idx)
+
+    s["ceeb_fanout_resolved"] = False
+    s.loc[loser_idx, "ceeb_fanout_resolved"] = True
+    s.loc[loser_idx, "ceeb"] = np.nan
+    print(f"  [ceeb dedup] {dup_ceeb.sum():,} rows shared a CEEB with another school "
+          f"({s['ceeb'].notna().sum() - (has_ceeb.sum() - dup_ceeb.sum()):,} kept as canonical, "
+          f"{len(loser_idx):,} had their CEEB nulled out -- see resolve_ceeb_ties docstring)")
+    return s.drop(columns=["_tier_rank", "_exact_name"])
+
+
 def build_schools_org_enriched(engine):
     """
     Left-join schools_combined_enriched_ceeb (Sheng's nationwide school
     export, load_schools_ceeb.py) to nu_master_org_data (Bob's NU master org
     list, load_nu_master.py) on CEEB — the shared exact-match key, since
     both sides already carry CEEB directly (no fuzzy matching needed here).
-    nu_master_org_data.CEEB is unique, so this is a clean 1:1 attach with no
-    row fan-out; ~1,400 CEEB codes on the schools side cover more than one
-    school row (see ceeb_match_tier/ceeb_needs_review there for why), each
-    of which independently picks up the same org row.
+    nu_master_org_data.CEEB is unique, so this is a clean 1:1 attach; the
+    schools side is deduped by resolve_ceeb_ties() first (see its docstring
+    — the ~1,400 colliding CEEB codes were a fuzzy-match artifact, not a
+    real 1-CEEB-many-schools relationship, and previously caused every
+    colliding school to independently inherit the same NU org row).
     """
     print("Combining schools_org_enriched (schools_combined_enriched_ceeb + nu_master_org_data on CEEB)...")
     schools = pd.read_sql("SELECT * FROM schools_combined_enriched_ceeb", engine)
+    schools = resolve_ceeb_ties(schools)
     # Exclude null CEEB rows before merging: unlike SQL, pandas' merge treats
     # NaN keys as equal to each other, so every CEEB-less school would
     # otherwise fan out against every CEEB-less org row (2 non-school junk
@@ -447,14 +502,19 @@ def build_schools_org_all(engine):
     those rows too, with the school-side columns null for org-only rows
     (and vice versa for school-only rows).
 
-    No dedup step is needed beyond the merge itself: nu_master_org_data.ceeb
-    is unique (enforced by its own primary key on guid plus a 1:1 CEEB
-    relationship — see load_nu_master.py), so each schools row matches at
-    most one org row, and a plain outer merge on a key that's unique on one
-    side cannot fan out or duplicate rows on that side.
+    nu_master_org_data.ceeb IS unique (enforced by its own primary key on
+    guid plus a 1:1 CEEB relationship — see load_nu_master.py) so it cannot
+    fan out rows on its own side. The schools side, however, previously had
+    ~1,415 CEEB codes covering more than one school row — a fuzzy-matching
+    artifact, not a real relationship (see resolve_ceeb_ties() docstring for
+    the concrete examples) — which fanned out the same NU org row across
+    every colliding school and inflated org-side counts by ~2,072 rows
+    (EDA_features_joined.md 3b). Deduped via resolve_ceeb_ties() before the
+    merge, below.
     """
     print("Combining schools_org_all (schools_combined_enriched_ceeb OUTER JOIN nu_master_org_data on CEEB)...")
     schools = pd.read_sql("SELECT * FROM schools_combined_enriched_ceeb", engine)
+    schools = resolve_ceeb_ties(schools)
     org = pd.read_sql("SELECT * FROM nu_master_org_data WHERE ceeb IS NOT NULL", engine).add_prefix("nu_")
 
     df = schools.merge(org, left_on="ceeb", right_on="nu_ceeb", how="outer")

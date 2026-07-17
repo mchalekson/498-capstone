@@ -1,5 +1,25 @@
 # Data dictionary — `schools_org_enriched` / `schools_org_all`
 
+## Update 2026-07-17 — CEEB fan-out fixed, match numbers below corrected
+
+~1,415 CEEB codes on the schools side previously covered more than one school
+row — not a real 1-CEEB-many-schools relationship, but a fuzzy-matching
+artifact in the upstream CEEB crosswalk: e.g. CEEB `050222` ("Vista High
+Continuation") matched 55 distinct, unrelated California "___ Continuation
+High" schools purely on the shared generic phrase "Continuation High" (same
+pattern for "___ Area Learning Center" schools in Minnesota, etc.) — some
+pairs were even both marked `auto_accept` for the same CEEB, which can't
+happen for a real CEEB (it identifies one physical school). Every colliding
+school independently inherited the same NU org record downstream, which is
+where the 2,072 "duplicate org rows" in `EDA_features_joined.md` §3b came
+from. Fixed in `combine_schools.py` via `resolve_ceeb_ties()`: keeps one
+canonical school per CEEB (best match tier, then exact name match, then
+lowest school_id) and nulls the CEEB on the rest. **The match numbers below
+are the corrected, post-fix ones** — they're lower than before (fewer false
+matches), not worse.
+
+---
+
 Full field-by-field detail is in
 [`data_dictionary_schools_org_enriched.csv`](data_dictionary_schools_org_enriched.csv)
 (variable, data type, source dataset, grain, vintage, confidence, description,
@@ -23,12 +43,13 @@ extend the same CSV format to those next if useful.
   matched a school row (see below) don't appear here at all.
 - **`schools_org_all`** (`etl/combine_schools.py:build_schools_org_all`) —
   **full outer join**, everything from both files. 53,966 rows total:
-  18,580 matched both sides (identical to the match count below), 6,997
+  16,508 matched both sides (identical to the match count below), 9,069
   school-only rows (Sheng schools with no CEEB match in Bob's file, NU
   columns null), and 28,389 NU-org-only rows (Bob orgs with no matching
-  school row, school-side columns null). No dedup step was needed —
-  `nu_master_org_data.ceeb` is unique, so the join can't fan out rows on
-  either side.
+  school row, school-side columns null). `nu_master_org_data.ceeb` is
+  unique, so it can't fan out rows on its own — but the schools side needed
+  a dedup step first (`resolve_ceeb_ties()`, see update above) before this
+  held true for the schools side too.
 
 Use `schools_org_enriched` for school-level analysis (one row per school is
 usually what you want); use `schools_org_all` if you need to see or count
@@ -36,20 +57,22 @@ every org in Bob's file, including the ones with no matching school record.
 
 ## Match rate
 
-25,577 schools total; **18,580 (73%) matched to an NU org record via CEEB.**
-The other 27% either have no CEEB at all (~6,500 rows — mostly non-CEEB or
-unmatched schools upstream) or a CEEB that isn't in Bob's list. This is an
-exact-match join (both sides carry CEEB directly) — no fuzzy matching in this
-specific combination, so the match rate is a ceiling on coverage, not a
-matching-confidence question.
+25,577 schools total; **16,508 (64.5%) matched to an NU org record via CEEB**
+(post CEEB-dedup fix — see update above; was 18,580/73% before, but ~2,072 of
+those were false-positive fuzzy matches on the crosswalk, not real matches).
+The remaining schools either have no CEEB at all, a CEEB that isn't in Bob's
+list, or lost their CEEB in the dedup because a different school was the
+better-confidence match for that code. This is an exact-match join on CEEB
+itself (no fuzzy matching in this specific combination) — the fuzzy matching
+that caused the original inflation happened one step upstream, in the CEEB
+crosswalk that assigned `ceeb` to the schools table in the first place.
 
-Symmetrically, of Bob's 44,899 orgs, **18,580 (41%) matched a school row**;
-the other 59% (28,389 orgs) have a CEEB that isn't in Sheng's schools export
-(or, for 2 rows, no CEEB at all — "Explore Colleges" and "Model United
-Nations", non-school entities excluded from the join). A low match rate on
-this side is expected, not a data-quality problem: Bob's org export is
-broader than "high schools with a CEEB Sheng's source recognizes" — it likely
-includes colleges and other org types out of scope for this join.
+Symmetrically, of Bob's 44,897 CEEB-bearing orgs, **16,508 (36.8%) matched a
+school row**; the rest have a CEEB that isn't in Sheng's schools export (or
+lost its school-side match in the dedup). A low match rate on this side is
+expected, not a data-quality problem: Bob's org export is broader than "high
+schools with a CEEB Sheng's source recognizes" — it likely includes colleges
+and other org types out of scope for this join.
 
 ## Vintage — the real gap
 

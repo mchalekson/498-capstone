@@ -1,3 +1,79 @@
+## Update 2026-07-17 — LEAID fix, Goal 4 funding built, private-HS sector bug fixed
+
+Four things changed since the pass below; **the coverage numbers in §1 and the
+"missing features" in §4 are now stale** for these specific items (left as-is
+below for the historical record, corrected here):
+
+1. **LEAID was wrong, not just "not built yet."** The `leaid` column that ships
+   in `schools_org_all` is 5 characters and has a **0% match rate** against
+   `census_school_finances_clean.leaid`. The standard LEAID is the first 7
+   characters of the 12-digit NCESSCH (`nces_id_12[:7]`); that gets an **87%
+   match rate**, verified directly against the finance table. This is the same
+   kind of stale truncation `views.sql` already flags for the old
+   `nces_public_schools_clean` table — it predates the 12-digit ELSI re-pull.
+2. **Goal 4 (funding) is built.** `build_features.py` now joins Census F-33
+   (`census_school_finances_clean`) and SAIPE (`census_saipe_poverty_clean`) via
+   the corrected LEAID. Public-HS funding coverage: **2.8% -> 66.0%.**
+   **Caveat, and it's a real one:** F-33 has no enrollment/membership field,
+   and there's no verified district-level enrollment source loaded in this
+   pipeline to divide by (the old `nces_public_schools_clean.leaid` has the
+   same truncation problem, so it can't be used to aggregate school-level
+   enrollment up to district). So the new `per_resident_child_funding_*`
+   fields are total/state-local revenue ÷ **SAIPE school-age (5-17) population**
+   — a standard Census companion pairing, but a **proxy for enrollment, not an
+   actual per-pupil headcount.** Only the IL ISBE `per_pupil_state_local`
+   field is true per-pupil expenditure. `funding_source` records which one
+   populated each row so the two are never silently averaged together.
+3. **The "IB flags didn't land" finding in §4 was a sector-classification bug,
+   not a bad match.** All 1,354 `ib_school_id` matches are on rows with
+   `pss_id` populated (private schools with a school-side record) and
+   `school_level = NaN` (that field is public-only by construction in Sheng's
+   export). `is_private_hs` required `school_id` to be null, which excluded
+   every one of these rows into `other/oos` — invisible to every coverage
+   check. Fixed to `(nu_type private) | pss_id.notna()`. Also: `ib_flag` is
+   now `ib_flag_candidate`, gated on `ib_match_tier == 'review'` — nationwide
+   IB name-matching has no state to block on, so nothing is ever
+   `auto_accept`; the old `ib_school_id.notna()` check was silently counting
+   766 `reject`-tier (not just 588 `review`-tier) rows as confirmed IB flags.
+4. **`has_nu_data` added** (`nu_guid.notna()`) as the broad "matched any NU org
+   record" stratum, separate from `has_nu_analytics` (AP/SAT presence
+   specifically).
+
+**Update 2026-07-17, second pass — §3b CEEB fan-out fixed too.** Turned out
+not to be "no dedup needed" as `combine_schools.py` claimed, and not a
+legitimate 1-CEEB-many-schools relationship either: it's a fuzzy-matching
+false-positive in the upstream CEEB crosswalk (e.g. CEEB `050222` matched 55
+unrelated CA "___ Continuation High" schools on the shared generic phrase
+alone; some pairs were even both `auto_accept` for the same CEEB, which can't
+happen for a real CEEB). Fixed via `resolve_ceeb_ties()` in
+`combine_schools.py` (keeps one canonical school per CEEB by match-tier
+confidence, nulls the CEEB on the rest) plus `etl/rebuild_org_tables_from_csv.py`
+to regenerate `schools_org_all.csv`/`schools_org_enriched.csv` from the flat
+exports without needing DB access. **DUP org rows: 2,072 -> 0.** Match rate
+on `schools_org_enriched` drops from 73% to 64.5% as a result — that's the
+false matches leaving, not new breakage; see `DATA_DICTIONARY.md`'s update
+for the corrected numbers. Public-HS AP/socio coverage in this memo's §1 also
+shifts down slightly (56.1% -> 53.3% for `ap_offered`, etc.) now that the
+schools that were falsely inheriting another school's NU data no longer do.
+
+**Still open:**
+- True district enrollment for Goal 4 (would replace the SAIPE proxy above
+  with a real per-pupil number) — needs a CCD district membership file, not
+  currently loaded.
+- The upstream CEEB crosswalk itself (`data/CEEB-Crosswalk`, UC Boulder
+  source) still produces these generic-token false positives in the first
+  place — `resolve_ceeb_ties()` cleans up the symptom (fan-out) after the
+  fact, but doesn't fix the crosswalk's own matching logic. Worth flagging
+  to whoever owns that upstream source.
+
+`etl/build_modeling_dataset.py` is new: takes `build_features.py`'s output,
+applies the cleaning freeze (min-size >= 30 grades 9-12, restricts to the
+public+private HS universe, sentinel scrub, winsorize sanity check), and
+writes a versioned `modeling_dataset_<version>_<date>.csv` +
+`data_dictionary_modeling_dataset.csv`.
+
+---
+
 # EDA & Feature Memo — joined table (`schools_org_all` / `schools_org_enriched`)
 
 Supersedes the earlier raw-export memo. This pass measures the **joined** table
@@ -101,5 +177,17 @@ without care.
 1. Historical rigor labels available? (Goal 3)
 2. Per-variable vintage for the `nu_*` fields (dictionary confirms: undated).
 3. Confirm socio indices are need-coded / Landscape-derived (§3a).
-4. Fix `combine_schools.py` dup rows (§3b) and the IB key (§4).
+4. `combine_schools.py` dup rows (§3b) -- **fixed**, turned out to be a
+   fuzzy-matching false-positive in the upstream CEEB crosswalk, not a real
+   fan-out; see second-pass update above. The IB key issue (§4) turned out
+   to be a sector-classification bug in `build_features.py`, not the join
+   itself -- also fixed, see first-pass update above.
 5. Reconciliation rule when CRDC AP and Bob's AP disagree.
+6. **New:** OK to ship `per_resident_child_funding_*` (F-33 revenue / SAIPE
+   population) as a national Goal 4 proxy, clearly labeled as not true
+   per-pupil? Or hold for a real CCD district-membership enrollment source?
+7. **New:** the upstream CEEB crosswalk (`data/CEEB-Crosswalk`, UC Boulder
+   source) is producing generic-token false positives (see second-pass
+   update) -- worth a look at whoever built/owns that source file, since
+   `resolve_ceeb_ties()` only cleans up the symptom here, not the crosswalk
+   itself.
