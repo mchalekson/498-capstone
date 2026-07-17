@@ -39,14 +39,32 @@ below for the historical record, corrected here):
    record" stratum, separate from `has_nu_analytics` (AP/SAT presence
    specifically).
 
-**Still open, not touched in this pass** — needs either DB access to rerun
-`combine_schools.py` or a team call on methodology, not a build-features-layer
-fix:
-- §3b CEEB fan-out (2,072 duplicate org rows) — confirmed still present,
-  unchanged.
+**Update 2026-07-17, second pass — §3b CEEB fan-out fixed too.** Turned out
+not to be "no dedup needed" as `combine_schools.py` claimed, and not a
+legitimate 1-CEEB-many-schools relationship either: it's a fuzzy-matching
+false-positive in the upstream CEEB crosswalk (e.g. CEEB `050222` matched 55
+unrelated CA "___ Continuation High" schools on the shared generic phrase
+alone; some pairs were even both `auto_accept` for the same CEEB, which can't
+happen for a real CEEB). Fixed via `resolve_ceeb_ties()` in
+`combine_schools.py` (keeps one canonical school per CEEB by match-tier
+confidence, nulls the CEEB on the rest) plus `etl/rebuild_org_tables_from_csv.py`
+to regenerate `schools_org_all.csv`/`schools_org_enriched.csv` from the flat
+exports without needing DB access. **DUP org rows: 2,072 -> 0.** Match rate
+on `schools_org_enriched` drops from 73% to 64.5% as a result — that's the
+false matches leaving, not new breakage; see `DATA_DICTIONARY.md`'s update
+for the corrected numbers. Public-HS AP/socio coverage in this memo's §1 also
+shifts down slightly (56.1% -> 53.3% for `ap_offered`, etc.) now that the
+schools that were falsely inheriting another school's NU data no longer do.
+
+**Still open:**
 - True district enrollment for Goal 4 (would replace the SAIPE proxy above
   with a real per-pupil number) — needs a CCD district membership file, not
   currently loaded.
+- The upstream CEEB crosswalk itself (`data/CEEB-Crosswalk`, UC Boulder
+  source) still produces these generic-token false positives in the first
+  place — `resolve_ceeb_ties()` cleans up the symptom (fan-out) after the
+  fact, but doesn't fix the crosswalk's own matching logic. Worth flagging
+  to whoever owns that upstream source.
 
 `etl/build_modeling_dataset.py` is new: takes `build_features.py`'s output,
 applies the cleaning freeze (min-size >= 30 grades 9-12, restricts to the
@@ -159,11 +177,17 @@ without care.
 1. Historical rigor labels available? (Goal 3)
 2. Per-variable vintage for the `nu_*` fields (dictionary confirms: undated).
 3. Confirm socio indices are need-coded / Landscape-derived (§3a).
-4. `combine_schools.py` dup rows (§3b) still open -- needs DB access to rerun,
-   or a call on whether to dedup org-side or resolve 1:1 CEEB on the school
-   side first. The IB key issue (§4) turned out to be a sector-classification
-   bug in `build_features.py`, not the join itself -- fixed, see update above.
+4. `combine_schools.py` dup rows (§3b) -- **fixed**, turned out to be a
+   fuzzy-matching false-positive in the upstream CEEB crosswalk, not a real
+   fan-out; see second-pass update above. The IB key issue (§4) turned out
+   to be a sector-classification bug in `build_features.py`, not the join
+   itself -- also fixed, see first-pass update above.
 5. Reconciliation rule when CRDC AP and Bob's AP disagree.
 6. **New:** OK to ship `per_resident_child_funding_*` (F-33 revenue / SAIPE
    population) as a national Goal 4 proxy, clearly labeled as not true
    per-pupil? Or hold for a real CCD district-membership enrollment source?
+7. **New:** the upstream CEEB crosswalk (`data/CEEB-Crosswalk`, UC Boulder
+   source) is producing generic-token false positives (see second-pass
+   update) -- worth a look at whoever built/owns that source file, since
+   `resolve_ceeb_ties()` only cleans up the symptom here, not the crosswalk
+   itself.
