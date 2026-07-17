@@ -102,28 +102,58 @@ the specifics.
 
 **What we still need from you (or Sheng), in order of how much they're
 blocking us:**
-1. Historical rigor labels, if any exist (Goal 3 — nothing is buildable here
-   without this).
-2. Per-variable vintage for the 56 `nu_*` fields — right now the dictionary
+1. Per-variable vintage for the 56 `nu_*` fields — right now the dictionary
    can only confirm the export date (2026-06-24), not when each underlying
    stat (mean SAT, AP participation, etc.) was actually measured. This is
    the "old section vs. new section" concern from the meeting — we have the
    column to hold the answer, we don't have the answer.
-3. Confirm the socio-context fields (`nu_median_family_income`,
-   `nu_educational_attainment`, etc.) are Landscape-derived and need-coded
-   (we verified the need-coding externally against Census data, r=-0.60, but
-   haven't confirmed the source with you).
-4. Sign-off on the Goal 4 national funding proxy: is total district revenue
+2. Sign-off on the Goal 4 national funding proxy: is total district revenue
    ÷ SAIPE school-age population an acceptable stand-in for true per-pupil
    spending, or should we hold off until a real district-enrollment source
    is available? (IL's ISBE figure is true per-pupil; this one isn't.)
-5. Reconciliation rule for when CRDC's AP data and your AP data disagree.
+3. Reconciliation rule for when CRDC's AP data and your AP data disagree.
+
+**What we resolved ourselves instead of waiting** (2026-07-17, second pass):
+
+- ~~Historical rigor labels~~ — not actually needed. The rigor tier is a
+  constructed weighted composite (report Section 4.1), not a supervised
+  label learned from historical ground truth. See `docs/RIGOR_CLASSIFICATION.md`.
+- ~~Confirm the socio-context fields are Landscape-derived/need-coded~~ —
+  confirmed ourselves, no need to ask. All 5 fields (`crime_risk`,
+  `educational_attainment`, `family_stability`, `housing_stability`,
+  `median_family_income`) correlate 0.38-0.91 with each other and share the
+  same 1-100 scale, and 2 of the 5 already check out externally against
+  Census data (r=-0.60, -0.55). All five move together in the same
+  direction, so all five are need-coded the same way, not just the two we
+  could check against an outside source.
+- ~~Custom ID variable from Org Data~~ — investigated directly instead of
+  waiting on you to check your system. `custom_id` (76.5% populated, mostly
+  7-digit) doesn't match any federal ID we have (0% match against NCES's
+  7-digit school ID) and isn't fully unique (84 duplicate values) — it's an
+  internal identifier from whatever system this export came from, not
+  something with cross-referencing value here. **But investigating its
+  duplicates surfaced something we weren't looking for:** 62 of those 84
+  duplicate pairs are two clearly different schools whose CEEB codes are
+  related by an exact leading-zero/trailing-zero shift (e.g. `050003` vs.
+  `500030`) — the classic signature of a 6-digit zero-padded code getting
+  stored as a number somewhere upstream and re-padded on the wrong side.
+  Scanning the whole file the same way flags 644 CEEB codes total with a
+  same-file counterpart fitting this pattern (some fraction of those are
+  probably coincidental, not all bugged — the 62 are the confirmed ones).
+  Flagged (not auto-corrected — no reliable way to tell which side of a
+  pair is right) via `ceeb_suspected_padding_shift` in
+  `etl/load_nu_master.py`, applied to `nu_master_org_data`. Worth a look on
+  your end if you know which export step introduces this.
 
 ## Bottom line for Bob
 
 The NU school list is in — thanks. The data dictionary you and Adam asked
-about is ready to review (see above). Three things still need your input
-(rigor labels, per-variable vintage, socio-field source confirmation) before
-we can go further on Goals 3 and the "old vs. new dataset" tracking. The
-College Board access escalation is still on you, separately. The ELSI re-pull
-is on us and doesn't need your time.
+about is ready to review (see above). Two things still need your input
+(per-variable vintage, the funding-proxy sign-off) — rigor labels and the
+two data-provenance questions from the meeting turned out to be answerable
+from the data itself and didn't need your time after all. One new thing
+worth your attention: a likely CEEB formatting bug in your export, affecting
+at least 62 confirmed schools (see above) — flagged, not fixed, since we
+can't tell which side of each pair is correct without knowing your source
+system. The College Board access escalation is still on you, separately.
+The ELSI re-pull is on us and doesn't need your time.
