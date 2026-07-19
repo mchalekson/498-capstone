@@ -43,6 +43,12 @@ left-joined directly to Bob's org data on CEEB, matching 16,508/25,577
 schools (64.5% — corrected 2026-07-17 after fixing a CEEB fan-out bug that
 had inflated this to 18,580/73%; see `docs/DATA_DICTIONARY.md` update).
 
+**A second match rate (47%) circulates alongside this one** — it's the same
+matching measured against the modeling dataset's larger denominator, which
+includes 12,560 org-only rows that can't match by construction. Both are
+correct; see `docs/MATCH_RATE_RECONCILIATION.md` for which to quote where. The
+apples-to-apples figure for the modeling dataset is 73.8%.
+
 Note: this covers IB/ISBE/CPS ↔ CEEB. The core **NCES ↔ CEEB junction**
 (the proposal's #2 deliverable, Qifan's RACI item) is a separate piece,
 already built against the UC Boulder crosswalk in
