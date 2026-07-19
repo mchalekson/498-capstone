@@ -32,6 +32,11 @@ services:
       DB_PASS: capstone
     volumes:
       - ./data:/app/data:ro
+      # Stage 6 (load_modeling_layer.py) reads the frozen modeling-layer CSVs from
+      # csv_exports/. The Dockerfile only COPYs etl/, so without this mount the
+      # directory doesn't exist in the container and the stage silently skips.
+      # Read-only: the stage loads these into Postgres, it never writes them.
+      - ./csv_exports:/app/csv_exports:ro
 
 volumes:
   pgdata:
