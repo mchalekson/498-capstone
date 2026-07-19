@@ -3,6 +3,13 @@ Run the full ETL pipeline in order:
   1. Load raw data into raw_* tables
   2. Clean and produce *_clean tables
   3. Apply SQL views for analysis
+  4. Load the frozen modeling layer into Postgres
+
+Note on stage 6: this LOADS the already-frozen modeling-layer CSVs, it does not
+rebuild them. The build scripts stamp their outputs with the current date, so
+rebuilding them here would mint a new dataset on every pipeline run instead of
+reproducing the frozen one. Rebuilding is a separate, deliberate step:
+  python run_modeling_layer.py
 
 Usage:
   cd etl/
@@ -39,6 +46,7 @@ import clean_isbe
 
 import combine_schools
 import build_ceeb_crosswalk
+import load_modeling_layer
 
 STEPS = [
     # ── Stage 1: Raw loads ──────────────────────────────────────────────
@@ -78,6 +86,9 @@ STEPS = [
 
     # ── Stage 5: NU-master CEEB crosswalk (optional — no-ops until it exists) ──
     ("Build CEEB crosswalk (IB/ISBE/CPS)",   build_ceeb_crosswalk.build_all),
+
+    # ── Stage 6: Modeling layer (optional — skips if the freeze isn't present) ──
+    ("Load frozen modeling layer",           load_modeling_layer.load_modeling_layer),
 ]
 
 
@@ -113,7 +124,14 @@ def main():
     drop_views(engine)
 
     for name, fn in STEPS:
-        stage = "LOAD" if name.startswith("Load") else ("COMBINE" if name.startswith("Combine") else "CLEAN")
+        if name == "Load frozen modeling layer":
+            stage = "MODELING"
+        elif name.startswith("Load"):
+            stage = "LOAD"
+        elif name.startswith("Combine"):
+            stage = "COMBINE"
+        else:
+            stage = "CLEAN"
         print(f"\n{'='*50}")
         print(f"[{stage}] {name}")
         print("=" * 50)
@@ -155,6 +173,10 @@ def main():
         print("  NCES<->CEEB junction: nces_public_ceeb_crosswalk, nces_private_ceeb_crosswalk")
         print("  CEEB crosswalk (NU master):")
         print("         ib_ceeb_crosswalk, isbe_ceeb_crosswalk, cps_ceeb_crosswalk")
+        print("  Modeling layer (frozen freeze, see modeling_layer_manifest for which")
+        print("         file each came from): modeling_dataset, rigor_classification,")
+        print("         clustering, benchmarking, rigor_sensitivity, pca_loadings,")
+        print("         gap_statistic, data_dictionary_modeling_dataset")
 
 
 if __name__ == "__main__":
