@@ -54,6 +54,7 @@ STEPS = [
     ("Load NCES private schools",   load_nces.load_private),
     ("Load NCES public HS (9-12)",  load_nces.load_public_hs912),
     ("Load NCES private merged",    load_nces.load_private_merged),
+    ("Load NCES 7<->12-digit ID bridge", load_nces.load_public_id12),
     ("Load Census finances",        load_census.load_finances),
     ("Load Census SAIPE poverty",   load_census.load_saipe),
     ("Load NAEP assessments",       load_naep.load_naep),
