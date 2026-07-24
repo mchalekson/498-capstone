@@ -92,6 +92,12 @@ def tiny_schools_org_all():
               "nu_percent_federal_lunch_aid", "nu_percent_first_gen_college",
               "nu_number_of_ap_classes_offered", "nu_size_of_senior_class",
               "county_median_hh_income", "nu_avg_num_ap_tests_offered",
+              "nu_avg_ap_score", "nu_pct_students_taking_ap",
               "nu_latitude", "nu_longitude", "nu_us_region"]:
         df[c] = np.nan
+    # Give the two NU-covered rows real AP-performance / offered values so the Wk5 features
+    # (ap_score_nu, ap_take_rate) are actually exercised, not just present-and-null.
+    new_ap = ["nu_avg_num_ap_tests_offered", "nu_avg_ap_score", "nu_pct_students_taking_ap"]
+    df.loc[0, new_ap] = [15.0, 3.5, 45.0]   # public HS A: take_rate = 2.5/15
+    df.loc[1, new_ap] = [10.0, 2.8, 30.0]   # private HS B: take_rate = 1.0/10
     return df

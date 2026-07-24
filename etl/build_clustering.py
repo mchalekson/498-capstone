@@ -25,7 +25,7 @@ the same raw ingredients rigor is built from, then checking post-hoc whether clu
 with the independently-computed rigor tier, is the non-circular version of the check the
 report actually asks for.
 
-Run:  python build_clustering.py rigor_classification_v1_2026-07-17.csv --k 4
+Run:  python build_clustering.py rigor_classification_v3_2026-07-24.csv
 """
 import argparse
 import datetime as dt
@@ -42,9 +42,10 @@ sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
 from build_rigor_classification import build_components, zscore  # noqa: E402
 
 # location / academic-profile / funding-and-poverty -- the three axes the report names
-LOCATION_COLS = ["latitude", "longitude"]
+REGION_COL = "us_region"  # Wk5 client feedback: use region, NOT raw lat/long (meaningless as
+                          # coordinates in a Euclidean clustering distance)
 FUNDING_POVERTY_COLS = ["per_resident_child_funding_state_local", "child_poverty_saipe"]
-ACADEMIC_EXTRA_COL = "grad_rate_2021"  # added alongside the rigor components (ap/crdc/test)
+ACADEMIC_EXTRA_COL = "grad_rate_2021"  # added alongside the rigor components
 
 
 def build_feature_matrix(df):
@@ -52,12 +53,23 @@ def build_feature_matrix(df):
     Assemble the location / academic-profile / funding-poverty feature matrix, z-scored,
     complete-case only (no imputation, consistent with the rest of this pipeline -- see
     build_modeling_dataset.py / build_rigor_classification.py for the same stance).
+
+    Two Wk5 changes: (1) location is region membership (one-hot on us_region), not raw
+    latitude/longitude -- per client feedback that coordinates carry no meaning in a Pearson/
+    Euclidean sense; rows with unknown region are dropped by the complete-case rule. Region
+    dummies are left 0/1 (not z-scored) so five collinear one-hots don't swamp the academic
+    signal. (2) The academic block uses the moderate-coverage rigor components; the new
+    performance components (ap_performance/test_performance, ~31% coverage) are deliberately
+    excluded here -- forcing them into the complete-case intersection would decimate N.
     """
-    comp = build_components(df)  # reuse ap / crdc_coursework / test_participation from rigor
+    comp = build_components(df)  # reuse ap_opportunity / crdc_coursework / test_participation
     feats = pd.DataFrame(index=df.index)
-    feats["latitude"] = zscore(df["latitude"])
-    feats["longitude"] = zscore(df["longitude"])
-    feats["ap"] = comp["ap"]
+    region = df[REGION_COL].str.replace("US - ", "", regex=False)
+    region_dummies = pd.get_dummies(region, prefix="region").astype(float)
+    region_dummies = region_dummies.where(region.notna())  # unknown-region rows -> NaN -> dropped
+    for c in region_dummies.columns:
+        feats[c] = region_dummies[c]
+    feats["ap_opportunity"] = comp["ap_opportunity"]
     feats["crdc_coursework"] = comp["crdc_coursework"]
     feats["test_participation"] = comp["test_participation"]
     feats["grad_rate"] = zscore(df[ACADEMIC_EXTRA_COL])
@@ -65,6 +77,13 @@ def build_feature_matrix(df):
     feats["poverty"] = zscore(df["child_poverty_saipe"])
 
     complete = feats.dropna()
+    # A region one-hot can end up all-zero in the complete-case subset (e.g. no Illinois school
+    # clears every academic+funding filter) -> a constant column that breaks corr/PCA and adds
+    # no signal. Drop any such zero-variance feature explicitly rather than let it emit NaNs.
+    dead = complete.columns[complete.nunique() <= 1].tolist()
+    if dead:
+        print(f"  [drop] constant-in-subset feature(s) removed (no clustering signal): {dead}")
+        complete = complete.drop(columns=dead)
     print(f"  [coverage] {len(complete):,}/{len(df):,} schools have complete data across all "
           f"{feats.shape[1]} clustering features (no imputation -- complete-case only)")
     for c in feats.columns:
@@ -164,8 +183,8 @@ def check_reproduces_rigor_ordering(df, complete_idx, cluster_labels):
 
 if __name__ == "__main__":
     parser = argparse.ArgumentParser()
-    parser.add_argument("path", nargs="?", default="rigor_classification_v1_2026-07-17.csv")
-    parser.add_argument("--version", default="v1")
+    parser.add_argument("path", nargs="?", default="rigor_classification_v3_2026-07-24.csv")
+    parser.add_argument("--version", default="v3")
     parser.add_argument("--outdir", default=".")
     parser.add_argument("--k-min", type=int, default=2)
     parser.add_argument("--k-max", type=int, default=8)

@@ -1,0 +1,17 @@
+group,feature,column,public_pct,public_n,private_pct,private_n,overall_pct
+AP -- opportunity,# AP classes offered (NU),number_of_ap_classes_offered_mid,18.0,3718,9.6,1321,14.7
+AP -- opportunity,AP tests taken / student (NU),ap_tests_taken,39.9,8219,16.6,2285,30.5
+AP -- opportunity,AP take-rate (taken/offered),ap_take_rate,39.8,8217,16.6,2284,30.5
+AP -- opportunity,AP participation (CRDC),ap_participation,59.5,12260,0.0,0,35.6
+AP -- performance,AP exam score 1-5 (NU),ap_score_nu,39.9,8219,16.6,2285,30.5
+Standardized testing,SAT participation (NU),sat_participation_nu,38.1,7846,16.8,2309,29.5
+Standardized testing,SAT/ACT testtaker rate (CRDC),testtaker_rate,91.2,18804,0.0,0,54.7
+Standardized testing,Avg SAT score (NU),sat_score_nu,41.3,8521,18.7,2577,32.3
+Standardized testing,"ACT composite (ISBE, IL only)",act_composite_il,3.2,656,0.0,1,1.9
+Other academic / context,Dual enrollment (CRDC),dual_enrollment_rate,71.3,14708,0.0,0,42.8
+Other academic / context,IB flag (CRDC+adjudicated),ib_flag_v2,74.1,15287,4.5,623,46.3
+Other academic / context,Graduation rate (EDFacts),grad_rate_2021,84.5,17420,0.0,0,50.7
+Other academic / context,Free/reduced lunch rate,frl_rate,83.6,17230,0.0,0,50.1
+Other academic / context,Neighborhood context (NU),socio_need_index,41.3,8523,18.7,2577,32.3
+Other academic / context,Funding proxy (F-33/SAIPE),per_resident_child_funding_state_local,69.5,14340,0.0,0,41.7
+Other academic / context,County child poverty (SAIPE),child_poverty_saipe,95.6,19711,8.8,1212,60.8

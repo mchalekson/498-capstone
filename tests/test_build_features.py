@@ -13,6 +13,7 @@ specifically so those bugs cannot silently come back:
 """
 import numpy as np
 import pandas as pd
+import pytest
 
 from build_features import parse_bucket_midpoint, winsorize, build
 
@@ -119,3 +120,33 @@ class TestLeaidDerivation:
     def test_leaid_is_null_without_nces_id_12(self, tiny_schools_org_all):
         feats = build(tiny_schools_org_all)
         assert pd.isna(feats.loc[1, "leaid"])
+
+
+class TestAPPerformanceFeatures:
+    """Wk5: AP *exam performance* + offered-vs-taken take-rate were added because the model
+    was availability-only, which the literature (Geiser & Santelices) and the client both
+    flagged as the weak signal. These lock in that the new columns compute correctly."""
+
+    def test_ap_score_passed_through(self, tiny_schools_org_all):
+        feats = build(tiny_schools_org_all)
+        assert feats.loc[0, "ap_score_nu"] == 3.5
+        assert feats.loc[1, "ap_score_nu"] == 2.8
+
+    def test_ap_take_rate_is_taken_over_offered(self, tiny_schools_org_all):
+        feats = build(tiny_schools_org_all)
+        # public HS A: 2.5 tests taken / 15 offered; private HS B: 1.0 / 10.
+        # abs tolerance because build() winsorizes (1/99 pct), which nudges values slightly
+        # when there are only two non-null points in the fixture.
+        assert feats.loc[0, "ap_take_rate"] == pytest.approx(2.5 / 15, abs=1e-2)
+        assert feats.loc[1, "ap_take_rate"] == pytest.approx(1.0 / 10, abs=1e-2)
+        assert feats.loc[0, "ap_take_rate"] > feats.loc[1, "ap_take_rate"]  # ordering preserved
+
+    def test_ap_take_rate_null_when_offered_missing(self, tiny_schools_org_all):
+        feats = build(tiny_schools_org_all)
+        # row 2 has no offered value -> no take-rate (not a divide-by-zero or 0)
+        assert pd.isna(feats.loc[2, "ap_take_rate"])
+
+    def test_act_composite_absent_when_no_act_columns(self, tiny_schools_org_all):
+        """ACT is ISBE-sourced (optional); build must not crash or invent it when absent."""
+        feats = build(tiny_schools_org_all)
+        assert "act_composite_il" not in feats.columns

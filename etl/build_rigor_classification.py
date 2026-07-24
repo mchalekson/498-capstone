@@ -24,16 +24,32 @@ The report requires, verbatim:
   - per-school logging of which features were actually available, rather than silent
     imputation or exclusion of incomplete-coverage schools
 
-Component mapping (four named inputs -> available columns):
-  - AP course counts/enrollment  -> ap_tests_taken, number_of_ap_classes_offered_mid (NU-sourced)
-  - IB course counts/enrollment  -> ib_flag_candidate -- EXCLUDED from the default weighting
-    (weight 0): the report states IB participation "is not yet a usable rigor-classifier
-    input" since no IB match is above 'review' tier (Section 2.5/4.1). Included only in the
+Component mapping (named inputs -> available columns):
+  - AP OPPORTUNITY (offered/taken)  -> ap_tests_taken, number_of_ap_classes_offered_mid,
+    ap_take_rate (NU-sourced). "Opportunity structure": what the school offers and how much
+    of it students engage. The take-rate is the "of 25 offered they took 5" ratio Bob asked
+    for in the Wk5 meeting.
+  - AP PERFORMANCE (exam scores)    -> ap_score_nu (NU-sourced, ~35% coverage). ADDED Wk5:
+    the literature review's most consequential finding (Geiser & Santelices 2004, sec 2.2)
+    is that AP *exam performance*, not course availability, predicts college outcomes -- yet
+    the first-pass model was availability-only. This is the performance axis it was missing.
+  - IB course counts/enrollment     -> ib_flag_candidate -- EXCLUDED from the default
+    weighting (weight 0): the report states IB participation "is not yet a usable rigor-
+    classifier input" since no IB match is above 'review' tier. Included only in the
     ib_included sensitivity scenario, to show what changes IF it were trusted.
-  - CRDC advanced-coursework     -> ap_participation, dual_enrollment_rate (CRDC-sourced)
-  - Standardized test participation -> testtaker_rate (CRDC), sat_participation_nu (NU)
+  - CRDC advanced-coursework        -> ap_participation, dual_enrollment_rate (CRDC-sourced)
+  - Standardized test PARTICIPATION -> testtaker_rate (CRDC), sat_participation_nu (NU)
+  - Standardized test PERFORMANCE   -> sat_score_nu, act_composite_il. ADDED Wk5, same
+    performance-vs-availability rationale: score signal, not just who sat the exam. Both are
+    recruiting/IL biased -- see the coverage + selection caveats reported at run time.
 
-Run:  python build_rigor_classification.py modeling_dataset_v1_2026-07-17.csv
+NOTE ON COVERAGE BIAS: the two performance components are NU-recruiting-universe sourced
+(~35% coverage, skewing affluent). Proportional weight reallocation means uncovered schools
+fall back to the opportunity/participation signals -- so a performance-informed tier is only
+produced where performance data exists, and the availability_only sensitivity scheme below
+quantifies exactly how much the added performance signal moves tiers.
+
+Run:  python build_rigor_classification.py modeling_dataset_v2_2026-07-20.csv --version v3
 """
 import argparse
 import datetime as dt
@@ -41,25 +57,37 @@ import os
 
 import numpy as np
 import pandas as pd
+from sklearn.cluster import KMeans
 
 TIER_LABELS = ["Below Average", "Average", "Demanding", "Very Demanding", "Most Demanding"]
 
 # component -> list of raw columns averaged (after z-scoring) to form that component
 COMPONENTS = {
-    "ap": ["ap_tests_taken", "number_of_ap_classes_offered_mid"],
+    "ap_opportunity": ["ap_tests_taken", "number_of_ap_classes_offered_mid", "ap_take_rate"],
+    "ap_performance": ["ap_score_nu"],
     "ib": ["ib_flag_candidate"],
     "crdc_coursework": ["ap_participation", "dual_enrollment_rate"],
     "test_participation": ["testtaker_rate", "sat_participation_nu"],
+    "test_performance": ["sat_score_nu", "act_composite_il"],
 }
 
 # nominal weighting schemes to compare in the sensitivity analysis. "designed" is the default
 # used for the tier assignment written to the output file; ib excluded per report caveat above.
+# The two performance components carry 0.40 combined in the default scheme -- reflecting the
+# literature that performance is the stronger signal, without letting a ~35%-coverage feature
+# dominate. "availability_only" reproduces the pre-Wk5 model (no performance) so the sensitivity
+# table directly answers "how much did adding exam performance move the tiers?"
 WEIGHT_SCHEMES = {
-    "designed":   {"ap": 0.35, "ib": 0.00, "crdc_coursework": 0.35, "test_participation": 0.30},
-    "equal":      {"ap": 1 / 3, "ib": 0.00, "crdc_coursework": 1 / 3, "test_participation": 1 / 3},
-    "ap_heavy":   {"ap": 0.50, "ib": 0.00, "crdc_coursework": 0.25, "test_participation": 0.25},
-    "test_heavy": {"ap": 0.25, "ib": 0.00, "crdc_coursework": 0.25, "test_participation": 0.50},
-    "ib_included": {"ap": 0.30, "ib": 0.20, "crdc_coursework": 0.25, "test_participation": 0.25},
+    "designed":          {"ap_opportunity": 0.25, "ap_performance": 0.20, "ib": 0.00,
+                          "crdc_coursework": 0.20, "test_participation": 0.15, "test_performance": 0.20},
+    "equal":             {"ap_opportunity": 0.20, "ap_performance": 0.20, "ib": 0.00,
+                          "crdc_coursework": 0.20, "test_participation": 0.20, "test_performance": 0.20},
+    "availability_only": {"ap_opportunity": 0.40, "ap_performance": 0.00, "ib": 0.00,
+                          "crdc_coursework": 0.35, "test_participation": 0.25, "test_performance": 0.00},
+    "performance_heavy": {"ap_opportunity": 0.15, "ap_performance": 0.35, "ib": 0.00,
+                          "crdc_coursework": 0.10, "test_participation": 0.10, "test_performance": 0.30},
+    "ib_included":       {"ap_opportunity": 0.20, "ap_performance": 0.20, "ib": 0.20,
+                          "crdc_coursework": 0.15, "test_participation": 0.10, "test_performance": 0.15},
 }
 DEFAULT_SCHEME = "designed"
 
@@ -98,17 +126,38 @@ def weighted_composite(comp, weights):
     return pd.Series(score, index=comp.index), avail
 
 
-def assign_tiers(score):
-    """Quintile cut-points on the scored population -- transparent and reproducible, but an
-    arbitrary choice among several defensible ones (see report's own call, Section 4.1, for a
-    sensitivity analysis rather than treating any single cut-point scheme as ground truth)."""
+DEFAULT_TIER_METHOD = "natural"
+
+
+def assign_tiers(score, method=DEFAULT_TIER_METHOD):
+    """Cut the composite score into five ordinal tiers.
+
+    Two methods, both reported (the report calls for cut-point sensitivity, not a single
+    canonical scheme):
+      - "quantile": quintiles of the scored population -- equal-sized buckets. Transparent,
+        but the Wk5 client note is explicit that real institution rigor is *not* evenly
+        distributed into equal buckets, so this is a default, not a claim about the world.
+      - "natural" (DEFAULT): Jenks-style natural breaks via 1-D k-means on the score. Cut-points
+        fall at genuine gaps in the score distribution, so tier sizes vary -- which is the
+        behaviour the client asked for. Cluster centroids are ordered low->high and mapped onto
+        the five labels.
+    """
     valid = score.dropna()
-    if valid.empty:
+    if valid.empty or valid.nunique() < 5:
         return pd.Series(pd.NA, index=score.index, dtype="object"), pd.Series(pd.NA, index=score.index)
     tier_num = pd.Series(pd.NA, index=score.index, dtype="Int64")
-    ranks = valid.rank(pct=True)
-    bucket = np.minimum((ranks * 5).astype(int), 4)  # 0..4
-    tier_num.loc[valid.index] = bucket.values
+    if method == "quantile":
+        ranks = valid.rank(pct=True)
+        bucket = np.minimum((ranks * 5).astype(int), 4)  # 0..4
+        tier_num.loc[valid.index] = bucket.values
+    elif method == "natural":
+        km = KMeans(n_clusters=5, n_init=10, random_state=42).fit(valid.values.reshape(-1, 1))
+        # relabel raw cluster ids so 0=lowest-score cluster ... 4=highest (k-means ids are arbitrary)
+        order = np.argsort(km.cluster_centers_.ravel())
+        remap = {old: new for new, old in enumerate(order)}
+        tier_num.loc[valid.index] = pd.Series(km.labels_, index=valid.index).map(remap).values
+    else:
+        raise ValueError(f"unknown tier method: {method!r}")
     tier_label = tier_num.map(lambda i: TIER_LABELS[int(i)] if pd.notna(i) else pd.NA)
     return tier_label, tier_num
 
@@ -180,7 +229,8 @@ def crdc_availability_scenario(comp, df):
     comp_no_crdc = comp.copy()
     nu_only_test = zscore(df["sat_participation_nu"])
     comp_no_crdc["test_participation"] = nu_only_test
-    no_crdc_weights = {"ap": 0.55, "ib": 0.00, "crdc_coursework": 0.00, "test_participation": 0.45}
+    no_crdc_weights = {"ap_opportunity": 0.30, "ap_performance": 0.25, "ib": 0.00,
+                       "crdc_coursework": 0.00, "test_participation": 0.20, "test_performance": 0.25}
     score_without, _ = weighted_composite(comp_no_crdc, no_crdc_weights)
     tier_without, _ = assign_tiers(score_without)
 
@@ -212,7 +262,7 @@ def poverty_funding_correlation(df, tier_num):
 
 if __name__ == "__main__":
     parser = argparse.ArgumentParser()
-    parser.add_argument("path", nargs="?", default="modeling_dataset_v1_2026-07-17.csv")
+    parser.add_argument("path", nargs="?", default="modeling_dataset_v3_2026-07-24.csv")
     parser.add_argument("--version", default="v1")
     parser.add_argument("--outdir", default=".")
     args = parser.parse_args()
@@ -223,7 +273,7 @@ if __name__ == "__main__":
     comp = build_components(df)
     weights = WEIGHT_SCHEMES[DEFAULT_SCHEME]
     score, avail = weighted_composite(comp, weights)
-    tier_label, tier_num = assign_tiers(score)
+    tier_label, tier_num = assign_tiers(score, method=DEFAULT_TIER_METHOD)
 
     # ib_flag_candidate is never actually NaN (it's a boolean flag, always 0 or 1), so it would
     # otherwise show as "available" for every row despite carrying weight 0 in the default
@@ -243,7 +293,17 @@ if __name__ == "__main__":
     print(f"[coverage] component availability (ib shown for reference, weight 0 in default scheme): "
           + ", ".join(f"{c}={avail[c].mean()*100:.1f}%" for c in weights))
     print(f"[coverage] n_components_used distribution (active-weight components only):\n{n_components_used.value_counts().sort_index().to_string()}")
-    print(f"\n[tier distribution]\n{tier_label.value_counts().reindex(TIER_LABELS).to_string()}")
+
+    # Tier-cut sensitivity: natural breaks (primary, per Wk5 "not equal buckets") vs. quantiles.
+    q_label, q_num = assign_tiers(score, method="quantile")
+    both_t = tier_num.notna() & q_num.notna()
+    pct_same = 100 * (tier_num[both_t] == q_num[both_t]).mean() if both_t.sum() else float("nan")
+    print(f"\n[tier distribution -- method='{DEFAULT_TIER_METHOD}' (Jenks natural breaks; "
+          f"tier sizes vary, per Wk5 client note that rigor is NOT equal buckets)]")
+    print(tier_label.value_counts().reindex(TIER_LABELS).to_string())
+    print(f"\n[tier-cut sensitivity] natural-breaks vs. quantile: {pct_same:.1f}% of scored schools "
+          f"land in the same tier; quantile sizes (for reference) = "
+          f"{dict(q_label.value_counts().reindex(TIER_LABELS))}")
 
     full_coverage = avail[[n for n, w in weights.items() if w > 0]].all(axis=1)
     eff, total_var, n_full = effective_weights(comp, weights, full_coverage)
@@ -273,6 +333,9 @@ if __name__ == "__main__":
     out["rigor_n_components_used"] = n_components_used
     out["rigor_components_available"] = feature_log
     out["rigor_weighting_scheme"] = DEFAULT_SCHEME
+    out["rigor_tier_method"] = DEFAULT_TIER_METHOD
+    out["rigor_tier_num_quantile"] = q_num          # alternate cut kept for downstream comparison
+    out["rigor_tier_label_quantile"] = q_label
 
     date_tag = dt.date.today().isoformat()
     out_path = os.path.join(args.outdir, f"rigor_classification_{args.version}_{date_tag}.csv")

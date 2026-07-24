@@ -19,7 +19,7 @@ search -- selection-biased toward college-going, NU-engaged families, not a rand
 each school's student body (flagged repeatedly elsewhere in this pipeline; carried forward
 here rather than presented as if it were a clean measure).
 
-Run:  python build_benchmarking.py rigor_classification_v1_2026-07-17.csv
+Run:  python build_benchmarking.py rigor_classification_v3_2026-07-24.csv
 """
 import argparse
 import datetime as dt
@@ -75,8 +75,8 @@ def ses_reproduction_check(df, tier_col, score_col=SCORE_COL):
 
 if __name__ == "__main__":
     parser = argparse.ArgumentParser()
-    parser.add_argument("path", nargs="?", default="rigor_classification_v1_2026-07-17.csv")
-    parser.add_argument("--version", default="v1")
+    parser.add_argument("path", nargs="?", default="rigor_classification_v3_2026-07-24.csv")
+    parser.add_argument("--version", default="v3")
     parser.add_argument("--outdir", default=".")
     args = parser.parse_args()
 

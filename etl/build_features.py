@@ -156,6 +156,21 @@ def build(df, finance_df=None, saipe_df=None, ib_df=None):
         [out["ap_tests_taken"].notna(), out["ap_participation"].notna(), out["ap_offered"] == 1],
         ["nu_tests_taken", "crdc_participation", "offered_flag_only"], default="none")
 
+    # ---- AP PERFORMANCE + offered-vs-taken take-rate -------------------------
+    # Literature (Geiser & Santelices 2004, lit review 2.2): AP *exam performance*,
+    # not course availability, carries the college-outcome signal -- and the model so
+    # far was availability-only. These add the performance axis the review flags as
+    # missing, plus the "of 25 offered, they took 5" take-rate Bob asked for in Wk5.
+    # Caveat: NU-recruiting-universe sourced (~35% coverage, skews affluent) -- kept
+    # explicit here; handled downstream by proportional weight reallocation in
+    # build_rigor_classification.py so uncovered schools fall back to other signals.
+    out["ap_score_nu"] = num("nu_avg_ap_score")                       # avg AP exam score 1-5 (nu)
+    out["ap_pct_students_nu"] = num("nu_pct_students_taking_ap")      # % students taking any AP (nu)
+    out["ap_tests_offered"] = num("nu_avg_num_ap_tests_offered")      # # distinct AP tests offered (nu)
+    _offered = num("nu_avg_num_ap_tests_offered")
+    _take_rate = np.where(_offered > 0, num("nu_avg_num_ap_tests_taken") / _offered, np.nan)
+    out["ap_take_rate"] = winsorize(_take_rate)                       # tests taken / tests offered
+
     # ---- CRDC advanced-coursework indicator beyond AP (dual enrollment) -------
     out["dual_enrollment_offered"] = (num("crdc_dual_enr_offered") == 1).astype("Int64")
     out["dual_enrollment_rate"] = winsorize(np.where(enr > 0, num("crdc_dual_enrollment") / enr, np.nan))
@@ -164,6 +179,10 @@ def build(df, finance_df=None, saipe_df=None, ib_df=None):
     out["testtaker_rate"] = winsorize(np.where(enr > 0, num("crdc_satact_takers") / enr, np.nan))
     out["sat_participation_nu"] = num("nu_pct_seniors_taking_sat")
     out["sat_score_nu"] = num("nu_avg_freshman_sat")                  # NOTE: recruiting-selection biased
+    act_cols = ["act_ela_average_score_grade_11", "act_math_average_score_grade_11",
+                "act_science_average_score_grade_11"]
+    if all(c in df for c in act_cols):                                # ISBE ACT, IL only + thin (~660)
+        out["act_composite_il"] = pd.concat([num(c) for c in act_cols], axis=1).mean(axis=1)
 
     # ---- outcomes / context (national, high coverage) -------------------------
     out["grad_rate_2021"] = num("grad_rate_2021")
@@ -234,9 +253,9 @@ def validate(df, feats):
     # 3) coverage among public-HS universe (national, CRDC-extendable)
     pub = feats[feats["is_public_hs"]]
     print(f"\n[coverage] public-HS universe n={len(pub)}")
-    for c in ["ap_offered", "ap_tests_taken", "ap_participation", "testtaker_rate",
-              "grad_rate_2021", "frl_rate", "socio_need_index", "per_pupil_state_local",
-              "per_resident_child_funding_state_local"]:
+    for c in ["ap_offered", "ap_tests_taken", "ap_score_nu", "ap_take_rate", "ap_participation",
+              "testtaker_rate", "sat_score_nu", "act_composite_il", "grad_rate_2021", "frl_rate",
+              "socio_need_index", "per_pupil_state_local", "per_resident_child_funding_state_local"]:
         if c not in pub.columns:
             continue  # funding join skipped (--no-funding)
         cov = (pub[c] == 1).mean() if c == "ap_offered" else pub[c].notna().mean()

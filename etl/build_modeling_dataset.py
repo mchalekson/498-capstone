@@ -102,6 +102,19 @@ METADATA = {
                         "CRDC AP enrollment / enrollment_9_12, winsorized 1/99pct (Goal 8, fallback measure)"),
     "ap_intensity_src": ("Derived in build_features.py", "school", "n/a (derived flag)", "derived",
                         "Provenance of the best available AP intensity signal for this row"),
+    "ap_score_nu": ("NU org export", "school", NU_EXPORT_VINTAGE, NU_EXPORT_CONF,
+                    "NU avg AP EXAM score, 1-5 scale (~35% coverage) -- the performance signal the "
+                    "literature (Geiser & Santelices) says carries the outcome signal, vs availability. "
+                    "Recruiting-selection biased, skews affluent"),
+    "ap_pct_students_nu": ("NU org export", "school", NU_EXPORT_VINTAGE, NU_EXPORT_CONF,
+                           "NU pct of students taking any AP -- AP participation breadth (distinct from "
+                           "tests-per-student intensity)"),
+    "ap_tests_offered": ("NU org export", "school", NU_EXPORT_VINTAGE, NU_EXPORT_CONF,
+                         "NU avg # distinct AP tests offered by the school (denominator of ap_take_rate)"),
+    "ap_take_rate": ("Derived in build_features.py (NU org export)", "school", NU_EXPORT_VINTAGE, "derived",
+                     "AP tests taken / AP tests offered, winsorized 1/99pct -- the 'of 25 offered they took "
+                     "5' challenge-seeking ratio (Bob, Wk5 meeting); higher = students engage more of what's "
+                     "available"),
     "dual_enrollment_offered": ("CRDC", "school", "School Year 2021-2022", "confirmed",
                                "1 if CRDC reports the school offers dual enrollment"),
     "dual_enrollment_rate": ("CRDC", "school", "School Year 2021-2022", "confirmed",
@@ -113,6 +126,10 @@ METADATA = {
                             "NU pct of seniors taking SAT (Goal 6)"),
     "sat_score_nu": ("NU org export", "school", NU_EXPORT_VINTAGE, NU_EXPORT_CONF,
                      "NU avg freshman SAT score -- NOTE recruiting-selection biased, not a random sample"),
+    "act_composite_il": ("ISBE ACT (grade 11 school report card)", "school",
+                         "not confirmed in repo -- ask Sheng which ISBE report-card year", "inferred",
+                         "Mean of ISBE grade-11 ACT ELA/Math/Science average scores -- IL only, thin "
+                         "(~660 schools); standardized-test performance signal for cross-school comparison"),
     "grad_rate_2021": ("EDFacts", "school", "School Year 2020-2021", "confirmed",
                        "Four-year adjusted cohort graduation rate"),
     "frl_rate": ("Sheng's combined schools export (NCES CCD)", "school",
