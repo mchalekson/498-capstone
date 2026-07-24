@@ -1,0 +1,5 @@
+scheme,vs,n_compared,spearman_rank_corr,n_schools_changed_tier,pct_schools_changed_tier
+equal,designed,21951,0.9945,1563,7.1
+availability_only,designed,21802,0.8934,6650,30.5
+performance_heavy,designed,21951,0.9763,4293,19.6
+ib_included,designed,21951,0.9715,9911,45.2

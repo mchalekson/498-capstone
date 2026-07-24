@@ -1,0 +1,137 @@
+% =====================================================================
+% Methods subsection: school clustering methodology (Week-5 / v3)
+% Paste into the Methods section of the main paper (Overleaf), after the
+% rigor-tiering subsection (methods_rigor_tiering.tex).
+%
+% CITATION KEYS:
+%   NEW  (BibTeX provided at the bottom of this file -- paste into your .bib):
+%        macqueen1967, ward1963, tibshirani2001, rousseeuw1987,
+%        hubert1985, jolliffe2016
+%   EXISTING (already cited in the paper -- rename to YOUR keys):
+%        nardo2008 -> the OECD composite-indicator handbook (also used in
+%                     methods_rigor_tiering.tex)
+%
+% All numbers below are from the v3 run (clustering_v3_2026-07-24.csv,
+% docs/CLUSTERING.md). If the pipeline is re-run, regenerate them.
+% Uses natbib (\citep/\citet). Verify years/pages before final submission.
+% =====================================================================
+
+\subsection{Grouping Similar Institutions: Feature Engineering and Clustering}\label{sec:clustering}
+
+Beyond the ordinal rigor tiers, the platform calls for an unsupervised grouping of similar
+institutions across location, academic profile, and financial characteristics. We deliberately
+construct this grouping as a check on the rigor index rather than as a derivative of it: the
+rigor score itself is excluded from the feature set, so that any alignment between recovered
+clusters and the independently computed rigor tiers is an empirical result rather than an
+artifact of shared construction.
+
+\paragraph{Feature set and preprocessing.}
+Each school is represented by ten features spanning three axes: geography (one-hot indicators
+for U.S.\ Census region), academic profile (the rigor classifier's opportunity-side component
+scores---AP opportunity, CRDC advanced coursework, and test participation---plus the four-year
+adjusted-cohort graduation rate), and resources (state--local funding per school-age resident
+child and the county child-poverty rate). The two exam-performance components introduced in the
+Week-5 rigor revision are excluded here: their coverage (approximately 31\%) would decimate the
+complete-case population. Continuous features are $z$-standardized so that no single scale
+dominates the Euclidean geometry. Consistent with the rest of the pipeline, we do not impute:
+clustering is fit on the 5{,}801 schools (16.9\% of the 34{,}392-school universe) with complete
+data on all ten features. This complete-case population is not a random subset---it requires a
+school to appear in the federal funding, poverty, and academic collections simultaneously---and
+all cluster-level findings are reported as statements about this subset, not the full universe.
+
+\paragraph{Dimensionality and collinearity.}
+Because the features are intercorrelated (funding correlates $0.68$ with the Northeast
+indicator; poverty anti-correlates with funding and each academic component), we first apply
+principal component analysis \citep{jolliffe2016}, both to quantify the collinearity that the
+composite-indicator literature warns about \citep{nardo2008} and to obtain orthogonal axes for
+visualization. Six components are required to reach 90\% cumulative variance (91.8\%),
+indicating correlated but not redundant features. The leading components are interpretable:
+PC1 (33.6\% of variance) is a \emph{regional wealth} axis loading positively on funding and
+negatively on poverty; PC2 (17.6\%) is an \emph{academic intensity} axis loading on test
+participation, advanced coursework, and AP opportunity. That the wealth axis explains nearly
+twice the variance of the academic axis is itself a substantive description of how these
+schools differ.
+
+\paragraph{Cluster estimation and model selection.}
+We fit $k$-means \citep{macqueen1967} for $k \in \{2,\dots,8\}$ and select $k$ with the gap
+statistic under the one-standard-error rule \citep{tibshirani2001}, which selects $k=4$. As a
+pre-registered cross-check we also compute average silhouette widths \citep{rousseeuw1987},
+which peak at $k=2$ ($0.270$) and decline thereafter ($0.187$ at $k=4$). The two criteria
+disagree, and we report the disagreement rather than resolving it in favor of the more
+convenient answer; $k=4$ is retained because the gap statistic is the report's stated primary
+criterion. As a robustness check on the partition itself, we re-cluster with Ward
+agglomerative linkage \citep{ward1963} and compare partitions via the adjusted Rand index
+\citep{hubert1985}: ARI $=0.39$, indicating broadly similar but non-identical structure.
+
+\paragraph{Interpretation discipline.}
+The best silhouette attained anywhere in the search ($0.270$) sits at the conventional
+threshold for meaningful structure, and the retained $k=4$ solution falls below it. Following
+the project's reporting standard, we present this as a finding about the data rather than a
+modeling failure: on these features, U.S.\ high schools form a continuum with soft, overlapping
+groupings, not well-separated types---which the moderate cross-algorithm agreement corroborates.
+Downstream narratives therefore treat cluster labels as descriptive segments, not as ground
+truth. Examined against the independently constructed rigor tiers, the clusters show real but
+partial alignment: approximately 45\% of rigor-tier variance lies between clusters. The
+patterning is informative in both directions. Two clusters reach high mean rigor through very
+different resource profiles (mean funding of \$27{,}487 versus \$13{,}898 per resident child),
+demonstrating that the recovered structure is not a simple wealth gradient; at the same time,
+the lowest-rigor cluster is also the highest-poverty one (21.2\%), exactly the
+socioeconomic-ordering pattern the composite-indicator literature cautions composite measures
+tend to reproduce, and we flag it accordingly.
+
+% ---------------------------------------------------------------------
+% BibTeX for the NEW keys
+% ---------------------------------------------------------------------
+% @inproceedings{macqueen1967,
+%   author    = {MacQueen, James},
+%   title     = {Some Methods for Classification and Analysis of Multivariate Observations},
+%   booktitle = {Proceedings of the Fifth Berkeley Symposium on Mathematical Statistics and Probability},
+%   volume    = {1},
+%   pages     = {281--297},
+%   year      = {1967},
+%   publisher = {University of California Press}
+% }
+% @article{ward1963,
+%   author  = {Ward, Joe H.},
+%   title   = {Hierarchical Grouping to Optimize an Objective Function},
+%   journal = {Journal of the American Statistical Association},
+%   volume  = {58},
+%   number  = {301},
+%   pages   = {236--244},
+%   year    = {1963}
+% }
+% @article{tibshirani2001,
+%   author  = {Tibshirani, Robert and Walther, Guenther and Hastie, Trevor},
+%   title   = {Estimating the Number of Clusters in a Data Set via the Gap Statistic},
+%   journal = {Journal of the Royal Statistical Society: Series B},
+%   volume  = {63},
+%   number  = {2},
+%   pages   = {411--423},
+%   year    = {2001}
+% }
+% @article{rousseeuw1987,
+%   author  = {Rousseeuw, Peter J.},
+%   title   = {Silhouettes: A Graphical Aid to the Interpretation and Validation of Cluster Analysis},
+%   journal = {Journal of Computational and Applied Mathematics},
+%   volume  = {20},
+%   pages   = {53--65},
+%   year    = {1987}
+% }
+% @article{hubert1985,
+%   author  = {Hubert, Lawrence and Arabie, Phipps},
+%   title   = {Comparing Partitions},
+%   journal = {Journal of Classification},
+%   volume  = {2},
+%   number  = {1},
+%   pages   = {193--218},
+%   year    = {1985}
+% }
+% @article{jolliffe2016,
+%   author  = {Jolliffe, Ian T. and Cadima, Jorge},
+%   title   = {Principal Component Analysis: A Review and Recent Developments},
+%   journal = {Philosophical Transactions of the Royal Society A},
+%   volume  = {374},
+%   number  = {2065},
+%   pages   = {20150202},
+%   year    = {2016}
+% }

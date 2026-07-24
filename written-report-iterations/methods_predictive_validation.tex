@@ -1,0 +1,97 @@
+% =====================================================================
+% Methods subsection: predictive validation of the rigor construct (v1)
+% Paste into the Methods section of the main paper (Overleaf), after the
+% clustering subsection (methods_clustering.tex).
+%
+% CITATION KEYS:
+%   NEW  (BibTeX at the bottom of this file -- paste into your .bib):
+%        adelman1999, adelman2006, breiman2001
+%   EXISTING (already cited in the paper -- rename to YOUR keys):
+%        geiser2004  -> Geiser & Santelices (lit review section 2.2)
+%        bastedo2016 -> Bastedo (lit review section 3.1)
+%        ho2020      -> the SEDA/Reardon citation (lit review section 4.1)
+%
+% Numbers are from the v1 run (docs/PREDICTIVE_VALIDATION.md,
+% etl/build_predictive_validation.py against modeling_dataset_v3_2026-07-24).
+% Regenerate if the pipeline is re-run. Uses natbib (\citep/\citet).
+% =====================================================================
+
+\subsection{Predictive Validation of the Rigor Construct}\label{sec:validation}
+
+The rigor index is a constructed composite, not a model trained against ground truth; the
+literature's test for such a construct is predictive validity. \citet{adelman1999,adelman2006}
+built academic intensity as an index and then regressed degree completion on it, and the
+studies most critical of admissions-context measures apply the same standard---does the
+measure predict a real outcome \citep{geiser2004,bastedo2016}? We therefore estimate
+supervised models not to replace the index but to validate it, with the socioeconomic
+guardrail that outcome-linked school measures tend to reproduce SES \citep{ho2020}.
+
+\paragraph{Specification.}
+The outcome is the school's four-year adjusted-cohort graduation rate (EDFacts, SY~2020--21;
+public schools only, as EDFacts does not cover private schools). Predictors are restricted to
+the index's \emph{opportunity-structure} ingredients---AP offerings and engagement, CRDC
+advanced-coursework participation, standardized-test participation, and the verified IB
+indicator---while the index's exam-performance components are deliberately excluded: using one
+outcome to predict another would render the validation circular. Socioeconomic status enters
+as a separate block (school free/reduced-lunch rate, county child-poverty rate, and per-child
+funding). Following the incremental-validity logic, we fit three nested models on identical
+observations: SES-only, opportunity-only, and SES~+~opportunity; the construct's claim rests
+on the incremental explained variance of the opportunity block over the SES baseline. Two
+estimators are run side by side: ordinary least squares for interpretable coefficients, and
+gradient-boosted trees \citep{breiman2001} as a nonlinear ceiling reference, evaluated on a
+held-out 20\% test split with $R^2$ and RMSE, and permutation importance computed on the test
+set. Consistent with the pipeline's no-imputation rule, the nested comparison uses complete
+cases; because complete-case populations are non-random, the analysis is repeated under two
+specifications---the full eight-feature opportunity block ($n{=}1{,}691$, bounded by
+NU-sourced feature coverage) and a CRDC-only block ($n{=}6{,}158$, free of
+recruiting-universe selection)---and a gradient-boosting robustness run with native
+missing-value handling covers all $17{,}420$ public schools with an observed outcome.
+
+\paragraph{Results.}
+The opportunity block adds $+0.035$ to $+0.053$ $R^2$ over the SES baseline, a result stable
+across both specifications and both estimator families (full spec: $0.37 \rightarrow 0.42$;
+CRDC-only: $0.27 \rightarrow 0.33$ under gradient boosting; the all-schools robustness run
+reaches $R^2 = 0.515$). In Adelman's terms, the ingredients of the rigor construct predict a
+real outcome beyond demographics. The companion finding is reported with equal prominence:
+school-level FRL dominates permutation importance ($0.53$, against $0.07$ for the strongest
+opportunity feature), confirming that the \emph{outcome} is heavily SES-driven even though
+the \emph{index} correlates with county poverty at only $-0.07$---which is precisely the
+argument for characterizing schools by opportunity structure rather than by outcomes.
+
+\paragraph{Limitations.}
+This is an ecological, school-level regression: it licenses claims about schools, not about
+individual students. The outcome is a COVID-cohort rate, privacy-blurred (interval midpoints)
+and ceiling-compressed (median 91\%), which structurally bounds attainable $R^2$; the
+county-poverty coefficient reverses sign in the combined linear model, a suppression artifact
+of collinearity with FRL that we report and decline to interpret; and rare binary predictors
+(the IB flag) have limited leverage on a compressed target, which speaks to their role in the
+index (measuring offerings) rather than against it. The validation should be re-estimated
+when a post-COVID ACGR vintage is published.
+
+% ---------------------------------------------------------------------
+% BibTeX for the NEW keys
+% ---------------------------------------------------------------------
+% @techreport{adelman1999,
+%   author      = {Adelman, Clifford},
+%   title       = {Answers in the Tool Box: Academic Intensity, Attendance Patterns, and Bachelor's Degree Attainment},
+%   institution = {U.S. Department of Education, Office of Educational Research and Improvement},
+%   year        = {1999}
+% }
+% @techreport{adelman2006,
+%   author      = {Adelman, Clifford},
+%   title       = {The Toolbox Revisited: Paths to Degree Completion From High School Through College},
+%   institution = {U.S. Department of Education},
+%   year        = {2006}
+% }
+% @article{breiman2001,
+%   author  = {Breiman, Leo},
+%   title   = {Statistical Modeling: The Two Cultures},
+%   journal = {Statistical Science},
+%   volume  = {16},
+%   number  = {3},
+%   pages   = {199--231},
+%   year    = {2001}
+% }
+% NOTE: if the paper prefers a boosting-specific citation over breiman2001,
+% use Friedman (2001), "Greedy Function Approximation: A Gradient Boosting
+% Machine," Annals of Statistics 29(5):1189-1232 (key: friedman2001).
