@@ -1,0 +1,102 @@
+% =====================================================================
+% Methods subsection: rigor-index tiering methodology (Week-5 / v3)
+% Paste into the Methods section of the main paper (Overleaf).
+%
+% CITATION KEYS:
+%   NEW  (BibTeX provided at the bottom of this file -- paste into your .bib):
+%        jenks1967, fisher1958, glaser1963, cizek2007, nardo2008
+%   EXISTING (already cited in the paper -- rename to YOUR key):
+%        ho2020  -> your SEDA/Reardon citation (Ho, 2020 in the literature review)
+%
+% Uses natbib (\citep/\citet). If the paper uses plain \cite, replace them.
+% Verify page numbers/years in Google Scholar before final submission.
+% =====================================================================
+
+\subsection{Classifying the Rigor Index into Ordinal Tiers}\label{sec:tiering}
+
+The academic rigor classifier produces, for each school, a continuous composite score: each
+component feature is standardized, the components are combined under the designed weighting
+scheme, and weight is reallocated proportionally across whichever components a school actually
+reports---the standard composite-indicator construction \citep{nardo2008}. Converting this
+continuous score into the five ordinal tiers (Below Average, Average, Demanding, Very Demanding,
+Most Demanding) is a separate methodological choice, and we treat it as one rather than as an
+arbitrary partition.
+
+We set the tier boundaries using Jenks natural breaks \citep{jenks1967}, the one-dimensional case
+of Fisher's optimal-grouping algorithm \citep{fisher1958} and computationally equivalent to
+one-dimensional $k$-means clustering. Natural breaks place the class boundaries so as to minimize
+within-tier variance and maximize between-tier variance---that is, at the natural gaps in the
+score distribution. We prefer this to equal-frequency quantiles for a reason internal to our own
+review: \citet{ho2020} caution against distinguishing schools ``whose performance differs only
+slightly,'' and equal-frequency quantiles do exactly that, forcing a tier boundary between
+near-identical schools solely to fill equally sized buckets. Because the classification literature
+also holds that the choice of break method is itself consequential, we report both the
+natural-breaks tiers and an equal-quantile alternative together with their level of agreement
+(49\% of scored schools receive the same tier under the two schemes), rather than presenting
+either as canonical.
+
+The resulting tiers are \emph{norm-referenced}: a school's tier reflects its position within the
+scored population rather than a fixed external standard \citep{glaser1963}. Under natural breaks,
+``Most Demanding'' corresponds to a composite score of at least approximately $1.5$ standard
+deviations above the population mean and comprises roughly 700 schools, in contrast to the top
+20\% that an equal-quantile scheme would assign. A norm-referenced tier shifts if the reference
+population changes---here the scored population covers approximately 64\% of schools and is skewed
+toward the recruiting universe---whereas a criterion-referenced alternative that fixes thresholds
+on the underlying features (for example, a minimum mean AP examination score) would remain stable
+across populations but requires separately justified cut scores \citep{cizek2007}. We adopt the
+norm-referenced scheme for this iteration and flag the criterion-referenced alternative as an
+available design decision for the client.
+
+As an external check, mean SAT---a measure not used in constructing the tiers---rises
+monotonically across the five natural-breaks tiers, from $1{,}052$ in Below Average to $1{,}303$
+in Most Demanding with no inversions, indicating that the internally derived boundaries track
+real between-school differences.
+
+% =====================================================================
+% BibTeX entries for the NEW references (paste into your .bib file):
+% =====================================================================
+%
+% @article{jenks1967,
+%   author  = {Jenks, George F.},
+%   title   = {The Data Model Concept in Statistical Mapping},
+%   journal = {International Yearbook of Cartography},
+%   year    = {1967},
+%   volume  = {7},
+%   pages   = {186--190}
+% }
+%
+% @article{fisher1958,
+%   author  = {Fisher, Walter D.},
+%   title   = {On Grouping for Maximum Homogeneity},
+%   journal = {Journal of the American Statistical Association},
+%   year    = {1958},
+%   volume  = {53},
+%   number  = {284},
+%   pages   = {789--798}
+% }
+%
+% @article{glaser1963,
+%   author  = {Glaser, Robert},
+%   title   = {Instructional Technology and the Measurement of Learning Outcomes: Some Questions},
+%   journal = {American Psychologist},
+%   year    = {1963},
+%   volume  = {18},
+%   number  = {8},
+%   pages   = {519--521}
+% }
+%
+% @book{cizek2007,
+%   author    = {Cizek, Gregory J. and Bunch, Michael B.},
+%   title     = {Standard Setting: A Guide to Establishing and Evaluating Performance Standards on Tests},
+%   publisher = {SAGE Publications},
+%   address   = {Thousand Oaks, CA},
+%   year      = {2007}
+% }
+%
+% @book{nardo2008,
+%   author    = {Nardo, Michela and Saisana, Michaela and Saltelli, Andrea and Tarantola, Stefano and Hoffmann, Anders and Giovannini, Enrico},
+%   title     = {Handbook on Constructing Composite Indicators: Methodology and User Guide},
+%   publisher = {OECD Publishing},
+%   address   = {Paris},
+%   year      = {2008}
+% }
