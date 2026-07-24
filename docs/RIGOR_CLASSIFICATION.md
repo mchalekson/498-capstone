@@ -90,14 +90,17 @@ everything else, is largely absorbed.
 
 ## Sensitivity analysis — alternate weighting schemes vs. the default ("designed")
 
+Spearman is on the continuous score (tiering-independent); "% changed" is on the natural-breaks
+tiers (the shipped default):
+
 | Scheme | Spearman rank corr. | Schools changed tier | % changed |
 |---|---|---|---|
-| `equal` (0.20 each) | 0.995 | 2,134 | 9.8% |
-| **`availability_only`** (pre-Wk5 model, no performance) | **0.879** | **6,497** | **29.9%** |
-| `performance_heavy` | 0.972 | 4,587 | 21.0% |
-| `ib_included` | 0.971 | 9,197 | 42.1% |
+| `equal` (0.20 each) | 0.995 | 1,472 | 6.7% |
+| **`availability_only`** (pre-Wk5 model, no performance) | **0.879** | **5,066** | **23.3%** |
+| `performance_heavy` | 0.972 | 3,655 | 16.7% |
+| `ib_included` | 0.971 | 13,150 | 60.2% |
 
-**The headline number: adding exam-performance signal moves ~30% of schools across tiers**
+**The headline number: adding exam-performance signal moves ~23% of schools across tiers**
 (`availability_only` → `designed`, Spearman 0.88). This is the direct answer to "how much did
 the literature-motivated change matter?" — a lot. It is *not* a cosmetic change to the index.
 
@@ -108,7 +111,7 @@ NU-sourced signal (as if CRDC access were lost):
 
 - 8,933 schools comparable both ways
 - Spearman rank correlation: **0.88**
-- **39.3% changed tier**
+- **38.7% changed tier**
 
 Still the key fragility to surface to the client: losing CRDC access reshuffles ~40% of the
 CRDC-covered population's tiers. (Adding the NU-sourced performance components softened this
@@ -120,23 +123,61 @@ dependency is still material.)
 The check the composite-indicator literature (§4.1) demands — does the tier just reproduce
 socioeconomic ordering?
 
-- `spearman(tier, child_poverty_saipe)` = **-0.148**
-- `spearman(tier, per_resident_child_funding_state_local)` = **0.091**
-- `spearman(tier, per_pupil_state_local)` = **-0.067**
+- `spearman(tier, child_poverty_saipe)` = **-0.137**
+- `spearman(tier, per_resident_child_funding_state_local)` = **0.080**
+- `spearman(tier, per_pupil_state_local)` = **-0.091**
 
-All still weak. The poverty correlation strengthened from the first pass's -0.070 to -0.148 —
+All still weak. The poverty correlation strengthened from the first pass's -0.070 to -0.137 —
 expected, since the added performance signals (AP/SAT scores) are more SES-correlated than raw
-availability (lit review §2.3, §4.1 predicts exactly this). But at -0.15 the tier is still far
+availability (lit review §2.3, §4.1 predicts exactly this). But at -0.14 the tier is still far
 from being a poverty proxy. Worth stating honestly: the literature-recommended change bought
 real predictive signal at the cost of a small, quantified increase in SES entanglement.
 
+## How a score becomes a tier — the bucket boundaries
+
+The composite gives every scored school a single `rigor_score` (z-score-based, centered ~0;
+higher = more rigorous *relative to the average school in the scored population*). Turning that
+continuous score into five ordinal tiers is a separate, explicit choice.
+
+**Default: natural breaks (Jenks).** Jenks natural breaks is a 1-D clustering method (here via
+1-D k-means, which is equivalent): given the scores and a target of 5 groups, it puts the
+cut-points at the natural *gaps* in the distribution — minimizing variance within each tier and
+maximizing it between tiers. The boundaries are found by the algorithm, not hand-set. This is
+the client's "not equal buckets" request: tier sizes vary and the top tier stays genuinely
+small. Actual v3 boundaries:
+
+| Tier | `rigor_score` range | # schools |
+|---|---|---|
+| Below Average | −3.21 to −0.73 | 3,281 |
+| Average | −0.73 to −0.11 | 7,431 |
+| Demanding | −0.11 to 0.51 | 7,058 |
+| Very Demanding | 0.51 to 1.47 | 3,387 |
+| **Most Demanding** | **≥ 1.47** | **700** |
+
+So "Most Demanding" means `rigor_score ≥ 1.47` — roughly 1.5 SD above the average school.
+
+**Alternate: quantiles (equal fifths).** Also written to the output (`rigor_tier_*_quantile`):
+forces ~4,371 schools per tier, and "Most Demanding" becomes `rigor_score ≥ 0.46`. Natural-breaks
+and quantile tiers agree on only **49%** of scored schools — so the choice is consequential, not
+cosmetic.
+
+**Relative, not absolute — the key caveat.** Both schemes define tiers *relative to our scored
+population*, not against a fixed external standard. A school is "Most Demanding" because it sits
+at the top of this data, not because it cleared a fixed bar (e.g. "avg AP exam score ≥ 3.5 and
+≥ 15 APs offered"). Two implications: (1) the cut-points would shift if re-run on a different
+population — and ours is ~64% of schools, skewed toward NU's recruiting universe; (2) an
+absolute / fixed-threshold scheme is a real alternative if the client wants a tier that does
+*not* move when the population changes. We validate the relative cuts against a measure the
+tiers were not built from — mean SAT rises 1,052 → 1,303 across the five tiers with no
+inversions (`BENCHMARKING.md`) — evidence the boundaries track real differences even though they
+are internally derived.
+
 ## What this is not
 
-- **Tier cut-points are quintiles** (equal buckets: ~4,371 schools each). The Week-5 client
-  note flagged that real institution rigor is *"not broken into equal buckets"* — so quintiles
-  are a transparent default, not a claim about the true distribution. Natural-breaks (Jenks) or
-  fixed score thresholds are a defensible follow-up; this is called out as an open choice, not
-  settled.
+- **Tier cut-points are relative, not absolute** — see "How a score becomes a tier" above. The
+  default is natural breaks (Jenks); quantiles are provided as an alternate (`rigor_tier_*_quantile`).
+  Neither anchors to a fixed external standard, and that is a deliberate open choice for the
+  client, not settled.
 - Not validated against any external rigor measure (none exists in this project).
 - Naming: the tiers keep NU's own counselor vocabulary (Below Average … Most Demanding), but
   the model measures **opportunity + performance structure at the institution level**, not a

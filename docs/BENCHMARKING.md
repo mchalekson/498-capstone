@@ -63,7 +63,7 @@ this check is what makes this section worth having, not an afterthought:
 - `spearman(sat_score_nu, per_pupil_state_local)` = 0.058 (IL only, small n)
 
 **This is the comparison that matters: SAT's correlation with poverty (-0.385) is roughly
-2.6x stronger than the rigor tier's (-0.148, from `RIGOR_CLASSIFICATION.md` v3).** That's not a
+2.8x stronger than the rigor tier's (-0.137, from `RIGOR_CLASSIFICATION.md` v3).** That's not a
 coincidence — it's exactly what the report's literature review (Sections 2.2, 2.4) predicts:
 an outcome/achievement measure (SAT) is more socioeconomically confounded than an
 opportunity-plus-performance measure like the rigor tier. (The gap narrowed from v1's ~5.5x

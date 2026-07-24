@@ -56,7 +56,7 @@ an arbitrary top 20%.
 ## Open decisions for the team
 
 1. **Should exam performance stay weighted as-is?** It buys signal but adds mild SES
-   correlation (−0.07 → −0.15, still weak). Keep, or down-weight?
+   correlation (−0.07 → −0.14, still weak). Keep, or down-weight?
 2. **Natural breaks vs. quantiles for the final tiers?** We defaulted to natural breaks; both
    are in the output (`rigor_tier_*` vs `rigor_tier_*_quantile`).
 3. **Is "AP efficiency" a headline deliverable or a supporting appendix?**
