@@ -100,6 +100,14 @@ The project's per-student funding overlay draws on Census F-33 and SAIPE. Jackso
 
 Two caveats for this project. The finding is about spending *changes over time* identified through policy shocks, not about cross-sectional spending *levels* predicting current school quality — the latter is exactly the confounded comparison Jackson et al. designed around. And the project's data are district-grain (F-33, SAIPE join on LEAID), which the team has already learned the hard way produces join fanout when applied at school grain. The overlay is worth having as descriptive context; it should not be read as a causal input to rigor.
 
+### 4.4 Classifying a continuous index into ordinal tiers
+
+Two decisions convert the continuous rigor score into five labeled tiers, and both have direct methodological literature the project should cite rather than treat as arbitrary engineering.
+
+**Choice of class breaks.** Partitioning a continuous distribution into ordinal classes is the classification problem studied in statistical cartography. Jenks (1967) formalized "natural breaks" — class boundaries placed to minimize within-class variance and maximize between-class variance — which is the one-dimensional case of Fisher's (1958) exact optimal-grouping algorithm and is computationally equivalent to one-dimensional k-means. The project uses natural breaks as its default tiering, over equal-frequency quantiles, for a reason the review's own SEDA discussion (§4.1) supplies: Reardon cautions against ranking schools "whose performance differs only slightly," and equal-frequency quantiles do exactly that — they force a tier boundary between near-identical schools purely to fill equal buckets, whereas natural breaks cut where the data actually separates. The classification literature also holds that the choice of break method is itself consequential and can be unstable across samples, which is the justification for reporting *both* natural-breaks and quantile tiers and their level of agreement rather than presenting either as canonical.
+
+**Relative vs. absolute standards.** The tiers as implemented are norm-referenced: a school's tier is defined by its position in the scored population, not against a fixed external bar. Glaser (1963) drew the foundational distinction between norm-referenced and criterion-referenced measurement, and the standard-setting literature (Cizek & Bunch, 2007) provides the formal methodology for establishing absolute performance thresholds where those are wanted. Naming this choice matters for the client: a norm-referenced tier moves when the reference population changes (here, ~64% of schools, skewed toward NU's recruiting universe), whereas a criterion-referenced tier fixed on the underlying features (e.g., a minimum mean AP exam score) is stable across populations but requires defensible, separately-justified cut-scores. Neither is uniquely correct — but the composite-indicator methodology the project otherwise follows (Nardo et al., 2008, the OECD/JRC handbook on normalization, weighting, aggregation, and robustness) treats this as an explicit design decision to document, not a default to assume silently.
+
 ---
 
 ## 5. Record Linkage Without a Shared Identifier
@@ -145,6 +153,7 @@ This maps precisely onto the project's stated stakeholder need: a pipeline Bob's
 - Token-based over edit-distance string similarity for entity names (Cohen et al., 2003).
 - Containerization as the mechanism for a non-engineer-maintainable annual pipeline (Boettiger, 2015).
 - Per-pupil spending as a variable with real causal purchase on student outcomes (Jackson, Johnson, & Persico, 2016).
+- Cutting a continuous rigor index into ordinal tiers as a documented methodological choice, not arbitrary engineering — natural breaks (Jenks, 1967; Fisher, 1958) preferred over equal quantiles, and an explicit norm- vs. criterion-referenced standard-setting decision (Glaser, 1963; Cizek & Bunch, 2007) within the composite-indicator framework (Nardo et al., 2008).
 
 **Where the literature pushes back:**
 - Course *availability* is a weak predictor of college outcomes; exam *performance* is a strong one (Geiser & Santelices, 2004). The model is built mostly on the former. The tier should be named and described accordingly.
@@ -179,6 +188,8 @@ Center for Assessment, Design, Research and Evaluation. (2024). *Nominal and eff
 
 Christen, P. (2012). *Data matching: Concepts and techniques for record linkage, entity resolution, and duplicate detection*. Springer.
 
+Cizek, G. J., & Bunch, M. B. (2007). *Standard setting: A guide to establishing and evaluating performance standards on tests*. SAGE Publications.
+
 Coca, V., Johnson, D., & Kelley-Kemple, T. (2012). *Working to my potential: The postsecondary experiences of CPS students in the International Baccalaureate Diploma Programme*. University of Chicago Consortium on Chicago School Research.
 
 Cohen, W. W., Ravikumar, P., & Fienberg, S. E. (2003). A comparison of string distance metrics for name-matching tasks. In *Proceedings of the IJCAI-2003 Workshop on Information Integration on the Web (IIWeb-03)*, 73–78.
@@ -187,7 +198,11 @@ Enamorado, T., Fifield, B., & Imai, K. (2019). Using a probabilistic model to as
 
 Fellegi, I. P., & Sunter, A. B. (1969). A theory for record linkage. *Journal of the American Statistical Association, 64*(328), 1183–1210.
 
+Fisher, W. D. (1958). On grouping for maximum homogeneity. *Journal of the American Statistical Association, 53*(284), 789–798.
+
 Geiser, S., & Santelices, V. (2004). *The role of Advanced Placement and honors courses in college admissions*. Center for Studies in Higher Education, University of California, Berkeley. Research & Occasional Paper Series, ROP.9.04.
+
+Glaser, R. (1963). Instructional technology and the measurement of learning outcomes: Some questions. *American Psychologist, 18*(8), 519–521.
 
 Ho, A. D. (2020). What is the Stanford Education Data Archive teaching us about national educational achievement? *AERA Open*. https://doi.org/10.1177/2332858420939848
 
@@ -195,7 +210,11 @@ Jackson, C. K., Johnson, R. C., & Persico, C. (2016). The effects of school spen
 
 Jang, H., & Reardon, S. F. (2019). States as sites of educational (in)equality: State contexts and the socioeconomic achievement gradient. *AERA Open*. https://doi.org/10.1177/2332858419872459
 
+Jenks, G. F. (1967). The data model concept in statistical mapping. *International Yearbook of Cartography, 7*, 186–190.
+
 Kolluri, S. (2018). Advanced Placement: The dual challenge of equal access and effectiveness. *Review of Educational Research, 88*(5), 671–711. https://doi.org/10.3102/0034654318787268
+
+Nardo, M., Saisana, M., Saltelli, A., Tarantola, S., Hoffmann, A., & Giovannini, E. (2008). *Handbook on constructing composite indicators: Methodology and user guide*. OECD Publishing.
 
 U.S. Department of Education, Office for Civil Rights. (n.d.). *Civil Rights Data Collection*. https://civilrightsdata.ed.gov
 

@@ -172,6 +172,12 @@ tiers were not built from — mean SAT rises 1,052 → 1,303 across the five tie
 inversions (`BENCHMARKING.md`) — evidence the boundaries track real differences even though they
 are internally derived.
 
+**Literature backing** (see `literature_review.md` §4.4): natural breaks — Jenks (1967), Fisher
+(1958); the relative (norm-referenced) vs. absolute (criterion-referenced) choice — Glaser
+(1963), Cizek & Bunch (2007); the composite-indicator framework the tiering sits inside — Nardo
+et al. (2008, OECD/JRC handbook). The preference for natural breaks over equal quantiles is
+grounded in Reardon/SEDA's caution (§4.1) against ranking schools that "differ only slightly."
+
 ## What this is not
 
 - **Tier cut-points are relative, not absolute** — see "How a score becomes a tier" above. The
