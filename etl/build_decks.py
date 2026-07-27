@@ -252,6 +252,7 @@ def build_midterm():
         "Problem: CEEB and NCES have no common key.",
         "Decision rule: auto-accept / review / reject = Fellegi–Sunter three-way (1969).",
         "Similarity: token-based over edit distance for school names (Cohen et al., 2003).",
+        "Ambiguous middle band: an LLM adjudicates the review-tier pairs a threshold cannot settle — each decision logged and auditable.",
         "Reporting: match rates reported as a matter of course.",
     ], image="match_rates.png",
        notes="Classic entity-resolution problem. The three-way decision rule matters because "
@@ -278,7 +279,7 @@ def build_midterm():
              "genuinely sensitive to dropping performance.")
 
     content_slide(prs, "From score to tiers — natural breaks", [
-        "Method: Jenks natural breaks (Jenks, 1967; Fisher, 1958) — cuts at gaps in the distribution.",
+        "Method: Jenks natural breaks (Jenks, 1967; Fisher, 1958) — 1-D k-means, cutting at gaps in the distribution.",
         "Why not quantiles: Reardon cautions against splitting near-identical schools.",
         "Frame: norm-referenced (Glaser, 1963); criterion-referenced is the alternative (Cizek & Bunch, 2007).",
         "Result: 'Most Demanding' = 295 schools, not a forced top fifth.",
@@ -322,7 +323,8 @@ def build_midterm():
              "one methods-defense slide, keep this one.")
 
     content_slide(prs, "Predictive validation — the supervised model", [
-        "Design: gradient boosting + linear; grad rate ~ opportunity, SES-controlled (Adelman; Reardon).",
+        "Design: HistGradientBoosting + linear baseline; grad rate ~ opportunity, SES-controlled (Adelman; Reardon).",
+        "Discipline: 80/20 held-out split, fixed seed, permutation importance (10 repeats), R²/RMSE on the test set.",
         "Result: opportunity adds +0.05 R² beyond SES — stable across two specs, both model families.",
         "Importance: free-lunch rate dominates (0.53) — the outcome is SES-driven…",
         "…yet the index correlates with poverty only −0.11 → evidence it is not an SES proxy.",
@@ -331,7 +333,8 @@ def build_midterm():
              "graduation is how we test that the construct carries signal.")
 
     content_slide(prs, "Unsupervised segments", [
-        "K-means (k=4) + hierarchical over PCA components; region, academic profile, funding.",
+        "K-means + hierarchical over PCA components (90% variance retained); region, academic profile, funding.",
+        "k=4 selected by gap statistic (Tibshirani et al., 2001), cross-checked against silhouette; the two algorithms compared by adjusted Rand index.",
         "Deliberately excludes rigor_score — otherwise 'do the clusters match the tier?' is circular.",
         "Finding: every cluster spans several tiers — segments describe a different cut of the data.",
         "Limitation: 5,801 complete-case schools — the clustering universe is much smaller than the tiering one.",
@@ -343,7 +346,8 @@ def build_midterm():
         "Measurement model: the composite rigor index — the deliverable.",
         "Unsupervised ML: K-means + hierarchical clustering with PCA — school segments.",
         "Supervised ML: gradient boosting predicting outcomes — validation, not the product.",
-        "Rationale: no ground-truth rigor label exists — so an auditable index, validated by ML.",
+        "Why not train the tier directly: no ground-truth rigor label exists anywhere — inventing one would make the model unfalsifiable.",
+        "So: an auditable measurement instrument, validated by ML rather than produced by it.",
     ], notes="This is the 'where is the model?' answer. Three layers, each doing a job the others "
              "cannot. The absence of a ground-truth label is the reason for the architecture.")
 
