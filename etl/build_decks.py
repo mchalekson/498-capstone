@@ -253,9 +253,7 @@ def build_midterm():
         "Methodology handoff guide for NU integration.",
         "Final report: Methods, results, limitations.",
     ])
-    # NOTE: distinct filename -- a teammate's build_midterm_deck.py already owns
-    # docs/MSDS_498_Midterm.pptx. This is a separate alternate draft, not a replacement.
-    out = os.path.join(ROOT, "docs", "MSDS_498_Midterm_altdraft.pptx")
+    out = os.path.join(ROOT, "docs", "MSDS_498_Midterm.pptx")
     prs.save(out); return out
 
 
