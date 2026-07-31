@@ -1,0 +1,645 @@
+guid,name,city,region,ceeb_as_stored,suspected_counterpart_ceeb,custom_id,confirmed_via_custom_id_collision
+65adb898-fd21-461f-9d45-c2fb1f171eb9,Academy Of Our Lady Of Guam,Agana,GU,525040,052504,0006598,True
+184b8a87-62cb-4528-a8d8-c4356a3445f1,Almond Bancroft School,Almond,WI,500030,050003,0027279,True
+ea989d16-d8c6-47ad-8675-6c8b96ec1404,Alvirne High School,Hudson,NH,300280,030028,0015912,True
+63f13946-6ae0-48d4-bb85-514af6651cbf,Appleton West High School,Appleton,WI,500060,050006,0027283,True
+98acec9d-6d0e-4138-9ce4-82777b6f5b42,Barrington High School,Barrington,RI,400000,040000,0022054,True
+f7a9c65b-0138-4af0-8cfe-f054bbccb523,Bonny Eagle High School,Standish,ME,201100,020110,0011472,True
+48bf224a-4ffe-4c1d-b203-0fe0a5182a24,Coe Brown Northwood Academy,Northwood,NH,300470,030047,0015952,True
+b88db522-55e4-47cc-8239-c8967f2f890f,Cony High School,Augusta,ME,200040,020004,0011521,True
+4a593674-9519-4aba-acdd-48f7350336a1,De Forest Area High School,De Forest,WI,500500,050050,0026905,True
+b0edf344-307e-48f2-a8f9-4e0b4972fb8a,Divine Savior-Holy Angels HS,Milwaukee,WI,501350,050135,0026862,True
+057a1c84-e5a5-47a3-8f99-4d697f3ee039,Elkhorn Area High School,Elkhorn,WI,500600,050060,0026763,True
+8c1de20f-a7d5-4890-bdbf-b4122628a875,Faga'itua High School,Pago Pago,AS,520030,052003,0001423,True
+5030a4d0-fa59-4e7b-8051-a945e76485fd,Father Duenas Memorial HS,Hagatna,GU,525080,052508,0006612,True
+70de43fd-b25c-4e2f-a24b-57a98f3bdac6,Fort Fairfield Middle HS,Ft Fairfield,ME,200370,020037,0011596,True
+7c54246c-1583-4e59-825e-7211ecd6a74d,Georgia Military College HS,Milledgeville,GA,112100,011210,0006399,True
+7a70420a-f7ce-4aaf-930b-c5a076375ed1,Gibraltar High School,Fish Creek,WI,500660,050066,0027060,True
+d0237514-cd54-4f8c-bdc3-96f081ff0a37,Grace Christian Academy,Saipan,MP,529040,052904,0013963,True
+bd3ee48f-2498-4fb4-94ba-87a1d08ff57d,Grafton Senior High School,Grafton,WI,500770,050077,0026704,True
+f2f37958-6c86-43bb-93b5-f516048de065,Greely High School,Cumberland Cente,ME,200280,020028,0011452,True
+c162b998-3854-41d7-bc9d-c483720a01b4,Greendale Senior High School,Greendale,WI,500820,050082,0026765,True
+14dfba1b-4c82-4861-9f47-0e3adea8d689,H B Plant High School,Tampa,FL,101700,010170,0005646,True
+65995e1e-f608-4040-9994-0d97cafeca94,Hall-Dale High School,Farmingdale,ME,200420,020042,0011522,True
+453788d7-3407-4e60-a693-e1dbc4173f4f,Heard County Comprehensive HS,Franklin,GA,111350,011135,0006103,True
+123d19c1-a901-42e7-9221-445a890cacd1,Howard W Blake High School,Tampa,FL,101750,010175,0005615,True
+2ebeee20-cb17-40a6-88e9-18007d8872d0,Howards Grove High School,Howards Grove,WI,502090,050209,0026740,True
+1766362f-9e56-4520-b2b3-dacfe20255ba,Hudson Senior High School,Hudson,WI,500920,050092,0027013,True
+b99e5a05-c8f8-413e-aff6-42c968b0b31d,Hustisford Jr-Sr High School,Hustisford,WI,500930,050093,0026710,True
+d2924e7e-c257-46f6-812a-9814f5c38861,Jackson Hole High School,Jackson,WY,510210,051021,0027649,True
+b330e4e1-88e8-43cb-9cf1-299316750de5,John F Kennedy High School,Tamuning,GU,525160,052516,0006599,True
+fd941e5f-6e1b-4dd8-9e26-d613c080fe2a,Kaukauna Senior High School,Kaukauna,WI,500990,050099,0027034,True
+765c7447-e3d1-443f-ab24-5af8b66c787e,Kimball Union Academy,Meriden,NH,300400,030040,0016004,True
+c1bd0b47-d710-4e1d-b81e-9255c539ea2c,Lancaster Senior High School,Lancaster,WI,501080,050108,0026967,True
+45827c81-6977-4772-a4c3-e75d3ad9189f,Landrum High School,Landrum,SC,411250,041125,0022260,True
+762a3fa8-1125-4e22-8f2d-a2c75b939b13,Leone High School,Pago Pago,AS,520070,052007,0001431,True
+137d61b8-c524-4eb2-9b19-88577d34912d,Lewiston High School,Lewiston,ME,200550,020055,0011501,True
+3b1b674e-8f44-432c-9545-14692cc3af1b,Little Wolf Jr/Sr High School,Manawa,WI,501180,050118,0027297,True
+ef322e32-a851-4cf2-a1d1-23ccf6406c25,Logan High School,LA Crosse,WI,501050,050105,0027160,True
+5cde69a4-28fc-4c77-a90a-0304980d6d9e,Lomira High School,Lomira,WI,501120,050112,0026719,True
+95bad044-aee3-45d7-b002-7829abea0ab0,Lovell High School,Lovell,WY,510260,051026,0027594,True
+5dfeba36-245a-4b41-bb5c-66a5176d448e,Lugoff-Elgin High School,Lugoff,SC,410200,041020,0022166,True
+86fbb188-317a-47db-be1e-4832c9258d1b,Marinette Senior High School,Marinette,WI,501200,050120,0027041,True
+41f3c5d9-f71b-469e-ba40-47b9137b7b0c,Marshall High School,Marshall,WI,501220,050122,0026923,True
+675c1f1d-e66c-4ace-a1d8-b933654accd6,Marshwood High School,South Berwick,ME,200350,020035,0011443,True
+9eefa9ce-231d-4f38-af08-a4de566c16dc,Medomak Valley High School,Waldoboro,ME,201050,020105,0011567,True
+60d27f7b-7ead-4d0f-ba8a-9aaaffb0bfa5,Menomonie Senior High School,Menomonie,WI,501300,050130,0027222,True
+3c935da4-0bb9-43a2-abfe-b32c466c4347,Middleton High School,Middleton,WI,501320,050132,0026925,True
+b0a681b2-f9b8-4e38-9aaa-3ef67f0a6888,Milton High School,Milton,WI,501330,050133,0026926,True
+f486c97f-1e94-4139-8175-c6cfbf39bbb5,Mineral Point High School,Mineral Point,WI,501520,050152,0026927,True
+3ad09fe0-4321-41cf-8353-e38624b0baab,Notre Dame Academy,Green Bay,WI,500800,050080,0027079,True
+539070e7-f327-49b8-bfa4-d7acf00a6fed,Oxford Hills High School,South Paris,ME,200950,020095,0011514,True
+afea57e6-084a-4521-96ca-466c1dc647d0,Palmyra-Eagle High School,Palmyra,WI,501750,050175,0026784,True
+fd84412e-bc79-4d0f-bdc6-0dbb7d7b619c,Powell High School,Powell,WY,510340,051034,0027596,True
+d4ec842e-ecc1-4fb4-9907-4a141f8b8c18,Samoana High School,Utulei,AS,520050,052005,0001425,True
+1125cf37-8022-49da-aa07-afa2a34912fa,South Portland High School,South Portland,ME,200960,020096,0011490,True
+de2dd906-b711-457d-8abe-87123c76f3a8,Webster Area High School,Webster,SD,421400,042140,0022616,True
+e8469f6d-441a-46b6-b090-e0eb914f6e57,Worland High School,Worland,WY,510450,051045,0027587,True
+ac419972-253f-466c-901b-c186817cb857,Xavier High School,Chuuk,FM,529080,052908,0005920,True
+3f23e455-6416-457e-bbfb-194e4ae6b888,Yankton Senior High School,Yankton,SD,421500,042150,0022579,True
+4db26537-f948-4387-877b-1a306ffa5980,Abbeville High School,Abbeville,SC,410000,041000,0022418,False
+69339fa5-db8f-4aa0-9eff-6cbe48cc891c,Academia Adventista Metroplita,San Juan,PR,545480,054548,0021993,False
+20f00538-321b-4ce2-8347-34788a446f82,Academia Barbara Ann Roessler,San Juan,PR,544310,054431,0022003,False
+3422a7c2-ab08-4cd4-b708-bcd386fde77e,Academia Bautista Puerto Nuevo,Caparra Hills,PR,544170,054417,0021969,False
+c8d2f561-dc4d-4e57-b98e-1b845e9e15bd,Academia Cristo Rey,Ponce,PR,543780,054378,0021899,False
+cd3593d8-3456-4822-bc99-f2fb54da42bf,Academia Del Carmen,Carolina,PR,541230,054123,0022046,False
+340a56a9-f1e5-49b8-90b5-acbd585a77ee,Academia Del Perpetuo Socorro,San Juan,PR,543440,054344,0021946,False
+a5fb0b42-ec79-43a6-aa1d-335d2edfb868,Academia Del Sagrado Corazon,San Juan,PR,545520,054552,0021950,False
+ad751d24-ba78-4953-9f2d-5a9c0dd36552,Academia Discipulos De Cristo,Bayamon,PR,540790,054079,0022020,False
+bb360fcd-0ed1-4b15-b28b-79a6e8c854aa,Academia Garcia,Ponce,PR,544080,054408,0021898,False
+22f0103e-31d8-48e0-b903-335a18f1b532,Academia La Milagrosa De Cayey,Cayey,PR,541350,054135,2873145,False
+84166b19-0461-43a1-8e85-53d8414a7b97,Academia San Jorge,San Juan,PR,545560,054556,0021955,False
+f75e0f35-ee00-4bac-8aed-384929cacbdf,Academia San Jose High School,Guaynabo,PR,546580,054658,0022024,False
+958b81e7-dd48-4110-9579-a5bd8098d6ea,Academia San Luis,Lajas,PR,542800,054280,0021834,False
+c63dd7f6-5a81-4df6-8911-3521989a5e11,Academia Santa Maria,Ponce,PR,543800,054380,0021901,False
+81868287-e24f-4084-883b-51781711373a,Academia Santa Monica,San Juan,PR,545600,054560,0021948,False
+b1845d37-2202-40c0-858b-fff15558cdd1,Academia Santa Teresita,Naranjito,PR,543640,054364,0021876,False
+1b901c3b-da6f-4763-b2f0-bc8fd6de2d71,Academia Santa Teresita,San Juan,PR,545640,054564,0021953,False
+2690a155-cdf9-4526-845d-bd68370d932e,Academia Sn Antonio De Guayama,Guayama,PR,541950,054195,0021936,False
+d093baa3-522f-c6c5-81e6-ef494c9feaf5,Adult Virtual Academy,Palm Springs,FL,100120,010012,,False
+5afdfabb-ab37-4a48-87a1-1eb5faa705dc,Advance Academy Of Georgia The,Carrollton,GA,110600,011060,0006030,False
+b84f9864-74c7-4ed0-8274-0818da65f4d4,Albert Einstein High School,Santurce,PR,545680,054568,0021957,False
+5cfff7ca-dc89-41d8-87dd-c460416a310c,Alcester-Hudson School,Alcester,SD,420010,042001,0022537,False
+e211752d-fc7b-4af4-8d6e-33eed596d979,Alfonso Casta Martinez HS,Maunabo,PR,543180,054318,0021868,False
+c707d36c-a5c4-432f-b5d2-3a02177f9f06,Allentown High School,Allentown,NJ,310000,031000,0016543,False
+e318cce5-4d8e-4806-90ac-4ae2a93c2900,Altha High School,Altha,FL,100010,010001,0005091,False
+6a5d9cf4-42ab-45e7-b159-ebd22c1330e6,Ambassador Christian Academy,Merritt Is,FL,100400,010040,0005221,False
+2d45d9c1-2af9-708b-0700-80d14a5d5e4a,American High School Academy I,Miami,FL,102010,010201,,False
+96f6d161-334d-4070-acf4-8332b8f9d911,American Military Academy,Guaynabo,PR,542110,054211,0022035,False
+396f438d-0233-4355-8254-2fa12aadb555,Amherst High School,Amherst,WI,500050,050005,0027094,False
+6f29882a-32e8-834c-1bca-217822601a57,Ami Kids Jacksonville,Jacksonville,FL,100190,010019,,False
+75128051-efcb-4dc2-bec1-278ed0569dfa,Ana Roque Senior High School,Humacao,PR,542480,054248,0021828,False
+efd16680-dac0-4450-aef8-f03d502cfeeb,Annville Cleona Secondary Schl,Annville,PA,390080,039008,0021108,False
+538ae5a6-eed0-43ef-a8b8-156876a00dd7,Antilles High School,Fort Buchanan,PR,541900,054190,0021999,False
+8b73722a-bee2-44cf-92b2-66e1071fd6f9,Antilles Military Academy,Trujillo Alto,PR,546280,054628,0021920,False
+a43dd417-e7f7-4cab-a076-b2d818ceec45,Antilles School,St. Thomas,VI,550280,055028,0026058,False
+aa27564b-6040-ed35-52f1-ace02f56495a,Antonio Fernos Isern Voc HS,San Lorenzo,PR,544970,054497,3261095 ,False
+a9681152-38f4-4ff2-b0e2-25163bb624ed,Antonio Lucchetti Vocationl HS,Arecibo,PR,540560,054056,0021789,False
+968561b3-11d2-f0af-e752-7700901cad51,Antonio Reyes-Padilla Escuela,Utuado,PR,546420,054642,,False
+811538b3-3713-4882-8fbb-b817f41d3d22,Aquinas High School,LA Crosse,WI,501040,050104,0027159,False
+5c58cd72-278e-431f-87a6-0bcf40277e1b,Arvada-Clearmont High School,Clearmont,WY,510080,051008,0027638,False
+281ff6b0-85d4-4666-b394-e6f4405139dc,Athens High School,Athens,WI,500100,050010,0027096,False
+21d32116-7ce2-4f3d-8e28-f79c4ac2e55c,Atlantic Community High School,Delray Beach,FL,100420,010042,0005555,False
+f3bdb91b-e7a9-4024-a53e-17c8b69b41d9,Aubrey Rogers High School,Naples,FL,530700,053070,3694358,False
+ffd05ee4-e6e6-4c76-b715-88fabbfca10b,Augusta High School,Augusta,WI,500110,050011,0027202,False
+e50584b2-4611-4241-a242-c1df7f9ccaf7,Autec School,Fpo,AA,800050,080005,0029659,False
+8b6e395d-91af-4244-968d-3cf735657053,Avon Park High School,Avon Park,FL,100060,010006,0005697,False
+3a1ad4d0-fa20-2ffa-df47-bf5e6235d854,Azalea Park Baptist School,Orlando,FL,100350,010035,,False
+4274115d-08a9-4b7e-b283-a21411a2c7e7,Baldwin Middle-Senior High Sch,Baldwin,FL,100080,010008,0005029,False
+c1b07068-97a4-458d-b211-485836fd563c,Baraboo High School,Baraboo,WI,500140,050014,0026976,False
+cc824b4e-0834-47d8-baf6-5f81eed1c002,Barron Area Senior High School,Barron,WI,500150,050015,OID16366,False
+3d69b14c-0297-483f-960a-b269400d33dd,Battery Creek High School,Beaufort,SC,410260,041026,0022523,False
+ce8a6aea-45bd-4c5b-b822-28d4541df7de,Belmont High School,Belmont,WI,500180,050018,0026892,False
+ec3eb64b-8379-4a95-a8dd-1b3ec9945191,Benito Cerezo Vazquez HS,Aguadilla,PR,540190,054019,0021780,False
+081d2949-5739-404d-8051-57ca27d8baf5,Berlin Senior High School,Berlin,WI,500200,050020,0027286,False
+18381f08-778a-4ea9-8aaf-879a3801f020,Berwick Academy,South Berwick,ME,200930,020093,0011445,False
+6430534e-2548-4e7f-931f-efb48fa6a709,Big Piney High School,Big Piney,WY,510030,051003,0027651,False
+db2c1635-078c-4c10-a774-489a5f58a6d3,Bishop Kenny High School,Jacksonville,FL,100740,010074,0005000,False
+b7a5841b-a9e3-405e-9edb-421d36c29b26,Bishop Mclaughlin Catholic HS,Spring Hill,FL,101850,010185,2392096,False
+25c109a7-599d-4340-9636-b3776dd89395,Black River Falls High School,Black River Falls,WI,500220,050022,0027165,False
+d5f393a0-cf76-48b8-9752-a6eee5003018,Blackstone Academy,Pawtucket,RI,400100,040010,2393571,False
+d81cf6f4-726d-47ea-ac68-a765f6bbe0fe,Blanca Malaret HS,Sabana Grande,PR,544830,054483,0021915,False
+d9d00917-c7e9-4b0d-808f-5834c6d63e23,Blanche Ely High School,Pompano Beach,FL,101430,010143,0005387,False
+43dc0b21-38cc-4570-935c-1fcec147e353,Bob Jones Academy,Greenville,SC,410890,041089,0022411,False
+541593b1-a81c-433d-9e6e-130ba1cc14ab,Booker High School,Sarasota,FL,101570,010157,0005800,False
+59fe3042-6372-4025-8965-ec8b404788f5,Bowdle High School,Bowdle,SD,420130,042013,0022665,False
+4784c181-74f7-4cc1-91bd-f0183a1556fd,Bowler High School,Bowler,WI,500260,050026,0027098,False
+507d6b61-255c-4c97-a149-f30fcf1e1947,Bradley Tech High School,Milwaukee,WI,501340,050134,0026813,False
+111c1ea3-c7d0-4ecd-a273-c63152e309c8,Branchville High School,Branchville,SC,410250,041025,0022292,False
+908695df-1568-4ab4-9d55-2a2b1d857888,Brodhead Senior High School,Brodhead,WI,500280,050028,0026900,False
+3019c985-4737-44d2-adb2-0607cbe59474,Bronson Middle-High School,Bronson,FL,100170,010017,0005186,False
+a915a1d9-ef05-4a6e-841e-ed10f203e6b5,Brookwood High School,Ontario,WI,501670,050167,0027179,False
+c7469cb7-b288-4933-bffe-c2e930b4e98e,Brookwood School,Thomasville,GA,112970,011297,0006564,False
+8ed27e91-e0b2-44e4-bc69-73ae96d5717f,Bruce High School,Bruce,WI,500290,050029,0027246,False
+b99923a3-9adb-4315-990a-45601a171359,Bucksport High School,Bucksport,ME,200200,020020,0011539,False
+840bb2df-41d4-40a6-b001-ab7b2c6816c2,Burlington High School,Burlington,WY,510040,051004,0027589,False
+bc2d929f-0ccf-475c-ab8a-a2ca43476130,Butternut Senior High School,Butternut,WI,500310,050031,0027140,False
+58a6271d-4e45-47cc-b4ae-c3919c099299,C R O E M,Mayaguez,PR,543420,054342,0021870,False
+d8890619-0a02-4581-bf8c-1534b35d4d88,Cabo Rojo Christian Academy,Cabo Rojo,PR,540950,054095,0021802,False
+c764a0c6-12e7-c993-3e28-d78747cd55db,Cadest,Kissimmee,FL,100590,010059,,False
+64c45310-793a-4afc-9a4e-71cdd8bae20a,Cadott High School,Cadott,WI,500320,050032,0027206,False
+f52c0153-5e18-4ad9-97bb-67bb46636920,Calais High School,Calais,ME,200210,020021,OID16182,False
+3d6e9c3b-30e1-7256-bb25-192d13b9fde2,Calcampus High School,Rindge,NH,300530,030053,,False
+3b38cef7-02ee-410c-9037-a284bf9f385e,Calhoun High School,Calhoun,GA,110550,011055,0006318,False
+399255c2-ff34-4da2-9b64-30a99a4a0c7e,Campbell County High School,Gillette,WY,510150,051015,0027618,False
+bcdb59b8-d559-4ce6-8192-8c99a5d9c064,Campbellsport High School,Campbellsport,WI,500340,050034,0026696,False
+7a39deff-e64f-4906-80fd-78631f3a3fcf,Canaan Christian School,Canaan,ME,200220,020022,0011624,False
+33f2b035-4f3b-47e4-938e-652efe3adfa0,Carlos Escobar Lopez,Loiza,PR,543000,054300,0021838,False
+b5f61dca-a694-47ec-9050-d23a581d8005,Carmen Bozello de Huyke HS,Arroyo,PR,540640,054064,0021871,False
+b7978401-d556-42e4-8430-99a12239aa0b,Carrabec High School,North Anson,ME,200710,020071,0011635,False
+d148083c-704a-470f-9323-3bacd3d17bed,Carrabelle HS,Carrabelle,FL,100220,010022,0005064,False
+f8167008-89c3-497d-94e3-1650dcfc2039,Cassville Senior High School,Cassville,WI,500360,050036,0026963,False
+ee9ea6a2-77fa-524a-82ff-f478f255e7ab,Catapult Academy,Daytona Beach,FL,102230,010223,,False
+2a0f88f1-9f65-4549-9d2f-45b302f8f980,Cedarburg High School,Cedarburg,WI,500370,050037,0026697,False
+f9f86816-dacb-4b49-8dc8-4fed744b0994,Central De Artes Visuales,Santurce,PR,545760,054576,0022005,False
+ae3003d2-e02b-4cc4-b9a7-0f97571a1bef,Central High School,Macon,GA,111960,011196,0006422,False
+d1cc8b74-7287-4429-a80f-c7af855a95b5,Central High School,Aberdeen,SD,420000,042000,0022664,False
+558c4a64-a533-42ce-904c-296afaffce3d,Central Maine Christian Acad,Lewiston,ME,200030,020003,,False
+bc85d209-6c48-de14-d293-0ab1c061024e,Central Pasco Girls Academy,Land O Lakes,FL,100030,010003,,False
+7f7f80ff-34e0-4962-93b0-8c0f6a1a3ec9,Chamberlain High School,Chamberlain,SD,420240,042024,0022631,False
+ceb13418-5563-421d-b64b-81b095f1ab13,Charlton County High School,Folkston,GA,111300,011130,OID16155,False
+cbcc43e3-c217-4896-97ed-505c8da4dfe3,Chattahoochee HS,Chattahoochee,FL,100240,010024,0005065,False
+6cf6348a-31df-488f-90e2-95d816d5aa6f,Chilton High School,Chilton,WI,500390,050039,0026699,False
+43f7e84f-dc7c-4988-8e9a-50b227c3dde3,Chippewa Falls Senior HS,Chippewa Falls,WI,500400,050040,0027210,False
+18dadfb7-b9ec-3f6e-6408-502d26d63550,Christian Home Academy,Orange Park,FL,102000,010200,,False
+ce8cdc9f-932d-4837-b9ae-19339113d266,Classical High School,Providence,RI,400150,040015,0022106,False
+574e3357-7a80-4dc1-9066-c384757436d1,Clear Lake High School,Clear Lake,WI,500410,050041,0027009,False
+de485c3b-af7f-43ff-b315-bce9be95824e,Clintonville High School,Clintonville,WI,500420,050042,0027287,False
+a4dee449-8218-43ae-bca3-bb515ba391b9,Cokeville High School,Cokeville,WY,510090,051009,0027652,False
+f450e6c1-69dd-4ccd-8091-e6fa4cdade04,Col Beato Carlos M Rodriguez,Bayamon,PR,540850,054085,0022013,False
+f2c23125-69f1-4d72-aaa8-2afd6bd3450b,Col Nuestra Senora Del Pilar,Rio Piedras,PR,544320,054432,0021990,False
+9bc4a197-7369-4d00-a4e9-3d84db6c0bf1,Colebrook Academy,Colebrook,NH,300100,030010,0015987,False
+01ff2b23-5bdd-4f52-9b35-b4d4ce9d6de6,Colegio Bautista De Carolina,Carolina,PR,541240,054124,0022048,False
+f62718ad-c03c-4403-8703-fdca6d93b6b9,Colegio Catolico Inc,Coamo,PR,541680,054168,0021925,False
+fd7a0007-dc68-45e1-91c6-5e131e36706c,Colegio De Diego,Caparra Terrace,PR,541200,054120,0021963,False
+c3a349d8-aca6-43d5-8d72-e6f66aaa1630,Colegio De La Immaculada,Santurce,PR,545800,054580,0021949,False
+c97ac149-0eaa-477b-a539-b4d2af44ed84,Colegio Dioc Santiago Apostal,Fajardo,PR,541810,054181,0021908,False
+59609760-1e22-24fc-21f3-4af720e3762a,Colegio Dr Roque Diaz Tizol,Yabucoa,PR,544810,054481,,False
+a03c7975-7249-4e2f-b567-930977c26648,Colegio El Buen Pastor,Guaynabo,PR,544450,054445,0022026,False
+e705d0e4-59cb-4c59-81c5-bc82d6217b6d,Colegio Espiritu Santo,San Juan,PR,542240,054224,0021962,False
+e661ff06-bb91-4faa-a2e2-b5b95e8d8e2b,Colegio Evangelico Capt Correa,Arecibo,PR,540580,054058,0021794,False
+429aabd9-a1ae-4f1c-b678-67915373b1a9,Colegio Immaculada,Manati,PR,543080,054308,0021866,False
+bac84edb-24f5-4b35-bd02-24421be10026,Colegio La Milagrosa,Rio Piedras,PR,544600,054460,0021977,False
+64d885a7-4ecb-405a-8624-72e3a31e7d83,Colegio Madre Cabrini,Caparra Heights,PR,541190,054119,0021965,False
+782acb90-3f3c-480e-96e9-19bde7149542,Colegio Nuestra Sra Del Carmen,San Juan,PR,544370,054437,0021984,False
+377b98c2-2d7c-4452-ac34-ede367598cca,Colegio Nuestra Sra Del Carmen,Hatillo,PR,542220,054222,0021825,False
+c3d952e4-bf80-4b80-966b-9938419ad179,Colegio Puertorriqueno De Nina,Guaynabo,PR,545840,054584,0022025,False
+f398afc3-981e-4e47-9173-59e36837a9a7,Colegio Sagrado Corazon Jesus,Ponce,PR,543920,054392,0021895,False
+a34ddf08-d42b-4cdf-b357-55fb7d4d3192,Colegio San Antonio,Rio Piedras,PR,544360,054436,0021989,False
+3cb62720-db3c-4621-bcdb-4d6e119756d6,Colegio San Antonio,Isabela,PR,542640,054264,0021829,False
+5251f8b8-3b2f-4abc-bf93-c6ed4362bdc9,Colegio San Antonio Abad,Humacao,PR,542520,054252,0021941,False
+a362067b-eeb5-4eba-bd1b-f4513b8606eb,Colegio San Conrado,Ponce,PR,544000,054400,0021900,False
+67c49f4b-f80c-4c6f-a913-f9be4deb0c1a,Colegio San Felipe,Arecibo,PR,540600,054060,0021792,False
+6dcaf79a-62d5-469e-b687-ba95f27d6164,Colegio San Ignacio De Loyola,San Juan,PR,544400,054440,0021986,False
+f3e26ec4-56bd-4572-abdb-30bf0d9971ff,Colegio San Jose,San Juan,PR,544440,054444,0021992,False
+dd80e98a-ba0a-4edd-97f6-77d53c363826,Colegio San Jose,San German,PR,544960,054496,0021854,False
+601c6659-2a2a-4051-968f-b02ff4cecc42,Colegio San Juan Bosco,San Juan,PR,546000,054600,0021958,False
+1afdb026-9523-4b71-8ceb-eb69348775b9,Colegio San Miguel,Utuado,PR,546400,054640,0021814,False
+998aa89d-1ec2-4584-a272-e4b580dfed18,Colegio San Ramon,Juana Diaz,PR,542710,054271,0021833,False
+17fd35ec-2f83-4703-845a-9ce2c10e2945,Colegio San Vicente De Paul,San Juan,PR,545920,054592,0021951,False
+085f99de-f2b1-4924-a55f-25e2c90a7e25,Colegio Santa Cruz,Trujillo Alto,PR,546320,054632,0022037,False
+d297c0e6-72bf-4070-93a9-a3c4ac3576f3,Colegio Santa Rosa High School,Bayamon,PR,540800,054080,0022017,False
+1247c159-b43b-4504-9eb3-4842f58da023,Colegio Senora Merced HS,San Juan,PR,545200,054520,0022004,False
+42170225-11e2-452e-8712-6053aa34b49e,Coleman High School,Coleman,WI,500440,050044,0027025,False
+9cda34f6-08ab-47a8-a722-dabb02147a77,Columbus Senior High School,Columbus,WI,500450,050045,0026982,False
+03ddfd6d-4b96-40d6-908c-1e5fbf9c6d99,Comenius Schl Creative Lrning,Pineville,NC,343090,034309,OID13074,False
+f09897b2-3c59-4d63-8472-4e4c20462ac5,Commonwealth-Parkville School,San Juan,PR,544800,054480,0022001,False
+90bf052c-55fb-4377-8efa-0917c716011f,Conestee Baptist Day School,Conestee,SC,410550,041055,OID16352,False
+ec08a442-f752-47d3-aad8-c3f6315ceb30,Contoocook Valley Regional HS,Peterborough,NH,300490,030049,0015977,False
+0cb83ae7-1a9e-a27d-b172-a9276d5e841f,Cornerstone Charter Academy,Orlando,FL,102350,010235,3275045,False
+776aecf0-eb7d-4867-a498-282701346905,Coventry High School,Coventry,RI,400030,040003,0022057,False
+8bd622ac-599e-4c1f-a34d-b5ed12f8a669,Crandon High School,Crandon,WI,500460,050046,0027142,False
+72a8fd7e-6b5b-4862-a98a-3f7369fb4d0b,Cross High School,Cross,SC,410600,041060,OID16278,False
+f64c14e8-5016-45c6-8508-95f4ab81f453,Crotched Mountain School,Greenfield,NH,300230,030023,0015910,False
+f5778e43-282c-4e63-a754-4066cceb70dc,Cuba City High School,Cuba City,WI,500470,050047,0026964,False
+6991c26e-24cb-4590-9814-9a9777dca657,Culebra High School,Culebra,PR,541770,054177,0021816,False
+7283e59c-8506-440d-83bc-94b61a33b8da,Cumberland High School,Cumberland,WI,500480,050048,0027249,False
+a405e023-589b-4f3e-b21c-fe81aca113fe,Cupeyville School,San Juan,PR,544460,054446,0021988,False
+a7b8f16e-9865-49d1-b756-7b46c90b5081,D C Everest Senior High School,Schofield,WI,502060,050206,0027123,False
+5e52594c-6429-4188-9700-db49b7a66232,Dacula High School,Dacula,GA,110950,011095,0005934,False
+1547f6dd-0f5e-43f1-8735-92b8151f4139,Dade Christian School,Hialeah,FL,100660,010066,0005352,False
+225816cf-dc86-4a41-9fa1-ce49e2ec249c,Darlington High School,Darlington,WI,500490,050049,0026903,False
+1535cbee-1907-0d75-6f49-8d37a66e275e,De Lasalle Academy,Fort Myers,FL,100210,010021,,False
+5d35511c-7766-4eb5-921c-6955956f9b8b,De Soto County High School,Arcadia,FL,100040,010004,0005808,False
+b0113263-2211-4c17-8153-04a9f7be5e9a,De Soto High School,De Soto,WI,500530,050053,0027168,False
+48fbd405-05dd-47b6-a9f5-a599f62a59d0,Deer Isle-Stonington HS,Deer Isle,ME,200980,020098,OID16188,False
+166851ed-131b-40a1-ad60-7d3544eb7a64,Deerfield Beach High School,Deerfield Bch,FL,100380,010038,0005553,False
+fe29ca9f-85f9-4e76-b90b-cff68489a709,Deering High School,Portland,ME,200810,020081,0011484,False
+6219ac9f-c901-ef6a-6a7b-27f529f48ce3,Dekalb HS Of Technology-South,Decatur,GA,111050,011105,,False
+c7f50e37-ff20-4180-83c2-ae614b52bbac,Delavan Darien High School,Delavan,WI,500510,050051,0026760,False
+271c831d-ee8e-4295-b7d9-98418cdc15e5,Denmark High School,Denmark,WI,500520,050052,0027059,False
+4f2ac814-0eca-48d4-8194-0ece981f0541,Denmark High School,Alpharetta,GA,111000,011100,3251147,False
+10983c3c-01ca-c393-c7a7-0c0131bcb4b6,Destiny Christian Academy,Cheyenne,WY,510070,051007,,False
+95cd9458-dfbe-42d7-8049-52a9fa2800db,Dexter Regional High School,Dexter,ME,200300,020030,0011625,False
+c5f6c161-af66-48e7-9796-f3f73485586b,Dillard High School,Ft Lauderdale,FL,100480,010048,0005486,False
+9850a2cf-bd00-5014-fcf6-bd028bdb64bd,Distance Education Program,Saipan,MP,529000,052900,,False
+f28be2a0-bd8c-41ec-a0ed-cd68d3d8f8e0,Dixie County High School,Cross City,FL,100330,010033,0005189,False
+d5386e78-c4a2-4ea1-a6b4-6ee59d22b52e,Domingo Aponte Collazo Esc Sup,Lares,PR,542920,054292,0021836,False
+319bdcef-9df0-51aa-f3e9-42a92a52e313,Don Soffer Aventura HS,Aventura,FL,102510,010251,3478914,False
+acc5eabf-f5d6-407f-a59e-bd0b8bb273a2,Douglas High School,Douglas,WY,510110,051011,0027611,False
+8710a62a-de7d-40fa-b56a-df9cfb6c2e10,Dr Agustin Stahl,Bayamon,PR,540840,054084,0022021,False
+2d80793d-9550-433e-907c-ad31596aa57d,Dr Manuel Pila Iglesia Sr HS,Ponce,PR,543960,054396,0021897,False
+087414b3-e6b6-493b-81e9-6d522bb652e8,Dr Santiago Veve Calzada,Fajardo,PR,541880,054188,0021909,False
+e2578558-f4e4-46d4-ac54-24c98217026e,Duncan U Fletcher HS,Neptune Beach,FL,100800,010080,0005042,False
+91557862-a2f2-4258-a722-0a57cc5be94e,Durand High School,Durand,WI,500550,050055,0027214,False
+05e49ef0-c437-4528-a4e0-e32b57d486ec,East Greenwich High School,East Greenwich,RI,400040,040004,0022061,False
+7a7de9d0-566d-4b92-bc6b-62e3ac129750,East High School,Green Bay,WI,500790,050079,0027074,False
+acf524cd-6b10-4818-aa63-5fbf3c2bcc38,East Providence High School,East Providence,RI,400050,040005,0022123,False
+f2a66abf-fbf6-4f8e-816f-0873c82ee15d,Eastgate Christian Academy,New Gloucester,ME,200690,020069,0011507,False
+8ca338b6-54c0-4807-a43c-fed6220558c2,Easton Junior/Senior HS,Easton,ME,200340,020034,0011595,False
+63d5eef9-4afe-460b-a234-3b5ef6199aa8,Echols County High School,Statenville,GA,112800,011280,0006522,False
+207c65f8-e59f-49df-9d53-404c4c093a87,Edgar High School,Edgar,WI,500580,050058,0027100,False
+bf145037-0a9e-4e7c-9eb8-5ab423f98abd,Edgewater High School,Orlando,FL,101290,010129,0005271,False
+26b644ec-312b-4de2-8836-ebc6057c2fa6,Elcho High School,Elcho,WI,500590,050059,0027101,False
+f801a2bc-bde6-4f7c-b66a-5e0385dc6e93,Elmwood High School,Elmwood,WI,500620,050062,0027216,False
+3160f95a-e00e-415b-94be-0e5edb18e967,Emilio R Delgado High School,Corozal,PR,541760,054176,0021935,False
+9f2e40df-60ff-41b6-994a-b8a3644714be,Encampment High School,Encampment,WY,510130,051013,0027582,False
+d9a8cb76-c15e-4f25-8705-ac219d4d10b3,Episcopal Cathedral School,San Juan,PR,545960,054596,0021947,False
+1d6c578b-d4fc-47aa-96cb-bb94c13c7e1d,Escuela Berwind Superior,Rio Piedras,PR,544490,054449,0021976,False
+bfc5af09-84ee-22c7-d231-38b23bb0b19b,Escuela Dr Jose Celso Barbosa,San Juan,PR,545120,054512,,False
+1fc9c558-21bc-4b36-b57c-686bc4887634,Escuela Dr Rafael Lopez Landrn,Guayama,PR,541960,054196,0021938,False
+d2bcf912-2ac9-4dfa-b350-62c63a37c8a8,Escuela Elem/Sup Antolina Vele,Aguadilla,PR,541140,054114,3222909,False
+8e89eae1-faa4-48ea-bb16-d0e13d53a869,Escuela Gerardo Selles Sola,Caguas,PR,540000,054000,3830573,False
+c46901d3-8be6-4ecf-92d8-10d17a78aa0b,Escuela Juan J Osuna,San Juan,PR,542320,054232,0021959,False
+8a61b50c-e894-3976-12ea-e38428040b17,Escuela Lysander Borrero Terry,Villalba,PR,540230,054023,3744573,False
+a2eacc1b-3c60-419e-ac14-90a516a0a533,Escuela Ramon Pwr Y Grlt Sn Jn,Santurce,PR,545270,054527,0021954,False
+2fa7028e-1638-4634-8a1c-b3feefbd6768,Escuela Secundaria Univ De Pr,San Juan,PR,544760,054476,0021998,False
+87356f25-7c0e-4925-8f94-440a27ed36e3,Escuela Sup Miguel Melendez Munoz,Cayey,PR,541430,054143,0021904,False
+ae55f353-b571-46ab-a08e-d4bc4f289df4,Escuela Sup Stella Marqz Mrls,Salinas,PR,544920,054492,0021916,False
+41992b00-8eff-4c20-a218-1ad88f5dc6d5,Escuela Super Dr Jose Gandara,San Juan,PR,540400,054040,0021786,False
+1b48d1a6-39f6-43b0-8fb4-86dcecc0e67e,Escuela Superior Com Luis Munoz Marin,Anasco,PR,546740,054674,0021865,False
+9e867f6c-1cb2-48b1-9f5e-359a9b50f7ab,Escuela Superior Las Delicias,Coto Laurel,PR,544090,054409,0021902,False
+42bde983-ec55-4527-be24-42724d13867e,Escuela Superior Pedro Falu,Rio Grande,PR,544280,054428,0021914,False
+42b95ef0-ab9d-563a-60cd-dbf91995557f,Escuela Superior Petra Mrc Bgt,Humacao,PR,540210,054021,,False
+dfd274f4-6f54-4a90-926e-347593e913e9,Escuela Superior Vocacional,Rio Piedras,PR,544640,054464,0021997,False
+78395371-99d1-49a3-9a24-c7953ee89b60,Esquela Sup Lor Coba Gandia,Hatillo,PR,542230,054223,0021826,False
+b150062e-9e30-46d4-a5cc-00ea18f6dadf,Ethan High School,Ethan,SD,420400,042040,0022634,False
+d0b816d4-97f9-c092-862f-394d06888e18,Eucon International School,Saipan,MP,529050,052905,,False
+d11f9d96-c43e-4e92-8fdf-9dba256f955c,Eugenio Maria De Hostos H S,Mayaguez,PR,543280,054328,0021851,False
+af4171b5-753c-4539-9664-4a0e957cd218,Eva Y Patria Custodio Franqui,Las Marias,PR,542960,054296,0021837,False
+61834985-8946-49d9-b7e8-8f7fe63bbbd6,Evangelical Christian Academy,Chalan Pago,GU,525150,052515,OID16318,False
+0e30ae41-0806-4993-973a-5bfcbff24222,F J Turner High School,Beloit,WI,500190,050019,0026896,False
+6df70d96-88a0-49e5-b243-378fff795430,Fall Creek Senior High School,Fall Creek,WI,500640,050064,0027217,False
+7147925a-cf8c-4ab9-9778-4e47d5a9b563,Fall Mountain Reg High School,Langdon,NH,300000,030000,0015996,False
+f081abee-79f2-4433-b78c-4fe4244ff058,Farson-Eden School,Farson,WY,510140,051014,0027643,False
+710945b7-3cdf-4e84-bd20-7ebbb54c361a,Fennimore Senior High School,Fennimore,WI,500650,050065,0026965,False
+76649c99-009d-4d7f-a312-894011f2b722,Fernandina Beach High School,Fernandina Beach,FL,100460,010046,0004919,False
+428d374a-7932-450f-b806-23ee79b154b1,Fernando Suria Chavez Sr HS,Barceloneta,PR,540680,054068,0021795,False
+40d1d74c-8388-40d8-b969-f28b5028034f,Fitzgerald High School,Fitzgerald,GA,111280,011128,0006553,False
+51bad8a7-ea80-40c4-a1e4-67ff37ee91f3,Florida A&M University HS,Tallahassee,FL,101650,010165,0005052,False
+5bbd5039-afa3-a6a7-ef3e-a1d560917c37,Florida Departmnt Of Education,Tallahassee,FL,103130,010313,,False
+89a0daac-ff5c-4c1a-af9c-ae9493223a61,Florida Lrng Acad Priv SC Inc.,Cocoa,FL,100280,010028,0005319,False
+d170f609-11c1-4353-aeef-3ef2325462e7,Forest Hills Consolidated Sch,Jackman,ME,200490,020049,0011631,False
+0b24a556-fc55-4c41-9241-159bcc3fd957,Fort Atkinson High School,Fort Atkinson,WI,500690,050069,0026909,False
+c40862d3-e703-4208-87e3-b2161f4e544e,Francisco Mendoza High School,Isabela,PR,542590,054259,0021830,False
+06cdebe9-d9a8-46f2-afc7-be1fad5f45fb,Francisco Zayas Santana HS,Villalba,PR,546620,054662,0021923,False
+7daf5664-488f-472c-b652-895fdaf706bb,Fryeburg Academy,Fryeburg,ME,200390,020039,0011456,False
+ab9827fc-1117-ee67-ace0-82037d5f3cf9,Future Builders School,Raymond,ME,200840,020084,,False
+f240d560-7365-4433-a0ce-be344dd3888e,Gabriela Mistral School,San Juan,PR,541300,054130,0021810,False
+f1974cdd-6c4b-4803-b255-e4f1e925c4be,George Washington HS Guam,Barrigada,GU,525120,052512,0006603,False
+3bc25587-43d1-494c-9bde-1b69857520d8,German Riechehoff Secondary,Vieques,PR,546540,054654,0021922,False
+fdb06b59-0421-4bd1-8853-fb05729bf5eb,Gilmanton High School,Gilmanton,WI,500740,050074,0027218,False
+f547eb3d-7e06-462b-82aa-1b2eb1339ce4,Glades Central High School,Belle Glade,FL,100100,010010,OID16120,False
+557d829d-8b5c-4270-9541-ccc2cbb797c0,Glidden HS,Glidden,WI,500760,050076,,False
+a018f190-4186-4f05-9122-f1a4551aeaa8,Goffstown Area High School,Goffstown,NH,300210,030021,0015909,False
+89550c91-7dc4-416e-83b6-3b0266596fd0,Gorham High School,Gorham,ME,200400,020040,0011457,False
+661d4858-94a3-46cd-be4c-fe23a7582aed,Gorham Middle/High School,Gorham,NH,300220,030022,0015989,False
+5ae3beee-b932-44bc-b7d9-9360751a6414,Graceville High School,Graceville,FL,100570,010057,0005103,False
+f3161c7d-fe11-4ef8-94d0-2bcce629fb75,Grand Avenue School,Milwaukee,WI,501360,050136,0026872,False
+85922ddc-cfa2-4501-a3d5-4c53074b641e,Grand Ridge School,Grand Ridge,FL,100580,010058,0005104,False
+99e9c243-e9ed-0918-80a3-eb856f314e7a,Grant Career And Tech Edu Ctr,Winter Haven,FL,101260,010126,,False
+28c2b15f-5214-492e-9af6-54c90462d814,Grantsburg High School,Grantsburg,WI,500780,050078,0027253,False
+f1ad0708-bdb5-4edb-810d-4bc79a80de04,Green River High School,Green River,WY,510170,051017,0027645,False
+c127c23a-ff5f-4301-9cf2-8f68ed222d1e,Greenville High School,Greenville,ME,200410,020041,OID16195,False
+212fa120-f34f-4e26-86d2-b484d1498abc,Greenwood High School,Greenwood,WI,500830,050083,0027105,False
+3914eaca-1395-4d96-ac2c-01b0904a5908,Guam Cmty College Stdnt Srvcs,Barrigada,GU,525130,052513,OID16385,False
+cc84091f-5740-45de-9602-35b1e4449104,Gwinnett Sch Of Math Sci Tech,Lawrenceville,GA,111140,011114,2667572,False
+f9079220-2b95-2622-9662-24a83490c53d,Hadar South Fl HS For Girls,Boca Raton,FL,100200,010020,,False
+7aebd936-01f8-4ab5-8374-44bf4bb2e4c5,Haines City High School,Haines City,FL,100620,010062,0005709,False
+02e30cda-cb1f-4913-963a-510a5940a3b1,Hanover High School,Hanover,NH,300250,030025,0016002,False
+e76091b1-0393-f382-c7ee-634cfcd7c582,Harpswell Coastal Academy,Harpswell,ME,200440,020044,,False
+b895d1ae-18f5-4bc6-aee3-5dcecf3ed66c,High Mowing School,Wilton,NH,300620,030062,0015929,False
+4a8b5c00-5e92-4ac9-bb93-3c20238aa7b8,High School Of Health Sciences,Wales,WI,502350,050235,3039827,False
+d9430484-60fa-b788-bdc9-aebda02ba9f7,Highlands Virtual School,Sebring,FL,100320,010032,,False
+ca7e626a-ca5b-4b3b-9b84-d1444b6aad52,Highmore-Harrold High School,Highmore,SD,420600,042060,0022636,False
+a8db04fd-996d-46d6-95e4-60f93b665cfb,Hilbert High School,Hilbert,WI,500880,050088,0027033,False
+638ec9b1-7e37-46e2-97da-719453bbfd9a,Hinsdale High School,Hinsdale,NH,300270,030027,0015975,False
+fc7d429c-ebbb-7594-112c-7c74a5b199ce,Hla Preparatory School Llc,Palm Bay,FL,100500,010050,,False
+553b6f1a-abb8-460d-9414-62a4420091cd,Holy Family Academy,Manchester,NH,300350,030035,OID16270,False
+454ca426-1778-4521-afcd-c8ae14393f33,Holy Rosary School,Yauco,PR,546700,054670,0021864,False
+9f8fa23b-53b7-b2ef-6489-fe3f1b2a99a1,Hope Academy,Groveland,FL,100090,010009,,False
+95563265-ee51-44e6-aabd-4f922e8bcc6a,Horicon High School,Horicon,WI,500910,050091,0026709,False
+2417fabd-3d92-452a-b218-aeadb5c80161,Houston County Crossroads Ctr,Warner Robins,GA,113150,011315,0006417,False
+f4a645ab-e570-4b13-a6f4-1ded6a4ca9e5,Hulett High School,Hulett,WY,510200,051020,OID16351,False
+080f238e-f090-ebb3-21bf-3b023dae7efb,Iakina Adventist Academy,Pago Pago,AS,520060,052006,,False
+00bb01b1-a6d9-417a-815e-d974b132d6ef,Icpr Junior College,San Juan,PR,542360,054236,0021960,False
+9cd898d4-b75f-4a38-a664-95bf3317fb6b,Immaculate Conception Academy,Mayaguez,PR,543320,054332,0021852,False
+0eb068b6-e063-42e2-98eb-84b3dcf4153d,Iola-Scandinavia High School,Iola,WI,500940,050094,0027296,False
+fed294e9-3342-4570-a137-2d473de2b58b,Iowa-Grant High School,Livingston,WI,501110,050111,0026920,False
+0dc99169-1f53-4d41-b272-940f22edff03,Ithaca High School,Richland Center,WI,501980,050198,OID16374,False
+771e01ef-6a78-4cc4-9d82-a1edafa9912e,J W Mitchell High School,New Port Richie,FL,101560,010156,2392028,False
+689a06fb-7e3d-4984-8df4-fa18066de78a,James Island Charter HS,Charleston,SC,410400,041040,0022284,False
+e17b7b74-70e1-4543-baba-8d6bb449731d,Jefferson County High School,Louisville,GA,111860,011186,0006230,False
+496ab3f5-1f44-431e-9177-b4021b91da10,Jefferson High School,Jefferson,GA,111700,011170,0006278,False
+7e39e77b-f70b-4e09-b1c1-9b358762a5b7,John Edwards High School,Port Edwards,WI,501840,050184,0027120,False
+9ae2d22d-eaaf-458e-9a93-caf7fa98dbab,Jose Collazo Colon,Juncos,PR,542760,054276,0021931,False
+96bfe212-2bc6-4dcd-b28f-2a76215ddd05,Jose De Diego High School,Mayaguez,PR,543370,054337,0021846,False
+89da54ac-fee7-4c75-8a7b-a5d440c62405,Jose Emilio Lugo Ponce De Leon,Adjuntas,PR,540080,054008,0021775,False
+df9e678c-5790-404f-80ca-82fad09feb94,Jose Rojas Cortes High School,Orocovis,PR,543680,054368,0021877,False
+1008d846-fc26-4747-891e-a3571a7ac2e9,Jose S Alegria School,Dorado,PR,541780,054178,0021817,False
+bdfc9ebc-42f5-4504-b5de-4525d1bf5196,Juan A De Arizmendi,Quebradillas,PR,544210,054421,0021843,False
+4bda0d5f-774a-46b7-846f-839849da4c6e,Juan Rios Serpa,Ciales,PR,541520,054152,0021812,False
+5b40c941-48f4-42a5-9240-c46518931370,Juan Suarez Pelegrina HS,San Antonio,PR,540250,054025,0021778,False
+5668014d-6e81-8711-a4ec-60924672c582,Kabod Christian Academy,Hormigueros,PR,545900,054590,,False
+56516daa-bf45-4290-97dc-9fa278ad1a79,Kau High School,Pahala,HI,120200,012020,0006655,False
+154cc417-6633-4044-8a6e-970e09ddf185,Kemmerer High School,Diamondville,WY,510220,051022,0027653,False
+ecf2c16f-9369-46eb-a904-8f6d7f997cc1,Kewaunee Senior High School,Kewaunee,WI,501020,050102,0027061,False
+5f43a7b2-e8e1-023d-8e4b-61e519ddf945,Kids Community Colg Charter HS,Riverview,FL,100360,010036,,False
+dece6f6b-de04-42e3-a603-28bda05a6078,Kimberly High School,Kimberly,WI,501030,050103,0027037,False
+0d3ffa6e-5c5b-5900-9b18-22376dff916f,Kingdom Christian Academy,Starke,FL,100020,010002,,False
+513d2315-85e4-494d-bad9-d0d5c6185806,Kosrae High School,Kosrae,FM,529010,052901,0005924,False
+8eddcd29-2164-4e2b-a145-90a398b6a95e,La Farge High School,LA Farge,WI,501060,050106,,False
+584652a0-6cd6-4e9f-a3ab-3ee4201df9be,La Salle Academy,Providence,RI,400160,040016,0022119,False
+e0f4ce0d-0ef0-4949-9aa1-a5d733bc2e28,Ladislao Martinez High School,Vega Alta,PR,546490,054649,0021860,False
+366ec8c3-8788-4ec8-b457-49e6928e923c,Lake Placid High School,Lake Placid,FL,100900,010090,0005711,False
+5924964c-8543-4c08-8bb4-328bdaa44871,Lakewood School,Dousman,WI,500540,050054,0026761,False
+c9294186-4bf5-4b85-9a60-946755b2d7af,Lawrence High School,Fairfield,ME,200360,020036,0011627,False
+e70b1681-1d11-4911-a462-2432b08dda66,Leavitt Area High School,Turner,ME,201010,020101,0011517,False
+eb03812b-ae45-483c-8a55-4528a9e9d183,Lee Adolescent Mothers Prog,Fort Myers,FL,100530,010053,0005741,False
+7e07cf9f-a9d1-4a19-ab8a-15b4fcbaee8d,Lena Public School,Lena,WI,501090,050109,,False
+1c4775ad-1d77-b020-5998-f1ee7e6af4cb,Liberty Baptist Academy,Sarasota,FL,100250,010025,,False
+3c0a4ea3-b41a-cd50-7221-f2a4757f2ca1,Liberty Baptist Academy,Fort Pierce,FL,100630,010063,,False
+9d999d65-bb55-4a72-b25e-1f6266c6e94e,Liberty High School,Liberty,SC,411300,041130,0022446,False
+32467188-33ec-4e5c-80d1-2c3d4b07fc3a,Liceo Hispano Americano,Bayamon,PR,540910,054091,0021799,False
+420492e4-f8d1-40ec-a8e3-bae8aabe74a6,Liceo Ponceno,Ponce,PR,544040,054404,0021896,False
+e36e2203-a74e-27db-c175-89e4bbd33a3e,Light Of World Christian Acad,Atlanta,GA,110150,011015,,False
+ba374b51-4070-41cf-ab82-d25e764b0616,Limestone Community School,Limestone,ME,200570,020057,OID16218,False
+58b944ac-17a1-4439-8de1-7c1e8a4e033d,Lin-Wood Public School,Lincoln,NH,300330,030033,0015947,False
+15195667-acc3-43fe-ba04-9c3bf390edec,Lina Padron Rivera High School,Vega Baja,PR,546500,054650,0021921,False
+0b59c497-1543-4616-aa1e-e9af8f632125,Littleton High School,Littleton,NH,300340,030034,0015983,False
+b9edf92b-947c-4584-b44a-81828f0fd7bb,Living Faith Academy,Palatka,FL,101400,010140,0004989,False
+ead0f660-69e6-425a-a8f4-5964aaa93692,Lola R De Tio High School,San German,PR,544980,054498,0021855,False
+6e20db09-bc26-459f-be83-5a8146bd46dd,Lorenzo Vizcarrondo HS,Carolina,PR,541280,054128,0022045,False
+47642400-dfcb-400b-802c-f38b88b0828a,Loyal High School,Loyal,WI,501130,050113,0027106,False
+d73c1802-acf1-4160-8fcc-752c627beb97,Lubec High School,Lubec,ME,200600,020060,OID16256,False
+53c6763b-1df6-4de2-ac31-07580ec0fedc,Luis Llorens Torres HS,Juana Diaz,PR,542720,054272,0021832,False
+5a88b76f-b229-4f8d-8ef0-8b1c9d865f8c,Luis Munoz Marin High School,Anasco,PR,540480,054048,0021787,False
+9ee228b4-ff46-4bed-b1bf-109278a78000,Luis Munoz Rivera Sr HS,Utuado,PR,546440,054644,0021813,False
+7187b200-65ea-42b0-a2a4-d03d3d2e63d0,Madison East High School,Madison,WI,501150,050115,0026950,False
+67ede018-f7c1-4cfc-ba01-6a0f3e1bde89,Maine Academy Natural Sciences,Hinckley,ME,200450,020045,OID16281,False
+0a74286e-af20-4641-8ab7-947054b2e8fc,Maine Vocational Regional Ten,Brunswick,ME,200190,020019,0011450,False
+cb65991e-e295-4ce8-9a12-aeef2c40bc75,Manua High School,Pago Pago,AS,520090,052009,OID16223,False
+2b013d85-ab26-720e-0377-730f27afa4f5,Maplestone,Acton,ME,200010,020001,,False
+577d5843-87d5-433c-bd05-780d5fdbe22a,Margarita Janer High School,Guaynabo,PR,542160,054216,0022029,False
+bc53920a-d833-44d7-8311-6732adda8fc9,Marion High School,Marion,WI,501210,050121,0027298,False
+a18ee56a-1a2c-440d-b5c6-ab1ed6c14db9,Marist High School,Pago Pago,AS,520120,052012,0001428,False
+75b6561c-8898-47ff-a782-789e9905f8d1,Marlboro School Of Discovery,Clio,SC,411460,041146,0022389,False
+d16abf24-adc9-49b5-a817-be9638f5d36d,Marshfield High School,Marshfield,WI,501230,050123,0027108,False
+dfd4ee75-dd55-21a8-285f-54e13589ac79,Masada Day And Prep School,Snellville,GA,112760,011276,,False
+7685955c-f374-434b-8eb9-79ceabb98c5b,Mattanawcook Academy,Lincoln,ME,200580,020058,OID16140,False
+6464a990-f960-4e00-a6a6-7c1508f35ea6,Mayville Senior High School,Mayville,WI,501250,050125,0026720,False
+a8aeafa5-55d1-494b-8402-4ee88369d5c2,McClellanville HS,McClellanville,SC,411400,041140,,False
+61294f50-2c5d-4df8-86fc-50385c4599b1,Mcdonough High School,Mcdonough,GA,112040,011204,0006127,False
+788ffc73-3b25-4903-b09f-b963afe64a71,Medford Area Senior HS,Medford,WI,501260,050126,0027111 ,False
+6399785a-4b7c-4938-8ad0-00b7f5a17978,Medrardo Carazo High School,Trujillo Alto,PR,546370,054637,0022036,False
+dfbcd26a-d673-44e3-986e-c4fe9e7fb3b6,Meeteetse High School,Meeteetse,WY,510300,051030,,False
+45e844b1-db0b-445e-8e62-42a15105c1ea,Melrose-Mindoro High School,Melrose,WI,501270,050127,0027174,False
+75e99a2e-0d1f-4093-adbb-dd8af77b56cc,Mesa Vista Mid/High School,Ojo Caliente,NM,320490,032049,0016777,False
+0a0da635-6eb9-4056-b962-b6cf302e0bca,Messmer High School,Milwaukee,WI,501380,050138,0026818,False
+1b839d91-9066-47ed-83d2-5cb3ce6cdef2,Metter High School,Metter,GA,112080,011208,OID16150,False
+27a5a201-340b-47c5-979e-d4c3b8ea724a,Midtown High School,Atlanta,GA,110170,011017,0006222,False
+8e84204f-40f8-42ec-baec-96b1cad6acda,Miguel De Cervantes Saavedra,Lomas Verdes Bay,PR,540880,054088,0022011,False
+f5738f15-b017-4852-ab60-0043d32bf29a,Mobridge-Pollock High School,Mobridge,SD,420900,042090,0022707,False
+df1d7226-a011-423b-b51e-cb621f738890,Molokai High School,Hoolehua,HI,120130,012013,0006625,False
+62cbfa82-763c-48e0-bb82-dfb447ffe6cc,Mondovi High School,Mondovi,WI,501540,050154,0027223,False
+a92026a1-ca31-480b-89f2-6568fa68f692,Montello High School,Montello,WI,501550,050155,,False
+60e04ea6-9071-4ea9-949d-7fa8fbd49643,Montgomery County High School,Mount Vernon,GA,112200,011220,0006237,False
+13e7f2b8-e977-47f2-a2eb-08a19acec3ed,Moorcroft High School,Moorcroft,WY,510310,051031,0027624,False
+b88404bc-106a-4634-9053-0cfa2627294f,Morse High School,Bath,ME,200070,020007,0011563,False
+4285a66c-8c7d-4110-a748-eaaec7db3e2f,Moses Brown School,Providence,RI,400180,040018,0022111,False
+2fef8711-305f-4121-9e8a-a948b057ab51,Mount Abram Regional HS,Salem Twp,ME,200530,020053,0011642,False
+53325caf-b40f-4cf5-bf35-47fa2299cecd,Mountain View High School,Lawrenceville,GA,111800,011180,2753793,False
+fb7b67f9-2fe3-4cba-aa07-736e1b4e77b5,Mt Hope High School,Bristol,RI,400010,040001,0022056,False
+dff5fb4d-e368-492a-be8e-54036cd93046,Mukwonago High School,Mukwonago,WI,501590,050159,0026779,False
+54937a27-64be-403f-b1b1-6897528b72d3,Narraguagus High School,Harrington,ME,200650,020065,OID16165,False
+ac359764-9b9c-4d8f-89e8-bd6bc8731e54,Nashua High School North,Nashua,NH,300430,030043,0015924,False
+92adc2bb-0ae6-14b3-5da3-3108dd1b77eb,Nassau County Adult High Schl,Yulee,FL,102650,010265,,False
+2213f644-3c95-4d3f-8d10-f5b0940ef8c4,Nathan Hale High School,West Allis,WI,502450,050245,0026868,False
+7f10ab2f-43ab-4293-b744-cd4ae09abd64,Natrona County High School,Casper,WY,510060,051006,0027608 ,False
+5f917e43-60b2-4415-9327-975b8230d096,Necedah High School,Necedah,WI,501610,050161,0027176,False
+7cfa03fc-b0b0-408b-9602-42d9c62285a7,Neillsville High School,Neillsville,WI,501620,050162,0027116,False
+ad9f6b1e-8d9b-4a93-b382-94f973a3bf2c,New Auburn High School,New Auburn,WI,501630,050163,0027224,False
+d9977b13-086e-4cc8-a5c2-716b62ff5cda,New Hampton School,New Hampton,NH,300440,030044,0015950,False
+b93b4161-d2aa-4bdc-afbf-cc3600e8eb75,New Holstein High School,New Holstein,WI,501640,050164,0026727,False
+b6374361-1d8d-4a59-8d1f-ce62796db235,New London High School,New London,WI,501650,050165,0027303,False
+1e8f74c0-7133-4bc5-aa2e-79faba5fc090,New Smyrna Beach High School,New Smyrna,FL,101230,010123,0004984 ,False
+8e15b726-e3c1-4301-b5aa-0aa4a48005b1,Newberry High School,Newberry,SC,411490,041149,0022175,False
+16e32f36-e857-45da-8b53-547258ad7698,Newcastle High School,Newcastle,WY,510320,051032,OID16383,False
+a0c38b61-fb6e-4e5f-b712-d68083b37fcc,Newman High School,Wausau,WI,502410,050241,0027088,False
+9e884640-1210-c750-19c7-5ae797efe0af,Nfi North Midway Shelter Schl,Bradford,NH,300050,030005,,False
+8730d5bf-a9b2-470e-9681-83a3b0b5680a,Niagara High School,Niagara,WI,501660,050166,OID16391,False
+4a98411e-5bb7-4ed5-863d-27da8d25739b,Nicolet High School,Glendale,WI,501400,050140,0026854,False
+b12fab3b-c75d-4396-b23e-68affd1b017a,North Augusta High School,North Augusta,SC,411520,041152,0022516,False
+c65a88f9-f665-4b6f-8149-28e6edd6d91c,North Haven Community School,North Haven,ME,200730,020073,0011613,False
+460b1fd3-c498-4d43-b426-f1703670bfac,North High School,North,SC,411510,041151,0022181,False
+bef02d53-283d-4a2c-aced-2a98e673223e,North Providence High School,North Providence,RI,400090,040009,0022107,False
+19e8e99a-bd74-44cc-9834-7962ccdd36e8,North Yarmouth Academy,Yarmouth,ME,201140,020114,0011478,False
+078777af-8a51-41a3-b24c-43cd7bfc9354,Northland Pines High School,Eagle River,WI,500560,050056,0027143,False
+c6b3f2d4-1981-4f93-ab39-78e6829a83f5,Northside Christian Academy,Washington,GA,113180,011318,,False
+83cdca6c-9dbe-4f62-8ba9-203b0081eb8b,Northwestern High School,Maple,WI,501190,050119,0027258,False
+d429ef02-b8fe-4e04-a8d0-2d238955e3a5,Northwestern High School,Mellette,SD,420950,042095,0022680,False
+dafb8d64-3d82-4e14-978f-af8d93d4a6ad,Northwood School,Minong,WI,501530,050153,0027259,False
+f217e1b0-64a0-4fa8-be6e-3d1f3a0733d6,Notre Dame High School,Caguas,PR,541040,054104,0021884,False
+ed4b962d-ec6a-45d8-a03c-8a09d4330840,Notre Dame High School,Talofofo,GU,525200,052520,0006610,False
+4d458dba-abea-48dd-913b-97d68f504682,Oconee Christian Academy,Seneca,SC,411800,041180,0022451,False
+8f4c2211-45cd-4ba3-9797-ef362dc4855f,Oconomowoc High School,Oconomowoc,WI,501680,050168,0026729,False
+0633475e-a78d-4907-96bb-02672a373956,Oconto Falls High School,Oconto Falls,WI,501690,050169,0027044,False
+3e646820-81e7-4edf-950a-d47349241de1,Old Orchard Beach High School,Old Orchd Bch,ME,200750,020075,OID16153,False
+016e9209-80b8-4105-92b3-a6429bf43924,Onalaska High School,Onalaska,WI,501700,050170,0027177,False
+e20cc975-8437-4b4d-9c08-3ae568076ae4,Orangeburg Wilkinson HS,Orangeburg,SC,411550,041155,0022184,False
+45d93120-a750-430f-b1c5-b662d34d1be6,Orlando Technical College Main,Orlando,FL,101300,010130,,False
+996daae7-b530-4cc3-8120-8d0f6833a26f,Oshkosh West High School,Oshkosh,WI,501730,050173,0027277,False
+4da3dbc5-97ab-4584-ba52-469ef419dd4b,Owen-Withee Senior High School,Owen,WI,501740,050174,,False
+836c3017-d9c9-4fb2-a80e-bb079458c32d,Oyster River High School,Durham,NH,300150,030015,0016017,False
+f53f210e-e8de-4ebd-9eb3-9cec6e3f48e0,Pablo Avila,Camuy,PR,541100,054110,0021806,False
+0ea3d348-e0fb-14cd-0235-922bceed4e66,Pace Center Girls Santa Rosa,Pensacola,FL,102020,010202,,False
+4834e549-acff-4817-a966-f9cc4d9d8f14,Pahokee Middle-Senior HS,Pahokee,FL,101320,010132,0005570,False
+9c11d056-a4a9-4385-968b-f8f071c85a97,Palau High School,West Caroline Is.,PW,529020,052902,,False
+1178a025-723b-4b38-896c-72e9b82ccf65,Paradise Cove,Apia,AS,520040,052004,0001427,False
+5de480a7-7927-42a6-9752-be02dc042058,Parkview Jr/Sr High School,Orfordville,WI,501720,050172,,False
+6025831e-09ae-45c7-b186-a4261b00d3ef,Patria Latorre Ramirez,San Sebastian,PR,544990,054499,0021858,False
+93c11e8c-9fb6-460c-9dd5-4ff31b71559a,Pecatonica Area High School,Blanchardvlle,WI,500230,050023,0026898,False
+6be12102-cc7b-4d9f-a68e-d88e7153574e,Pedro Perea Fajardo Voc HS,Mayaguez,PR,543400,054340,0021850,False
+3dfd2858-976c-4fb1-818f-a0624593f6f9,Pendleton High School,Anderson,SC,411620,041162,0022424,False
+ce685240-b11b-47c9-9564-b6e7ab0658ba,Perryville High School,Perryville,MD,210810,021081,0011434,False
+391b4915-0de1-4e02-b8d5-98a221f20088,Piedmont Christian Academy,Piedmont,SC,411630,041163,0022454,False
+b74ea20e-9639-4909-a10a-3978b4502673,Piedmont Learning Center,Cumming,GA,110850,011085,0006046,False
+1c81505a-8218-4df0-aba7-3e05c108b7ba,Pine Bluffs High School,Pine Bluffs,WY,510330,051033,OID16384,False
+b9d96746-13d1-a7cc-5a76-32bd92fd5b24,Pine Haven Boys Center,Allenstown,NH,300010,030001,,False
+d419370a-52ce-45a1-9ab2-000fcdb323e6,Pinkerton Academy,Derry,NH,300130,030013,0015907,False
+c6e02fb0-3c3e-40c8-bebb-366ceae2ae71,Pittsburg School,Pittsburg,NH,300500,030050,OID16247,False
+58e747ef-1ac9-4e76-af84-464689f6a6e4,Platteville High School,Platteville,WI,501820,050182,0026969,False
+94b6b014-7697-4d9b-bb95-e50724dc5a74,Plymouth Comprehensive HS,Plymouth,WI,501830,050183,0026732,False
+c6078ebc-c658-4732-aa35-61ea01f7f4bf,Plymouth Regional High School,Plymouth,NH,300510,030051,0015955,False
+40dc69a8-3f99-49b9-9136-45a9697ca4e4,Pohnpei Seventh Day Advent Sch,Pohnpei,FM,529070,052907,0005916,False
+482a8f83-c933-63e3-d2e6-669fdcf3cac8,Poland Spring Academy,Poland,ME,200800,020080,,False
+d2962414-82e2-4051-a899-eed427d94c28,Pompano Beach High School,Pompano Beach,FL,101550,010155,0005386,False
+0a3fde06-ff9c-4793-9907-43f4b28cdf89,Ponce High School,Ponce,PR,544120,054412,0021903,False
+b79c2aa7-43ee-42bb-90a2-97233985a509,Ponce Vocational High School,Ponce,PR,544160,054416,0021891,False
+89827d18-c97b-406b-a4dd-85522885c463,Portland High School,Portland,ME,200820,020082,0011480,False
+42a91889-04be-44be-9dc8-9bfdeaf5b625,Portsmouth Abbey School,Portsmouth,RI,400130,040013,0022083,False
+4eec1528-e5b5-42d2-be91-626432c42177,Portsmouth High School,Portsmouth,NH,300520,030052,0016011,False
+03435db9-0e88-ceba-a829-56d5c253ef5a,Potters House Academy,Orlando,FL,100070,010007,,False
+673204f3-5692-4d57-8913-b48e03742e62,Prairie Farm High School,Prairie Farm,WI,501890,050189,0027229,False
+cd18f3f0-e887-43a2-a815-993b87b004ef,Prescott High School,Prescott,WI,501900,050190,0027016,False
+e779c228-0580-276f-d339-0c5f6e90f952,Puerto Rico Advancement Colg,Bayamon,PR,540940,054094,,False
+db79837f-d8bf-4b5a-8bc6-423ccf498a3d,Pulaski High School,Pulaski,WI,501910,050191,0027049,False
+0de57b37-23aa-4297-b51f-d9a9f4f9ed38,Putnam County High School,Eatonton,GA,111190,011119,0006384,False
+5feefd12-e73c-47b6-9f3b-c001e8f95796,Rafael Rocca High School,Naguabo,PR,543560,054356,0021874,False
+c05c4896-c744-49e2-576c-94544ff6c4e7,Raising Knowledge Academy Inc,Orlando,FL,100470,010047,,False
+8ffa20ba-788f-4cf0-a040-a4fcd7cc27dd,Ramey Unit School,Aguadilla,PR,540270,054027,0021781,False
+0a5397c8-4706-42de-b11d-13105c5f2c66,Ramon Jose Davila School,Coamo,PR,541640,054164,0021926,False
+8a3a4fa8-2e62-4ddf-90ce-ba2f8c3529c1,Ramon Power Y Giralt Senior HS,Las Piedras,PR,542980,054298,0021928,False
+83d9809a-ad58-4a9f-bfd6-ebdafc3d7e6d,Ramon Vila Mayo High School,San Juan,PR,544770,054477,0021991,False
+b2a1c1d5-b404-42e6-9323-d8731b6ba0a2,Random Lake High School,Random Lake,WI,501940,050194,0026735,False
+d920c4e5-379e-4a2a-b736-0e128e8d0995,Raul Ybarra Secondary School,Maricao,PR,543160,054316,0021785,False
+3885f0d8-3873-4c3f-953e-60b2481d11f4,Rawlins High School,Rawlins,WY,510350,051035,OID16315,False
+f729ab9d-36c8-4e2e-a97a-7659d538c3ee,Reedsburg Area High School,Reedsburg,WI,501950,050195,0026996,False
+c46fc18f-6bd5-4f2e-abe4-b3729e53d6d4,Republic Colombia HS,Rio Piedras,PR,544720,054472,0021973,False
+4a76fd09-ecce-47fb-a831-06bf80031a16,Republic Of Costa Rica Voc HS,Caguas,PR,541080,054108,0021883,False
+8759d405-efa5-44bb-8b1c-25dc381d9fb9,Rhinelander High School,Rhinelander,WI,501960,050196,0027139,False
+a562daaa-9cb6-456e-a429-685f100afe9c,Rice Lake High School,Rice Lake,WI,501970,050197,0027262,False
+6e4f9673-56e0-46e1-8e85-8e5c05548867,Richmond High School,Richmond,ME,200850,020085,OID16187,False
+efa98a8b-7d72-49ae-82b4-cf9944d8ea33,Rio High School,Rio,WI,501990,050199,0026997,False
+726255fd-bfed-4619-afbf-05ce04404aa5,Rivendell Academy,Orford,NH,300480,030048,0016006,False
+1ca3433e-1fc5-4786-ad30-89366afa584d,River Falls High School,River Falls,WI,502000,050200,0027018,False
+13d05e57-ff3e-48fc-a040-8c7c552e4e8c,Riverdale High School,Muscoda,WI,501600,050160,,False
+8ece4b99-c96a-483e-8639-9108223b414c,Riverdale High School,Fort Myers,FL,100510,010051,0005732,False
+7db5725a-dd3f-417d-ab6c-a6e6821961f3,Riverside High School,Milwaukee,WI,501430,050143,0026836,False
+8940ed79-1e4b-44f0-b915-36be3d65766b,Riverton High School,Riverton,WY,510360,051036,0027600,False
+cc28743b-bfba-0405-51bc-dbfe37ed4e7f,Riviera Beach Maritime Academy,Riviera Beach,FL,102100,010210,,False
+ff4e76f7-1df3-47ad-aa41-355a55fbc274,Robert L Osborne High School,Marietta,GA,112000,011200,0005970,False
+5df60da0-99cc-4283-9fc6-58818ce55b57,Robinson School,San Juan,PR,546040,054604,0021944,False
+2fea7031-632c-4f32-b191-77669ff424d1,Rocky Mountain Middle HS,Cowley,WY,510050,051005,0027590,False
+271542a3-7299-6770-75b9-5ae2ab9df398,Rosenwald High School,Panama City,FL,102210,010221,,False
+02047ce3-34ea-4dff-82db-43dfb9045402,Rosholt High School,Rosholt,WI,502020,050202,OID16375,False
+d27a95d9-47ef-4799-940e-424ba198c3d0,S U Angeles-Jose Vizcarrondo,Angeles,PR,546390,054639,0021788,False
+214548be-c2c6-46d8-b8eb-c7f94ce236c3,Saddlebrook Preparatory School,Wesley Chapel,FL,101810,010181,0005587,False
+86e2f242-5528-40d5-9920-a8558f05512f,Saint Andrews School,Barrington,RI,400250,040025,0022053,False
+07825f40-0768-4d97-b523-0ce8529909c1,Saint Catherines High School,Racine,WI,501920,050192,0026881,False
+3edd5d72-aed2-47fc-adee-0ffa87780b6b,Saint Croix High School,Hammond,WI,500840,050084,0027012,False
+95ef177e-f675-4d42-8043-23bf4c3bf328,Saint John's Christian Academy,Moncks Corner,SC,411430,041143,0022311,False
+5b55e2c4-7345-45e3-a735-b7a8642b483f,Saint John's School,San Juan,PR,546160,054616,0021945,False
+71b846f5-4bfc-4745-bb95-e1323fefd6f5,Saint Johns High School,Johns Island,SC,411150,041115,0022303,False
+f9120a55-1b8b-454c-94a0-a647f531721c,Saint Raphael Academy,Pawtucket,RI,400110,040011,0022077,False
+4f428369-bd9c-4c3c-a452-9686f91e52e6,Salem High School,Salem,NH,300550,030055,0015928,False
+3f93348d-c0f4-d783-5656-4e0a706b20bd,San Antonio Catholic School,Guayama,PR,540100,054010,,False
+413530b2-9f06-4d6a-a551-92bd10ea3b22,Sanborn Regional High School,Kingston,NH,300300,030030,0016022,False
+5c14168a-d95f-42a5-81e8-cca09d3e3fb7,Santiago Iglesias Pantin,Ceiba,PR,541490,054149,0021811,False
+25f9dada-e284-4fcd-90eb-e63b6b48517a,Satellite High School,Satellite Beach,FL,100440,010044,0005327,False
+56acacf8-dbb0-44a6-ad47-3ecd0783331f,Savannah Country Day School,Savannah,GA,112700,011270,0006472,False
+48342723-0b02-aabf-53b8-b8e98adecc04,Schoolhouse Preparatory,Miami,FL,102480,010248,,False
+d2bb7d8c-3fc0-95d2-b0dd-71e295328d4b,Score Academy Wellington,Wellington,FL,104450,010445,,False
+dc24cdd1-8447-42d4-ae80-2d6d8a151319,Seabreeze High School,Daytona Beach,FL,100370,010037,0004966,False
+a8b954fc-41e9-4fd8-6b49-f6e711e50f2d,Seacoast Collegiate High Schl,Santa Rosa Beach,FL,102550,010255,3390708,False
+3026847a-88fb-4fe1-8653-72a33db80737,Segundo Ruiz Belvis HS,Hormigueros,PR,542400,054240,0021827,False
+c5487b94-7558-4a37-8306-017dc5dfa2ef,Seymour High School,Seymour,WI,502070,050207,0027050,False
+98c2fa8c-e2c3-4704-9f01-920702891fad,Shawano Senior High School,Shawano,WI,502080,050208,0027051,False
+8c487fde-e7db-4af5-8099-cefbffe3062a,Sheboygan Falls High School,Sheboygan Falls,WI,502100,050210,0026743,False
+c9000250-a269-4ad2-8eec-fec6510f87a6,Shoshoni High School,Shoshoni,WY,510400,051040,OID16289,False
+a19a36ae-46e9-41e4-96f8-f52eb6213fc7,Slinger High School,Slinger,WI,502130,050213,0026744,False
+89d83639-9614-e695-2c3b-2583e12aaf9d,Smart Horizons Career Online,Pensacola,FL,102450,010245,3320323,False
+7bbba9ef-ace0-46b9-bfa8-9fe215f0bfc4,Solomon Juneau Business HS,Milwaukee,WI,501470,050147,0026843,False
+2936069e-38e2-4e2b-965f-077d3058b4de,South Broward High School,Hollywood,FL,100690,010069,0005356,False
+cb9e40cc-b0f6-41df-89dc-19d8b68e208d,South Central School,Bonesteel,SD,420120,042012,0022628,False
+5cef2be7-f007-4bda-83d3-96e59ca9d1b1,South Dade Senior High School,Homestead,FL,100700,010070,0005375,False
+b0eed562-9a65-4bf2-a0be-c296c3a8e1bf,South Division High School,Milwaukee,WI,501480,050148,0026814,False
+c4d92d9e-228b-4081-8a23-d7556c263400,South Shore High School,Port Wing,WI,501850,050185,,False
+a37bede4-5311-4bdd-bae2-8f02e3b5ac97,Southern Aroostook Cmty HS,Dyer Brook,ME,200480,020048,OID16213,False
+824740d6-aad6-46ac-8b72-c3612d3368b4,Southern High School,Agat,GU,525100,052510,0006611,False
+9d10033e-edca-4b41-9044-cf353ba8ecca,Southwestern Wisconsin HS,Hazel Green,WI,500870,050087,,False
+6cf199a2-edea-461c-a9fc-4b817d737c82,Sparta High School,Sparta,WI,502160,050216,0027183,False
+3a5a2899-3e3c-4fbf-98c6-880eeadbf8e2,Spaulding High School,Rochester,NH,300540,030054,0016026,False
+ec411790-396f-42c1-8688-14a24f89eb40,Spearfish High School,Spearfish,SD,421200,042120,0022747,False
+8233b5b8-5542-4dfd-acf5-ab59ccfc5bd5,Spooner High School,Spooner,WI,502170,050217,0027239,False
+647f8e21-6d78-4f0a-936f-1e776d521ee1,Spring Valley High School,Spring Valley,WI,502180,050218,OID16348,False
+ac9d4938-5afb-42df-8943-36a59fd9aab2,St Francis HS,Pago Pago,AS,520130,052013,,False
+f1369fc9-47e9-4b8c-8e25-ab118a17fb63,St Mary Catholic High School,Neenah,WI,501280,050128,0027300,False
+3c2cb2ac-8a88-4e5a-b365-83e5fbb6d59c,Star Valley High School,Afton,WY,510000,051000,0027650,False
+01f03a93-8395-466f-8ea8-74ee0baa676b,Stockbridge High School,Stockbridge,WI,502200,050220,,False
+ab47d928-e14c-446c-b6dc-fda3b810e45d,Strom Thurmond High School,Johnston,SC,410700,041070,0022509,False
+69a94b16-2fdc-4e5c-a5c3-e7754e0a7db1,Sturgeon Bay High School,Sturgeon Bay,WI,502220,050222,0027069,False
+3226f4a5-0824-42a8-90de-e52998572797,Sunapee Middle High School,Sunapee,NH,300560,030056,0016008,False
+078c959a-4ea1-21d2-b86e-0b732d9a1d86,Sunrise Academy,Orange City,FL,100260,010026,,False
+0f1a389e-411e-400c-97ec-3b813131b07a,Sunshine State Homeschool Academy,Apopka,FL,102750,010275,,False
+14964bcf-0215-4d81-8ebe-afee6e1e3a88,Superior Francisco Morales Sch,Naranjito,PR,543600,054360,0021875,False
+80c0dc47-1520-4b4b-b760-debf7713f156,Superior Isidro A Sanchez,Luquillo,PR,543040,054304,0021839,False
+62519f4d-e0d2-4b37-9057-a774e4ae62c6,Superior Jose Campeche,San Lorenzo,PR,545310,054531,0021918,False
+aa74889e-cdc7-4b5d-8cef-ed480fd7bb89,Superior Luis Munoz Marin HS,Barranquitas,PR,540720,054072,0021796,False
+1d0f53d1-3ce2-4a54-abdf-430f6298f3c8,Superior Morovis,Morovis,PR,543520,054352,0021873,False
+190a5ec9-2c50-461b-92f7-f2fa525ead72,Superior Voc Ben Harrison,Cayey,PR,541360,054136,0021906,False
+36f74b50-ff04-4604-bfcb-c264243e8b71,Suring High School,Suring,WI,502260,050226,0027053,False
+755f92f9-0237-4a49-9086-bd6364d707ae,T L Hanna High School,Anderson,SC,410050,041005,0022420,False
+b8b2d55b-4884-4a69-93bd-5fb320b869b8,T W Josey High School,Augusta,GA,110300,011030,0006360,False
+58a332f2-d634-49e5-b656-b71ec0344109,Telfair County High School,Mc Rae,GA,112050,011205,OID16193,False
+27a721d5-31ee-4cf0-b655-b3b9a673e897,Ten Sleep High School,Ten Sleep,WY,510420,051042,0027597,False
+a79991e2-e9ef-27d8-81d6-1783faf23d1d,Tesla Engineering Charter Schl,Appleton,WI,500070,050007,3319019,False
+e31aa669-fce5-4dbd-8d4d-83f3d7d01884,The Educ Center At Miami Lakes,Miami Lakes,FL,101500,010150,,False
+b3307c0a-8d69-4a59-b370-b4d5161c7d9f,Thomasville High School,Thomasville,GA,112980,011298,0006566 ,False
+c2b4945d-09c5-49f9-b0e1-415abe808e5e,Thorp High School,Thorp,WI,502270,050227,0027236,False
+f54dd04b-4010-48df-8cbb-5494a03caa37,Tigerton High School,Tigerton,WI,502280,050228,,False
+aad4883d-2810-4bfe-be9a-e4b63e64f638,Tilton School,Tilton,NH,300580,030058,0015960,False
+ffc96f11-d288-45d4-ae35-fae9e0149c06,Tomahawk High School,Tomahawk,WI,502290,050229,0027131,False
+404bcde6-be73-4941-8e35-cfc92e5a8c19,Tongue River High School,Dayton,WY,510100,051010,0027639,False
+24f2e460-47ff-4457-a4a8-6d595fa2f3d1,Toombs Central School,Lyons,GA,111920,011192,0006232,False
+af6035db-47cc-4e24-9b10-19e360677249,Torrington High School,Torrington,WY,510430,051043,0027577,False
+5b0a453d-bebd-4fa6-9203-d7c6d6d46d5e,Trina Padilla De Sanz,Arecibo,PR,540570,054057,0021793,False
+136eed58-18b0-49ff-935b-39edc416e5ee,Trina Padilla De Sanz HS,Arecibo,PR,544540,054454,0021972,False
+1cb6196b-6181-8db3-fc30-7f9e19a806ab,Trinity Acdmy Performing Arts,Providence,RI,400210,040021,3334335,False
+1857de5e-beba-4f62-910a-a6c38121c1b4,Trinity Baptist School,Fond Du Lac,WI,500680,050068,0027292,False
+f87fb44f-a531-421c-9093-d1801842859f,Trinity Christian Academy,Johnston,RI,400060,040006,0022126,False
+34110235-b8f7-44aa-38a3-af4bdcdfe559,Tunsil Academy,N Miami Beach,FL,100130,010013,,False
+e2373247-0b82-42f4-af4f-9ceff7170eb4,Turtle Lake High School,Turtle Lake,WI,502310,050231,0027269,False
+18077171-b76f-49a0-8993-c681f6092a37,Union County High School,Blairsville,GA,110380,011038,0006260,False
+c45ca8d9-0d7b-429f-b866-34179aca8699,Union Grove High School,Union Grove,WI,502320,050232,0026791,False
+2d4de900-f2bd-406e-b445-2d8d23265e17,Unity High School,Balsam Lake,WI,500130,050013,0027241,False
+79325364-7120-4a26-a5f3-3e6503cfd3b1,Univ Of Wyoming Lab School,Laramie,WY,510250,051025,,False
+9ee0d93e-6f18-4d72-acad-1b9ea8d34e79,Universidad Rado Corzon El Sec,Santurce,PR,545880,054588,0021956,False
+9b93171f-f937-45c9-ba22-afdc589289cc,University School Milwaukee,Milwaukee,WI,501390,050139,0026853,False
+db09e278-d7d3-4443-b3f3-5748466eecb3,Van Buren Dist Secondary Sch,Van Buren,ME,201030,020103,0011607,False
+a0c637b4-470b-3604-2705-9283ad1c9033,Vineyard Christian School,Lewiston,ME,200560,020056,,False
+2360a0e4-3b4d-432f-b852-c1d62d7a9540,Viroqua High School,Viroqua,WI,502340,050234,0027187,False
+d840d421-c785-4adb-86a9-5a2831cd252b,Wagner Community High School,Wagner,SD,421350,042135,0022656,False
+cb5921b7-ac31-4039-a598-ba3dc8a74d1f,Wakulla High School,Crawfordville,FL,100310,010031,0005067,False
+a88f546f-e20b-4e94-b25a-3fe12fac1214,Walton High School,Defuniak Spgs,FL,100390,010039,0005099,False
+e8eeedc8-9575-4bf1-be73-ef3cc4731226,Washburn District High School,Washburn,ME,201060,020106,0011608,False
+ebfb0a0b-8c68-4665-8fed-5f0d7f62d3db,Washington Academy,East Machias,ME,200330,020033,0011581,False
+74a05bad-4cd0-4097-a6f9-d6d1929f0a5f,Washington High School,Milwaukee,WI,501490,050149,OID16354,False
+5c623c81-3577-4e68-94b5-995ee323d7e8,Waterford Union High School,Waterford,WI,502370,050237,0026796,False
+0c854b00-9514-4a27-a6ff-1da7351440be,Watertown High School,Watertown,WI,502380,050238,0026754,False
+85fd3c40-1bf7-fbfa-061d-10deff291b05,Waterville Valley Academy,Waterville Valley,NH,300600,030060,3830557,False
+07134f46-24d0-4295-bcad-a7bf006da3de,Waupaca High School,Waupaca,WI,502400,050240,0027311,False
+8743b5e1-728b-4432-8e15-514432c42c69,Wausaukee High School,Wausaukee,WI,502420,050242,0027055,False
+5d846d71-af90-4104-9f5d-85e050a2ec6f,Wayland Academy,Beaver Dam,WI,500170,050017,0026978,False
+eaf94bd1-7781-4ff0-890a-9a6fecf0cf18,Waynflete School,Portland,ME,200830,020083,0011483,False
+6f7952c7-fe47-4e84-94eb-7ed3f531d6c8,Wells High School,Wells,ME,201090,020109,0011476,False
+8443c5d4-40eb-4747-babf-edd3973fb544,West De Pere High School,De Pere,WI,502470,050247,0027027,False
+28f978bd-49f7-44f4-8dbf-364cc44c27f3,West Hall High School,Oakwood,GA,112300,011230,0006285,False
+5d107768-4c05-476a-8449-d07de426f801,West Salem High School,West Salem,WI,502490,050249,0027193,False
+f1810173-d93d-4b17-8152-683b2d16a795,Westfield Area High School,Westfield,WI,502480,050248,0027001,False
+29dfc562-75da-476d-ad85-f38e1a56d8c7,Wheeler High School,Marietta,GA,112010,011201,0005986,False
+2d3a618c-efd2-4ac3-b63d-00ea1f4ccab5,Wheeler School,Providence,RI,400170,040017,0022113,False
+877fa008-6248-40d0-bbe4-6f6f74c9237b,Wildwood High School,Wildwood,FL,101860,010186,0005891,False
+511f6847-5b39-4f31-a239-2a2c5bedc68a,William Horlick High School,Racine,WI,501930,050193,0026883,False
+ac8d651d-eb0c-45cb-9473-3aef2f957b70,Williston Middle High School,Williston,FL,101870,010187,0005204,False
+3c7d9d1d-2421-4857-b248-21831e298772,Wilmot High School,Wilmot,WI,502540,050254,0026808,False
+675e2f18-cfc0-40db-b1f2-d4a050d37973,Windermere High School,Windermere,FL,100180,010018,3183014,False
+ea5422bd-ff4d-4c36-bfd7-1f999b7367ad,Winneconne High School,Winneconne,WI,502550,050255,0027315,False
+7972ad79-77b8-4ee7-a221-100523558882,Wisconsin Dells High School,Wisconsin Dells,WI,502560,050256,0027003,False
+b5b38294-4c72-4fce-a968-21dbebe57abd,Wisconsin Lutheran High School,Milwaukee,WI,501510,050151,0026841,False
+6b047e35-7736-448a-9a94-2dd753c014eb,Wisconsin Sch For Visually Imp,Janesville,WI,500960,050096,0026915,False
+0c4e06e3-773e-4e0e-ab7c-ae7283c72b73,Wisdom Middle/High School,St. Agatha,ME,200880,020088,OID16219,False
+4d218537-ab52-4afa-9175-eb117e6dd3a4,Wonewoc Center High School,Wonewoc,WI,502590,050259,0027004,False
+28c6b0d7-2927-41c3-925f-ec23061081b1,Woodland Jr/Sr High School,Baileyville,ME,201130,020113,0011589,False
+486d0820-5582-49d8-902e-d1d1ccedd69f,Woodsville High School,Woodsville,NH,300640,030064,0016010,False
+ec1071ea-1cdf-5bd4-24b0-5ba891483cf1,Xceed Prep Acad Miami Dadeland,Miami,FL,101000,010100,3643558,False
