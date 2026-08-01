@@ -1,6 +1,7 @@
 # Performance benchmarking — first pass (Section 4.5)
 
-Code: `etl/build_benchmarking.py`. Run against `rigor_classification_v3_2026-07-24.csv`.
+Code: `etl/build_benchmarking.py`. Run against `rigor_classification_v4_2026-07-24.csv`
+(regenerated on v4 2026-07-26 → `benchmarking_v4_2026-07-26.csv`).
 
 Descriptive only, per the report's own instruction: this ranks schools against peer groups
 (region, funding tier, rigor tier), it does not predict or validate anything. `sat_score_nu` is
@@ -33,19 +34,24 @@ national benchmarking pass. Left for a future IL-specific comparison.
 
 | Rigor tier | n | Mean SAT |
 |---|---|---|
-| Most Demanding | 177 | 1,303 |
-| Very Demanding | 2,014 | 1,219 |
-| Demanding | 4,309 | 1,156 |
-| Average | 3,895 | 1,115 |
-| Below Average | 703 | 1,052 |
+| Most Demanding | 89 | 1,288 |
+| Very Demanding | 1,335 | 1,234 |
+| Demanding | 3,785 | 1,168 |
+| Average | 4,831 | 1,126 |
+| Below Average | 1,058 | 1,066 |
 
-**Cleanly and strongly monotonic** — a **251-point** SAT spread from Below Average (1,052) to
-Most Demanding (1,303), with no inversions. This is the single best validation result for the
-v3 rigor tier: mean SAT rises with tier on an *independent* measure the tier was not built
-from, and the natural-breaks top tier (n=177) is genuinely elite (1,303 mean). The v1 tier,
+**Cleanly and strongly monotonic** — a **222-point** SAT spread from Below Average (1,066) to
+Most Demanding (1,288), with no inversions. This is the single best validation result for the
+rigor tier: mean SAT rises with tier on an *independent* measure the tier was not built
+from, and the natural-breaks top tier (n=89) is genuinely elite (1,288 mean). The v1 tier,
 by contrast, spanned only ~52 SAT points across tiers and had a Below/Average inversion — the
 Wk5 additions (AP/test performance components + natural-breaks cuts) sharpened the separation
 dramatically.
+
+Versus v3 (which spanned 1,052 → 1,303, 251 points, top tier n=177), v4 is marginally less
+separated at the extremes but rests on a much tighter top tier (295 schools vs. 700, of which
+89 have SAT). The step sizes are also more even across the middle of the distribution
+(1,066 → 1,126 → 1,168 → 1,234 → 1,288), rather than v3's flatter middle.
 
 Per-school percentile rank within each of the three peer groups is written to the output CSV
 (`sat_percentile_by_us_region`, `sat_percentile_by_funding_tier`,
@@ -63,12 +69,13 @@ this check is what makes this section worth having, not an afterthought:
 - `spearman(sat_score_nu, per_pupil_state_local)` = 0.058 (IL only, small n)
 
 **This is the comparison that matters: SAT's correlation with poverty (-0.385) is roughly
-2.8x stronger than the rigor tier's (-0.137, from `RIGOR_CLASSIFICATION.md` v3).** That's not a
+3.5x stronger than the rigor tier's (-0.110, from `RIGOR_CLASSIFICATION.md` v4).** That's not a
 coincidence — it's exactly what the report's literature review (Sections 2.2, 2.4) predicts:
 an outcome/achievement measure (SAT) is more socioeconomically confounded than an
-opportunity-plus-performance measure like the rigor tier. (The gap narrowed from v1's ~5.5x
-because v3 folds AP/SAT *exam performance* into rigor, and performance is more SES-correlated
-than pure availability — a tradeoff quantified openly in `RIGOR_CLASSIFICATION.md`, not hidden.)
+opportunity-plus-performance measure like the rigor tier. (The ratio moved v1 ~5.5x → v3 2.8x →
+v4 3.5x: v3 folded AP/SAT *exam performance* into rigor and performance is more SES-correlated
+than pure availability, then v4's qualifying-density re-specification bought back about half of
+that — a tradeoff quantified openly in `RIGOR_CLASSIFICATION.md`, not hidden.)
 This is
 a genuinely useful result for the writeup: it's direct empirical evidence *for* building rigor
 from curricular opportunity rather than test scores, not just a literature citation asserting

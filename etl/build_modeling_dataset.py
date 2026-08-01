@@ -195,7 +195,105 @@ METADATA = {
     "meets_min_size": ("Derived in build_modeling_dataset.py", "school", "n/a (derived flag)", "derived",
                        f"True if enrollment_9_12 >= {MIN_ENROLLMENT_9_12} or enrollment_9_12 is unknown "
                        f"(freeze gate)"),
+    "ap_qualifying_density": ("Derived in build_modeling_dataset.py (NU org export)", "school",
+                              NU_EXPORT_VINTAGE, "derived",
+                              "Expected AP exams scoring 3+ per student = ap_tests_taken x P(score>=3), "
+                              "with P from a normal approximation on ap_score_nu (within-school SD~1.2, "
+                              "continuity-corrected cut at 2.5). Winsorized at the 99th pct. Replaces the "
+                              "raw mean exam score as the v4 AP-performance signal: a mean rewards "
+                              "gatekeeping (sit only your strongest students, post a high mean), density "
+                              "credits breadth x success. See docs/RIGOR_SCENARIOS.md scenario B"),
+    "ib_intensity_v2": ("CRDC (SY2021-22) + adjudicated IB crosswalk", "school",
+                        "CRDC SY2021-22; IB scraper pull date not confirmed in repo", "mixed",
+                        "IB participation intensity = crdc_ib_enrollment / enrollment_9_12 where CRDC "
+                        "reports it (n~820), else the verified binary ib_flag_v2 (docs/IB_RESCUE.md). "
+                        "Clipped to [0, 1]. The v4 replacement for the never-confirmed ib_flag_candidate; "
+                        "enters the crdc_coursework component rather than a standalone IB component"),
 }
+
+# --- v4 rigor features -------------------------------------------------------
+# Both are the changes adopted in docs/RIGOR_SCENARIOS.md (scenarios A + B) and used by
+# build_rigor_classification.py --spec v4. Derived here, at the freeze, so the modeling
+# dataset carries them and the index stays a pure scoring step over frozen columns.
+AP_SCORE_QUALIFYING_CUT = 2.5   # continuity-corrected boundary for a discrete 1-5 exam score
+AP_SCORE_WITHIN_SCHOOL_SD = 1.2  # documented approximation -- College Board publishes no
+                                 # per-school score distributions; see RIGOR_SCENARIOS.md
+AP_DENSITY_WINSOR_PCT = 0.99
+IB_INTENSITY_WINSOR_PCT = 0.99
+
+
+IB_V2_SOURCE = "schools_combined_enriched_ceeb.csv"
+IB_V2_COLS = ["ib_flag_v2", "crdc_ib_enrollment"]
+
+
+def _ceeb_key(s):
+    return pd.to_numeric(s, errors="coerce").astype("Int64").astype(str).replace("<NA>", np.nan)
+
+
+def attach_ib_v2(df, input_path):
+    """Join the rescued IB columns (docs/IB_RESCUE.md) if they aren't already present.
+
+    build_features.py runs off schools_org_all.csv and never sees these two columns -- they
+    are produced further up, in combine_schools.py, and land in schools_combined_enriched_ceeb.
+    Without this join `ib_intensity_v2` silently comes out empty and the v4 crdc_coursework
+    component quietly loses its IB signal, so the join is explicit and its match rate reported.
+
+    `ceeb` is the only key the two frames share, and it is not unique in the source
+    (19,084 rows over 16,865 distinct CEEBs), so values are aggregated per CEEB with max --
+    "any confirmed IB signal wins", the conservative reading for a rescued flag.
+    """
+    if all(c in df.columns for c in IB_V2_COLS):
+        print(f"  [ib_v2] {IB_V2_COLS} already present -- no join needed")
+        return df
+    src_path = os.path.join(os.path.dirname(os.path.abspath(input_path)), IB_V2_SOURCE)
+    if not os.path.exists(src_path):
+        print(f"  [ib_v2] WARNING: {IB_V2_SOURCE} not found next to {input_path} -- "
+              f"ib_intensity_v2 will be empty and the v4 index will lose its IB signal.")
+        return df
+
+    src = pd.read_csv(src_path, low_memory=False)[["ceeb"] + IB_V2_COLS].copy()
+    src["_k"] = _ceeb_key(src["ceeb"])
+    n_rows, n_keys = src["_k"].notna().sum(), src["_k"].nunique()
+    agg = (src.dropna(subset=["_k"]).groupby("_k")[IB_V2_COLS].max().reset_index())
+
+    df = df.copy()
+    df["_k"] = _ceeb_key(df["ceeb"])
+    df = df.merge(agg, on="_k", how="left").drop(columns="_k")
+    matched = df["ib_flag_v2"].notna().sum()
+    print(f"  [ib_v2] joined from {IB_V2_SOURCE} on ceeb "
+          f"({n_rows:,} source rows over {n_keys:,} distinct CEEBs, aggregated with max): "
+          f"{matched:,}/{len(df):,} rows ({100*matched/len(df):.1f}%) carry a definitive IB flag")
+    return df
+
+
+def derive_rigor_v4_features(df):
+    """ap_qualifying_density (scenario B) and ib_intensity_v2 (scenario A)."""
+    from scipy.stats import norm
+
+    taken = pd.to_numeric(df.get("ap_tests_taken"), errors="coerce")
+    mean_score = pd.to_numeric(df.get("ap_score_nu"), errors="coerce")
+    p_qualify = 1 - norm.cdf((AP_SCORE_QUALIFYING_CUT - mean_score) / AP_SCORE_WITHIN_SCHOOL_SD)
+    density = taken * pd.Series(p_qualify, index=df.index)
+    cap = density.quantile(AP_DENSITY_WINSOR_PCT)
+    n_capped = int((density > cap).sum())
+    df["ap_qualifying_density"] = density.clip(upper=cap)
+    print(f"  [v4] ap_qualifying_density: {df['ap_qualifying_density'].notna().sum():,} schools, "
+          f"winsorized at p{AP_DENSITY_WINSOR_PCT:.0%}={cap:.3f} ({n_capped} capped)")
+
+    ib_enr = pd.to_numeric(df.get("crdc_ib_enrollment"), errors="coerce")
+    enr = pd.to_numeric(df.get("enrollment_9_12"), errors="coerce")
+    ratio = (ib_enr / enr).replace([np.inf, -np.inf], np.nan)
+    # CRDC IB enrollment is a headcount of IB-enrolled students that can exceed the 9-12
+    # denominator (whole-school IB programmes, middle-grade IB students counted in, stale
+    # enrollment): 9 schools land above 1.0. Winsorize the ratio itself before the fallback,
+    # so those stay the most-intense schools without a >100% share. The binary fallback is
+    # applied after, so a flag-only school keeps a clean 1.0.
+    ratio = ratio.clip(upper=ratio.quantile(IB_INTENSITY_WINSOR_PCT))
+    flag = pd.to_numeric(df.get("ib_flag_v2"), errors="coerce")
+    df["ib_intensity_v2"] = ratio.fillna(flag)
+    print(f"  [v4] ib_intensity_v2: {df['ib_intensity_v2'].notna().sum():,} schools "
+          f"({ratio.notna().sum():,} from CRDC enrollment share, rest from the verified binary flag)")
+    return df
 
 
 def apply_sentinel_scrub(df):
@@ -312,6 +410,10 @@ if __name__ == "__main__":
     check_winsorized(df)
     df = restrict_to_hs_universe(df)
     df = apply_min_size_freeze(df)
+
+    print("\nDeriving v4 rigor features:")
+    df = attach_ib_v2(df, args.path)
+    df = derive_rigor_v4_features(df)
 
     date_tag = dt.date.today().isoformat()
     out_csv = os.path.join(args.outdir, f"modeling_dataset_{args.version}_{date_tag}.csv")

@@ -48,6 +48,15 @@ OPPORTUNITY = [
 ]
 SES = ["frl_rate", "child_poverty_saipe", "per_resident_child_funding_state_local"]
 
+# Second specification, reported alongside the main one in docs/PREDICTIVE_VALIDATION.md.
+# The main spec's complete-case population is bound by NU-export coverage, so it inherits the
+# recruiting-universe selection bias. These four features exist for the whole public-school
+# CRDC universe, so the spec trades features for a ~4x larger, unbiased population -- if the
+# incremental R^2 survives that swap, it isn't an artifact of who NU recruits.
+OPPORTUNITY_CRDC = ["ap_participation", "dual_enrollment_rate", "testtaker_rate", "ib_flag_v2"]
+
+SPECS = {"main": OPPORTUNITY, "crdc_only": OPPORTUNITY_CRDC}
+
 
 def fit_eval(X_tr, X_te, y_tr, y_te, label):
     out = {}
@@ -63,58 +72,95 @@ def fit_eval(X_tr, X_te, y_tr, y_te, label):
     return out, lr, hgb
 
 
-def main(path):
-    df = pd.read_csv(path, low_memory=False)
-    df = df[df["sector"] == "public"].copy()
-    for c in OPPORTUNITY + SES + [TARGET]:
-        df[c] = pd.to_numeric(df[c], errors="coerce")
-
-    # complete cases across target + both predictor blocks (same rows for all nested models)
-    cc = df.dropna(subset=[TARGET] + OPPORTUNITY + SES)
-    print(f"public schools: {len(df):,} | complete-case for validation: {len(cc):,}")
+def run_spec(df, opportunity, spec_name, metrics, want_detail):
+    """Fit the three nested models for one predictor specification."""
+    cc = df.dropna(subset=[TARGET] + opportunity + SES)
+    print(f"\n--- spec '{spec_name}' ({len(opportunity)} opportunity features) | "
+          f"complete-case n={len(cc):,} ---")
 
     y = cc[TARGET]
     idx_tr, idx_te = train_test_split(cc.index, test_size=0.2, random_state=SEED)
-    results = {}
-    results["ses_only"], _, _ = fit_eval(cc.loc[idx_tr, SES], cc.loc[idx_te, SES],
-                                         y.loc[idx_tr], y.loc[idx_te], "SES only")
-    results["opportunity_only"], _, _ = fit_eval(cc.loc[idx_tr, OPPORTUNITY], cc.loc[idx_te, OPPORTUNITY],
-                                                 y.loc[idx_tr], y.loc[idx_te], "Opportunity only")
-    both = SES + OPPORTUNITY
-    results["ses_plus_opportunity"], lr_full, hgb_full = fit_eval(
-        cc.loc[idx_tr, both], cc.loc[idx_te, both], y.loc[idx_tr], y.loc[idx_te], "SES + Opportunity")
+    both = SES + opportunity
+    blocks = [("SES only", SES), ("Opportunity only", opportunity), ("SES + Opportunity", both)]
 
-    inc_lin = results["ses_plus_opportunity"]["linear"]["r2"] - results["ses_only"]["linear"]["r2"]
-    inc_gbm = results["ses_plus_opportunity"]["gbm"]["r2"] - results["ses_only"]["gbm"]["r2"]
-    print(f"\nINCREMENTAL R2 of opportunity over SES:  linear +{inc_lin:.3f} | gbm +{inc_gbm:.3f}")
+    results, lr_full, hgb_full = {}, None, None
+    for label, cols in blocks:
+        res, lr, hgb = fit_eval(cc.loc[idx_tr, cols], cc.loc[idx_te, cols],
+                                y.loc[idx_tr], y.loc[idx_te], label)
+        results[label] = res
+        for family in ("linear", "gbm"):
+            metrics.append({"spec": spec_name, "block": label, "model": family,
+                            "r2": round(res[family]["r2"], 4),
+                            "rmse": round(res[family]["rmse"], 3),
+                            "n_train": len(idx_tr), "n_test": len(idx_te),
+                            "n_complete_case": len(cc)})
+        if label == "SES + Opportunity":
+            lr_full, hgb_full = lr, hgb
 
-    print("\npermutation importance (gbm, SES+Opportunity, test set):")
-    pi = permutation_importance(hgb_full, cc.loc[idx_te, both], y.loc[idx_te],
-                                n_repeats=10, random_state=SEED)
-    imp = pd.Series(pi.importances_mean, index=both).sort_values(ascending=False)
-    print(imp.round(3).to_string())
+    inc = {f: results["SES + Opportunity"][f]["r2"] - results["SES only"][f]["r2"]
+           for f in ("linear", "gbm")}
+    print(f"INCREMENTAL R2 of opportunity over SES:  "
+          f"linear +{inc['linear']:.3f} | gbm +{inc['gbm']:.3f}")
+    for family in ("linear", "gbm"):
+        metrics.append({"spec": spec_name, "block": "Incremental (opportunity over SES)",
+                        "model": family, "r2": round(inc[family], 4), "rmse": np.nan,
+                        "n_train": len(idx_tr), "n_test": len(idx_te),
+                        "n_complete_case": len(cc)})
 
-    print("\nstandardized linear coefficients (SES+Opportunity):")
-    Xz = (cc[both] - cc[both].mean()) / cc[both].std()
-    lrz = LinearRegression().fit(Xz.loc[idx_tr], y.loc[idx_tr])
-    print(pd.Series(lrz.coef_, index=both).round(2).sort_values().to_string())
+    imp = None
+    if want_detail:
+        print("\npermutation importance (gbm, SES+Opportunity, test set):")
+        pi = permutation_importance(hgb_full, cc.loc[idx_te, both], y.loc[idx_te],
+                                    n_repeats=10, random_state=SEED)
+        imp = (pd.DataFrame({"feature": both, "importance": pi.importances_mean,
+                             "importance_std": pi.importances_std})
+               .sort_values("importance", ascending=False))
+        imp["block"] = ["SES" if f in SES else "Opportunity" for f in imp["feature"]]
+        print(imp.round(3).to_string(index=False))
+
+        print("\nstandardized linear coefficients (SES+Opportunity):")
+        Xz = (cc[both] - cc[both].mean()) / cc[both].std()
+        lrz = LinearRegression().fit(Xz.loc[idx_tr], y.loc[idx_tr])
+        print(pd.Series(lrz.coef_, index=both).round(2).sort_values().to_string())
+
+    return cc, idx_te, both, lr_full, hgb_full, imp
+
+
+def main(path):
+    df = pd.read_csv(path, low_memory=False)
+    df = df[df["sector"] == "public"].copy()
+    for c in sorted(set(OPPORTUNITY + OPPORTUNITY_CRDC + SES + [TARGET])):
+        df[c] = pd.to_numeric(df[c], errors="coerce")
+    print(f"public schools: {len(df):,}")
+
+    metrics = []
+    cc, idx_te, both, lr_full, hgb_full, imp = run_spec(
+        df, OPPORTUNITY, "main", metrics, want_detail=True)
+    run_spec(df, OPPORTUNITY_CRDC, "crdc_only", metrics, want_detail=False)
 
     # sensitivity: HGB on all public rows with a target (native NaN handling)
     allr = df.dropna(subset=[TARGET])
-    Xtr, Xte, ytr, yte = train_test_split(allr[both], allr[TARGET], test_size=0.2, random_state=SEED)
+    Xtr, Xte, ytr, yte = train_test_split(allr[both], allr[TARGET], test_size=0.2,
+                                          random_state=SEED)
     hgb_all = HistGradientBoostingRegressor(random_state=SEED).fit(Xtr, ytr)
-    print(f"\nrobustness (all {len(allr):,} public rows w/ target, HGB w/ NaN): "
-          f"R2={r2_score(yte, hgb_all.predict(Xte)):.3f}")
+    r2_all = r2_score(yte, hgb_all.predict(Xte))
+    print(f"\nrobustness (all {len(allr):,} public rows w/ target, HGB w/ NaN): R2={r2_all:.3f}")
+    metrics.append({"spec": "robustness_all_rows", "block": "SES + Opportunity", "model": "gbm",
+                    "r2": round(r2_all, 4), "rmse": np.nan, "n_train": len(Xtr),
+                    "n_test": len(Xte), "n_complete_case": len(allr)})
 
     stamp = path.split("_v")[-1].replace(".csv", "")
     out = cc.loc[idx_te, ["ceeb", "school_name", "state", TARGET]].copy()
     out["pred_linear"] = lr_full.predict(cc.loc[idx_te, both])
     out["pred_gbm"] = hgb_full.predict(cc.loc[idx_te, both])
     out["residual_gbm"] = out[TARGET] - out["pred_gbm"]
-    dest = f"csv_exports/predictive_validation_v{stamp}.csv"
-    out.to_csv(dest, index=False)
-    print(f"\nsaved test-set predictions -> {dest}")
+    for name, frame in [("", out),
+                        ("_metrics", pd.DataFrame(metrics)),
+                        ("_importance", imp)]:
+        dest = f"csv_exports/predictive_validation{name}_v{stamp}.csv"
+        frame.to_csv(dest, index=False)
+        print(f"saved -> {dest}")
 
 
 if __name__ == "__main__":
-    main(sys.argv[1] if len(sys.argv) > 1 else "csv_exports/modeling_dataset_v3_2026-07-24.csv")
+    main(sys.argv[1] if len(sys.argv) > 1 else "csv_exports/modeling_dataset_v4_2026-07-24.csv")

@@ -75,7 +75,7 @@ CSV_EXPORTS_DIR = os.path.join(os.path.dirname(__file__), "..", "csv_exports")
 # freeze actually frozen, rather than a convention everyone has to remember.
 #
 # Bump this deliberately when a new freeze is cut, and say so in the docs.
-FREEZE_TAG = "v1_2026-07-17"
+FREEZE_TAG = "v4_2026-08-01"
 
 # table name -> filename stem. Date-tagged files are resolved by glob against
 # FREEZE_TAG; undated ones are matched literally.

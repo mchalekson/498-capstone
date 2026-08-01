@@ -35,10 +35,13 @@ without it.
 
 ## The finalized dataset
 
-The project's terminal artifact is
-**`csv_exports/modeling_dataset_v1_2026-07-17.csv`** — 34,392 US high schools
-(public + private, grades 9–12 enrollment ≥ 30) × 57 variables, keyed on `ceeb`.
-Every number in the report's Section 4 is computed from it. Its companion
+The project's terminal artifact is the current freeze,
+**`csv_exports/modeling_dataset_v4_2026-08-01.csv`** — 34,392 US high schools
+(public + private, grades 9–12 enrollment ≥ 30), keyed on `ceeb`. This freeze was
+rebuilt on 2026-08-01 from Bob & Adam's *extended* org export
+(`Capstone_Org_Data_extended_v4_full_2026-07-31.xlsx`); the school universe is
+unchanged (34,392 rows) and the rigor formula is unchanged — hence still `v4`, only
+re-dated (bump to `v5` only when the formula itself changes). Its companion
 dictionary is `csv_exports/data_dictionary_modeling_dataset.csv` (one row per
 variable: source, grain, vintage, confidence, range, % non-null, description).
 
@@ -75,7 +78,7 @@ output with the current date, so running them on every pipeline run would mint a
 new dataset each time rather than reproducing the frozen one.
 
 `etl/load_modeling_layer.py` therefore pins an **exact** freeze tag
-(`FREEZE_TAG = "v1_2026-07-17"`) — version *and* date — and resolves it by exact
+(`FREEZE_TAG = "v4_2026-08-01"`) — version *and* date — and resolves it by exact
 filename match with no "newest wins" fallback. Pinning on the version alone isn't
 a pin: any rebuild at the same version outranks the freeze just by being newer,
 whether or not it was meant to replace it.
@@ -109,9 +112,21 @@ To load them without a full pipeline run: `cd etl/ && python load_modeling_layer
 The stage skips with a message if the freeze isn't on disk, so a clone that has
 only run stages 1–5 won't fail.
 
+## Dashboard
+
+Interactive Streamlit app over the v4 freeze — live rigor-formula explorer, clustering,
+benchmarking, crosswalk/junction status, and school lookup. See
+[`dashboard/README.md`](dashboard/README.md):
+
+```
+pip install -r dashboard/requirements.txt
+cd dashboard && streamlit run app.py
+```
+
 ## Docs
 
 - [`docs/EDA.md`](docs/EDA.md) — source inventory, join keys, profiling
 - [`docs/EDA_NCES_private_EN.md`](docs/EDA_NCES_private_EN.md) — NCES private-school EDA
 - [`docs/BOB_BRIEFING.md`](docs/BOB_BRIEFING.md) — database overview and open data gaps
+- [`docs/OPE_CEEB_JUNCTION.md`](docs/OPE_CEEB_JUNCTION.md) — OPE↔CEEB junction: builder + sourcing plan
 - [`data/NU-Master/README.md`](data/NU-Master/README.md) — what's needed for the CEEB crosswalk

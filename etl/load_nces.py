@@ -103,6 +103,36 @@ def load_public_hs912(engine):
         conn.commit()
 
 
+def load_public_id12(engine):
+    """Build the 7<->12-digit NCES ID bridge (nces_public_id12_bridge).
+
+    build_ceeb_crosswalk.py joins our 7-digit ncessch to the NU master's
+    12-digit NCES IDs, so it needs a lookup between the two. Both IDs live in
+    the same ELSI re-pull that feeds nces_public_hs_grades_9_12; here we pull
+    just the two ID columns (as text — 12-digit IDs are fixed-width and can
+    carry leading zeros) into a dedicated bridge table.
+    """
+    path = os.path.join(DATA_DIR, "NCES", "ELSI_csv_new_updated.csv")
+    print("Building NCES 7<->12-digit ID bridge...")
+    hdr = pd.read_csv(path, skiprows=6, nrows=0)
+    c7 = next(c for c in hdr.columns if "(7-digit)" in c)
+    c12 = next(c for c in hdr.columns if "(12-digit)" in c)
+    df = pd.read_csv(path, skiprows=6, usecols=[c7, c12], dtype=str)
+    df = df.rename(columns={c7: "ncessch", c12: "ncessch12"})
+    df = df.dropna(subset=["ncessch"]).drop_duplicates(subset=["ncessch"])
+
+    print(f"  {len(df):,} rows ({df['ncessch12'].notna().sum():,} with a 12-digit ID)")
+    df.to_sql("nces_public_id12_bridge", engine, if_exists="replace", index=False,
+              method=db_utils.psql_insert_copy)
+    print("  Loaded nces_public_id12_bridge ✓")
+
+    with engine.connect() as conn:
+        conn.execute(text(
+            "ALTER TABLE nces_public_id12_bridge ADD PRIMARY KEY (ncessch)"
+        ))
+        conn.commit()
+
+
 def load_private_merged(engine):
     path = os.path.join(DATA_DIR, "NCES", "NCES_private_merged.csv")
     print("Reading NCES private schools (49-state PSS merge)...")
@@ -126,4 +156,5 @@ if __name__ == "__main__":
     load_public(engine)
     load_private(engine)
     load_public_hs912(engine)
+    load_public_id12(engine)
     load_private_merged(engine)

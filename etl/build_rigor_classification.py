@@ -61,15 +61,43 @@ from sklearn.cluster import KMeans
 
 TIER_LABELS = ["Below Average", "Average", "Demanding", "Very Demanding", "Most Demanding"]
 
-# component -> list of raw columns averaged (after z-scoring) to form that component
-COMPONENTS = {
-    "ap_opportunity": ["ap_tests_taken", "number_of_ap_classes_offered_mid", "ap_take_rate"],
-    "ap_performance": ["ap_score_nu"],
-    "ib": ["ib_flag_candidate"],
-    "crdc_coursework": ["ap_participation", "dual_enrollment_rate"],
-    "test_participation": ["testtaker_rate", "sat_participation_nu"],
-    "test_performance": ["sat_score_nu", "act_composite_il"],
+# component -> list of raw columns averaged (after z-scoring) to form that component.
+#
+# Two specs are kept side by side so the v3 -> v4 change is auditable rather than a silent
+# edit. v4 is the default (adopted per docs/RIGOR_SCENARIOS.md, scenarios A + B); pass
+# --spec v3 to reproduce the earlier index for comparison.
+#
+#   v3 -> v4, change 1 (scenario B): ap_performance switches from the raw mean exam score
+#   (ap_score_nu) to ap_qualifying_density -- expected exams scoring 3+ per student. A mean
+#   rewards gatekeeping: a school that sits only its strongest students posts a high mean and
+#   an open-access school is penalised for breadth. Density fuses opportunity x performance
+#   and is the College Board's own equity-metric logic. Empirically it cuts the metric's
+#   correlation with take-rate from -0.144 to -0.091 and reduces SES confounding.
+#
+#   v3 -> v4, change 2 (scenario A): the standalone `ib` component (built on the never-
+#   confirmed ib_flag_candidate, weight 0 and therefore inert) is replaced by ib_intensity_v2
+#   folded into crdc_coursework, where it carries real weight. The flag is the adjudicated,
+#   human-verified one from docs/IB_RESCUE.md. This is what makes IB count at all.
+COMPONENT_SPECS = {
+    "v3": {
+        "ap_opportunity": ["ap_tests_taken", "number_of_ap_classes_offered_mid", "ap_take_rate"],
+        "ap_performance": ["ap_score_nu"],
+        "ib": ["ib_flag_candidate"],
+        "crdc_coursework": ["ap_participation", "dual_enrollment_rate"],
+        "test_participation": ["testtaker_rate", "sat_participation_nu"],
+        "test_performance": ["sat_score_nu", "act_composite_il"],
+    },
+    "v4": {
+        "ap_opportunity": ["ap_tests_taken", "number_of_ap_classes_offered_mid", "ap_take_rate"],
+        "ap_performance": ["ap_qualifying_density"],
+        "ib": ["ib_flag_candidate"],   # retained only for the ib_included sensitivity scheme
+        "crdc_coursework": ["ap_participation", "dual_enrollment_rate", "ib_intensity_v2"],
+        "test_participation": ["testtaker_rate", "sat_participation_nu"],
+        "test_performance": ["sat_score_nu", "act_composite_il"],
+    },
 }
+DEFAULT_SPEC = "v4"
+COMPONENTS = COMPONENT_SPECS[DEFAULT_SPEC]
 
 # nominal weighting schemes to compare in the sensitivity analysis. "designed" is the default
 # used for the tier assignment written to the output file; ib excluded per report caveat above.
@@ -100,10 +128,10 @@ def zscore(s):
     return (s - mu) / sd
 
 
-def build_components(df):
+def build_components(df, components=None):
     """z-score each raw sub-feature, then average the available ones per component per row."""
     comp = pd.DataFrame(index=df.index)
-    for name, cols in COMPONENTS.items():
+    for name, cols in (components or COMPONENTS).items():
         z = pd.DataFrame({c: zscore(df[c]) for c in cols if c in df.columns})
         comp[name] = z.mean(axis=1, skipna=True)  # NaN only if ALL sub-features are missing
     return comp
@@ -262,15 +290,26 @@ def poverty_funding_correlation(df, tier_num):
 
 if __name__ == "__main__":
     parser = argparse.ArgumentParser()
-    parser.add_argument("path", nargs="?", default="modeling_dataset_v3_2026-07-24.csv")
+    parser.add_argument("path", nargs="?", default="modeling_dataset_v4_2026-07-24.csv")
     parser.add_argument("--version", default="v1")
+    parser.add_argument("--spec", default=DEFAULT_SPEC, choices=sorted(COMPONENT_SPECS),
+                        help="Component specification (v4 = qualifying density + verified IB)")
     parser.add_argument("--outdir", default=".")
     args = parser.parse_args()
 
     df = pd.read_csv(args.path, low_memory=False)
     print(f"Loaded {args.path}: {len(df):,} rows")
 
-    comp = build_components(df)
+    components = COMPONENT_SPECS[args.spec]
+    missing = [c for cols in components.values() for c in cols if c not in df.columns]
+    if missing:
+        raise SystemExit(
+            f"Spec '{args.spec}' needs columns absent from {args.path}: {missing}. "
+            f"The v4 features are derived in build_modeling_dataset.py -- rebuild the "
+            f"modeling dataset, or pass --spec v3."
+        )
+    print(f"Component spec: {args.spec}")
+    comp = build_components(df, components)
     weights = WEIGHT_SCHEMES[DEFAULT_SCHEME]
     score, avail = weighted_composite(comp, weights)
     tier_label, tier_num = assign_tiers(score, method=DEFAULT_TIER_METHOD)
@@ -333,6 +372,7 @@ if __name__ == "__main__":
     out["rigor_n_components_used"] = n_components_used
     out["rigor_components_available"] = feature_log
     out["rigor_weighting_scheme"] = DEFAULT_SCHEME
+    out["rigor_component_spec"] = args.spec
     out["rigor_tier_method"] = DEFAULT_TIER_METHOD
     out["rigor_tier_num_quantile"] = q_num          # alternate cut kept for downstream comparison
     out["rigor_tier_label_quantile"] = q_label

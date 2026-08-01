@@ -1,0 +1,18 @@
+spec,block,model,r2,rmse,n_train,n_test,n_complete_case
+main,SES only,linear,0.3698,5.187,1352,339,1691
+main,SES only,gbm,0.3733,5.173,1352,339,1691
+main,Opportunity only,linear,0.2124,5.799,1352,339,1691
+main,Opportunity only,gbm,0.2284,5.74,1352,339,1691
+main,SES + Opportunity,linear,0.4185,4.983,1352,339,1691
+main,SES + Opportunity,gbm,0.4194,4.979,1352,339,1691
+main,Incremental (opportunity over SES),linear,0.0487,,1352,339,1691
+main,Incremental (opportunity over SES),gbm,0.0461,,1352,339,1691
+crdc_only,SES only,linear,0.1998,6.623,4926,1232,6158
+crdc_only,SES only,gbm,0.2715,6.32,4926,1232,6158
+crdc_only,Opportunity only,linear,0.1035,7.011,4926,1232,6158
+crdc_only,Opportunity only,gbm,0.1276,6.916,4926,1232,6158
+crdc_only,SES + Opportunity,linear,0.2348,6.477,4926,1232,6158
+crdc_only,SES + Opportunity,gbm,0.3247,6.085,4926,1232,6158
+crdc_only,Incremental (opportunity over SES),linear,0.0349,,4926,1232,6158
+crdc_only,Incremental (opportunity over SES),gbm,0.0532,,4926,1232,6158
+robustness_all_rows,SES + Opportunity,gbm,0.515,,13936,3484,17420

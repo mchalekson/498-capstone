@@ -1,4 +1,17 @@
-# Rigor index — proposed v4 revisions (scenarios A + B), 2026-07-24
+# Rigor index — v4 revisions (scenarios A + B), 2026-07-24
+
+> **Status: ADOPTED (2026-07-26).** A+B is now the shipped default — `COMPONENT_SPECS["v4"]`
+> in `etl/build_rigor_classification.py`, with the two derived features
+> (`ap_qualifying_density`, `ib_intensity_v2`) built in `etl/build_modeling_dataset.py`.
+> The whole chain was re-run and reproduces the committed v4 outputs exactly
+> (max |Δrigor_score| = 3.6e-15). `docs/RIGOR_CLASSIFICATION.md` now carries the v4 numbers,
+> and `BENCHMARKING.md` / `RIGOR_ANALYSIS.md` were regenerated on v4. Pass `--spec v3` to
+> reproduce the prior index. This file is retained as the scenario audit trail.
+>
+> Adoption checklist (below) — (1) sensitivity + effective weights rerun: **done**;
+> (2) refit migration reported: **done** (frozen-cut-point decomposition remains scenario-A
+> only); (3) SD≈1.2 and IB asymmetry documented: **done**, in `RIGOR_CLASSIFICATION.md`
+> and the `build_modeling_dataset.py` docstrings.
 
 Two candidate changes to the shipped v3 "designed" index, run as scenarios against
 `modeling_dataset_v3_2026-07-24.csv` without touching the default. Outputs:

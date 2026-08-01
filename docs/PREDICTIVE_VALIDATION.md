@@ -1,7 +1,17 @@
 # Predictive validation of the rigor construct — v1 (2026-07-24)
 
-Code: `etl/build_predictive_validation.py`. Run against `modeling_dataset_v3_2026-07-24.csv`.
-Test-set predictions: `csv_exports/predictive_validation_v3_2026-07-24.csv`.
+Code: `etl/build_predictive_validation.py`. Run against `modeling_dataset_v4_2026-07-24.csv`
+(the predictor blocks are unchanged between v3 and v4 — neither v4 feature is a predictor here —
+so every figure below is identical on both).
+
+Outputs:
+- `csv_exports/predictive_validation_v4_2026-07-24.csv` — test-set predictions
+- `csv_exports/predictive_validation_metrics_v4_2026-07-24.csv` — R²/RMSE per spec × block × model
+- `csv_exports/predictive_validation_importance_v4_2026-07-24.csv` — permutation importance
+
+The CRDC-only specification was documented here before it existed in code; it is now
+`OPPORTUNITY_CRDC` in the script and runs on every invocation. All numbers below were
+reproduced from that run on 2026-07-26.
 
 ## What this is (and is not)
 
