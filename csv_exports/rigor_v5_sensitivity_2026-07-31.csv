@@ -1,0 +1,5 @@
+scheme,vs,n_compared,spearman_rank_corr,pct_changed_tier_refit,pct_changed_tier_frozen_cuts
+v4_equivalent,designed_v5,21312,0.879,43.1,32.3
+equal,designed_v5,22186,0.95,23.2,26.1
+performance_heavy,designed_v5,20380,0.959,26.0,24.3
+no_new_factors,designed_v5,21294,0.922,43.9,24.9

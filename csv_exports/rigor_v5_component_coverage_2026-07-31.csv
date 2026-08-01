@@ -1,0 +1,10 @@
+component,nominal_weight,public_pct,private_pct,overall_pct
+ap_opportunity,0.15,56.1,23.0,36.4
+ap_performance,0.2,55.9,22.4,36.0
+advanced_access,0.1,76.9,0.0,33.3
+ib,0.05,87.4,6.5,39.8
+stem_depth,0.1,73.0,0.0,31.7
+test_performance,0.2,44.2,19.5,28.7
+test_participation,0.05,89.5,26.0,53.8
+college_placement,0.1,67.7,31.0,43.7
+faculty_investment,0.05,84.6,0.0,36.7

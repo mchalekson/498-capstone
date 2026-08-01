@@ -19,7 +19,8 @@ Then open http://localhost:8501.
 | Page | What it shows |
 |---|---|
 | **Overview** | universe size, rigor-tier mix, NU-match counts, public/private coverage |
-| **Rigor explorer** | move the six component weights + cut method; tiers recompute live, with Spearman vs. the shipped "designed" scheme, % of schools that change tier, nominal-vs-effective weights, and the SES-ordering check. A *what-if* tool — it never rewrites a file |
+| **Rigor explorer (v4)** | move the six v4 component weights + cut method; tiers recompute live, with Spearman vs. the shipped "designed" scheme, % of schools that change tier, nominal-vs-effective weights, and the SES-ordering check. A *what-if* tool — it never rewrites a file |
+| **Rigor v5** | Qifan's v5 index (`etl/build_rigor_v5.py`, `docs/RIGOR_FORMULA_V5.md`): pooled vs within-sector tier tracks, nominal-vs-effective weights, SES entanglement, opportunity-adjusted high-need overperformers, and tier validation vs external measures |
 | **Clustering** | complete-case k-means: PCA projection, cluster sizes, gap statistic, and interpretable **cluster profiles** (`build_cluster_profiles.py`) |
 | **Benchmarking** | a school's SAT percentile within its peer group (region / funding tier / rigor tier) |
 | **Crosswalk & junctions** | CEEB↔NCES/IB/ISBE/CPS match rates + OPE↔CEEB junction status |

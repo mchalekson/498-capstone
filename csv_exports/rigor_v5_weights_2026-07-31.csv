@@ -1,0 +1,10 @@
+component,nominal_weight,effective_weight
+ap_opportunity,0.15,0.129
+ap_performance,0.2,0.364
+advanced_access,0.1,0.096
+ib,0.05,0.017
+stem_depth,0.1,0.031
+test_performance,0.2,0.247
+test_participation,0.05,0.015
+college_placement,0.1,0.079
+faculty_investment,0.05,0.022

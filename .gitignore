@@ -11,3 +11,6 @@ data/CRDC/2021-22-crdc-data/SCH/
 data/SY2021_FS150_FS151_DG695_DG696_SCH_data_files/
 data/SY2021_FS185_DG588_SCH_data_files/
 data/SY2021_FS188_DG589_SCH_data_files/
+
+# build_rigor_v5.py intermediate
+etl/m5.pkl

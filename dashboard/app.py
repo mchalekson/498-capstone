@@ -56,18 +56,26 @@ st.set_page_config(page_title="Capstone rigor dashboard", page_icon="🎓", layo
 # ─────────────────────────────────────────────────────────────────────────────
 # Data loading
 # ─────────────────────────────────────────────────────────────────────────────
-def _newest(stem):
-    """Newest csv_exports/<stem>_v*_*.csv (or exact <stem>.csv), by filename sort."""
-    dated = sorted(glob.glob(os.path.join(CSV, f"{stem}_v*_*.csv")))
-    if dated:
-        return dated[-1]
+def _newest(stem, version=None):
+    """Newest csv_exports file for <stem>, by filename sort.
+
+    version pinned  -> <stem>_<version>_*.csv (keeps v4 pages off the v5 file, which
+                       would otherwise sort newest and hijack them).
+    version None    -> try <stem>_v*_*.csv, then <stem>_*.csv (date-only tags like the
+                       v5 aux files), then an exact <stem>.csv.
+    """
+    patterns = [f"{stem}_{version}_*.csv"] if version else [f"{stem}_v*_*.csv", f"{stem}_*.csv"]
+    for pat in patterns:
+        dated = sorted(glob.glob(os.path.join(CSV, pat)))
+        if dated:
+            return dated[-1]
     exact = os.path.join(CSV, f"{stem}.csv")
     return exact if os.path.exists(exact) else None
 
 
 @st.cache_data(show_spinner=False)
-def load_csv(stem, **kw):
-    path = _newest(stem)
+def load_csv(stem, version=None, **kw):
+    path = _newest(stem, version)
     if not path:
         return None, None
     return pd.read_csv(path, low_memory=False, **kw), os.path.basename(path)
@@ -322,16 +330,80 @@ def page_lookup(model, clust, bench):
                          use_container_width=True, hide_index=True)
 
 
+def page_rigor_v5(v5, v5w, v5val, v5ses, audit, fn):
+    st.header("Rigor v5 (candidate)")
+    st.caption(f"{fn} · Qifan's v5 formula — see docs/RIGOR_FORMULA_V5.md. Nine components, "
+               "coverage floor ω≥0.25, plus an opportunity-adjusted residual and a within-sector track.")
+
+    def _num(key, default=0):
+        try:
+            return int(float(audit.get(key, default)))
+        except (TypeError, ValueError):
+            return default
+
+    scored = int(v5["rigor_tier_label_v5"].notna().sum())
+    c1, c2, c3, c4 = st.columns(4)
+    c1.metric("Universe", fmt_int(len(v5)))
+    c2.metric("Scored", fmt_int(scored), f"{100*scored/len(v5):.0f}% (coverage floor)")
+    if audit:
+        c3.metric("v4→v5 change tier", f"{audit.get('v4_v5_pct_changed','—')}%",
+                  f"ρ={audit.get('v4_v5_spearman','—')}")
+        c4.metric("High-need overperformers", fmt_int(_num('overperformers_high_need')),
+                  f"vs {_num('top_tier_high_need')} in raw top tier")
+
+    track = st.radio("Tier track", ["Pooled", "Within-sector (public/private separately)"],
+                     horizontal=True)
+    col = "rigor_tier_label_v5" if track == "Pooled" else "rigor_tier_label_v5_sector"
+    st.subheader(f"v5 tier distribution — {track.split(' (')[0].lower()}")
+    st.caption("Pooled scores every school on one instrument (favours public schools with full CRDC "
+               "coverage); within-sector re-standardizes inside public / private. Which to use is a "
+               "client decision (spec §11), not a modeling one — both ship.")
+    vc = v5[col].value_counts().reindex(TIERS).fillna(0)
+    fig = px.bar(x=vc.index, y=vc.values, color=vc.index, color_discrete_map=TIER_COLORS,
+                 labels={"x": "", "y": "schools"})
+    fig.update_layout(showlegend=False, height=340, margin=dict(t=10, b=10))
+    st.plotly_chart(fig, use_container_width=True)
+
+    left, right = st.columns(2)
+    with left:
+        st.subheader("Nominal vs effective weight")
+        st.caption("AP performance is designed 0.20 but carries ~0.36 of index variance.")
+        if v5w is not None:
+            st.dataframe(v5w, use_container_width=True, hide_index=True, height=360)
+    with right:
+        st.subheader("SES entanglement (ρ vs child poverty)")
+        st.caption("The cost of the shift toward exam performance — reported, not hidden.")
+        if v5ses is not None:
+            st.dataframe(v5ses, use_container_width=True, hide_index=True, height=360)
+
+    st.subheader("Opportunity-adjusted: high-need overperformers")
+    st.caption("Residual of the rigor score on poverty + FRL — schools outperforming their "
+               "circumstances (`overperformer_v5`), even where the raw tier is modest.")
+    op = v5[v5["overperformer_v5"].astype(str).isin(["True", "TRUE", "1", "1.0"])].copy()
+    if "poverty" in op.columns and len(op):
+        hi = op[op["poverty"] > op["poverty"].quantile(0.75)]
+        show = [c for c in ["Name", "sector", "rigor_tier_label_v5", "rigor_residual_v5", "poverty"]
+                if c in op.columns]
+        st.dataframe(hi.sort_values("rigor_residual_v5", ascending=False)[show].head(40),
+                     use_container_width=True, hide_index=True)
+
+    st.subheader("Tier validation vs external measures")
+    st.caption("Tier means. Grad rate / SAT / % to college are NOT model inputs; monotone across "
+               "tiers = convergent validity.")
+    if v5val is not None:
+        st.dataframe(v5val, use_container_width=True, hide_index=True)
+
+
 # ─────────────────────────────────────────────────────────────────────────────
 # Main
 # ─────────────────────────────────────────────────────────────────────────────
 def main():
     st.sidebar.title("🎓 Rigor dashboard")
-    page = st.sidebar.radio("Page", ["Overview", "Rigor explorer", "Clustering",
+    page = st.sidebar.radio("Page", ["Overview", "Rigor explorer (v4)", "Rigor v5", "Clustering",
                                      "Benchmarking", "Crosswalk & junctions", "School lookup"])
 
     model, model_fn = load_csv("modeling_dataset")
-    rigor, rigor_fn = load_csv("rigor_classification")
+    rigor, rigor_fn = load_csv("rigor_classification", version="v4")  # pin: keep v5 off v4 pages
     clust, clust_fn = load_csv("clustering")
     bench, bench_fn = load_csv("benchmarking")
     cover, _ = load_csv("coverage_by_sector")
@@ -367,8 +439,20 @@ def main():
 
     if page == "Overview":
         page_overview(model, rigor, cover, files)
-    elif page == "Rigor explorer":
+    elif page == "Rigor explorer (v4)":
         page_rigor_explorer(model_path)
+    elif page == "Rigor v5":
+        v5, v5_fn = load_csv("rigor_classification", version="v5")
+        if v5 is None:
+            st.warning("v5 outputs not found. Run `python etl/build_rigor_v5.py` to generate them.")
+        else:
+            v5w, _ = load_csv("rigor_v5_weights")
+            v5val, _ = load_csv("rigor_v5_validation")
+            v5ses, _ = load_csv("rigor_v5_ses_entanglement")
+            audit_path = _newest("rigor_v5_audit")
+            audit = (pd.read_csv(audit_path, index_col=0).iloc[:, 0].to_dict()
+                     if audit_path else {})
+            page_rigor_v5(v5, v5w, v5val, v5ses, audit, v5_fn)
     elif page == "Clustering":
         page_clustering(clust, profiles, gap, files)
     elif page == "Benchmarking":

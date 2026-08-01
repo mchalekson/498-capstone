@@ -25,9 +25,16 @@ from sklearn.linear_model import LinearRegression
 
 warnings.filterwarnings('ignore')
 
-SRC = '/mnt/project'
-NEW = '/mnt/user-data/uploads/Capstone_Org_Data_extended_v4_full_2026-07-31.xlsx'
-OUT = 'out5'
+# --- paths adapted for this repo (Qifan authored against a /mnt sandbox) ------
+# Only the I/O locations below were changed; the formula logic is unmodified.
+ETL_DIR = os.path.dirname(os.path.abspath(__file__))
+REPO = os.path.abspath(os.path.join(ETL_DIR, '..'))
+SRC = os.path.join(REPO, 'csv_exports')   # crdc_stem_clean.csv, schools_org_all.csv
+CENSUS_XLSX = os.path.join(REPO, 'data', 'US-Census',
+                           'census_school_finances_FY2024_alldistricts.xlsx')
+NEW = os.path.join(SRC, 'Capstone_Org_Data_extended_v4_full_2026-07-31.xlsx')
+OUT = SRC                                 # write v5 outputs alongside the rest
+PKL = os.path.join(ETL_DIR, 'm5.pkl')
 os.makedirs(f'{OUT}/fig', exist_ok=True)
 audit = {}
 RS = 42
@@ -120,7 +127,7 @@ fac = (old[old.nces_id_12.notna()]
                                 'crdc_fte_counselors', 'total_enrollment']])
 m = m.merge(fac, on='n12', how='left')
 
-fin = pd.read_excel(f'{SRC}/census_school_finances_FY2024_alldistricts.xlsx', 'elsec24',
+fin = pd.read_excel(CENSUS_XLSX, 'elsec24',
                     usecols=['NCESID', 'V33', 'TCURINST'])
 fin['leaid7'] = fin.NCESID.astype(str).str.strip().str.zfill(7)
 fin['instr_spend_per_pupil'] = (fin.TCURINST * 1000) / fin.V33.replace(0, np.nan)
@@ -443,7 +450,7 @@ weights_tbl.to_csv(f'{OUT}/rigor_v5_weights_2026-07-31.csv', index=False)
 cov_tbl.to_csv(f'{OUT}/rigor_v5_component_coverage_2026-07-31.csv', index=False)
 ent.to_csv(f'{OUT}/rigor_v5_ses_entanglement_2026-07-31.csv', index=False)
 pd.Series(audit).to_csv(f'{OUT}/rigor_v5_audit_2026-07-31.csv', header=['value'])
-m.to_pickle('m5.pkl')
+m.to_pickle(PKL)
 
 print('\n=== AUDIT ===')
 for k, v in audit.items():
