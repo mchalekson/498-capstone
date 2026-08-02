@@ -1,0 +1,21 @@
+column,source_dataset,time_period,description
+ceeb,College Board ATP institution code registry (carried in the NU Admissions org export),Snapshot 2026-07-31,"College Board 6-digit institution code (zero-padded string). Primary key of the NU college list; identifies the score-recipient entity, which can be finer than an institution (e.g., sub-schools)."
+org_name,College Board institution registry via NU Admissions org export,Snapshot 2026-07-31,"Institution name in CEEB/ATP abbreviation style (e.g., ""U Arkansas CC Hope"")."
+org_city,College Board institution registry via NU Admissions org export,Snapshot 2026-07-31,City of the institution.
+state,College Board institution registry via NU Admissions org export,Snapshot 2026-07-31,Two-letter U.S. state/territory code.
+unitid,NCES IPEDS institution directory (Header/HD file),SY 2023-24,"IPEDS survey unit ID assigned by NCES — keys the entire IPEDS universe. Blank when the institution has no live federal record (closed/renamed/non-Title-IV)."
+opeid,Federal Student Aid PEPS (Postsecondary Education Participants System) — Title IV program participation ID,SY 2023-24 (as reported in IPEDS HD2023),"8-digit Office of Postsecondary Education ID: 6-digit institution stem + 2-digit branch suffix (""00"" = institution-level). Assigned by ED/FSA when an institution enters Title IV. Blank when unmatched."
+sc_instnm,NCES IPEDS Institutional Characteristics (IC/HD) — institution self-report to NCES,SY 2023-24,Official institution name in the federal record (verifies the CEEB-side abbreviation resolved correctly).
+sc_control,NCES IPEDS Institutional Characteristics (IC/HD),SY 2023-24,"Control of institution: 1 = public, 2 = private nonprofit, 3 = private for-profit."
+sc_preddeg,NCES IPEDS Institutional Characteristics (IC) — derived from completions reporting,SY 2023-24,"Predominant degree awarded: 0 = not classified, 1 = certificate, 2 = associate, 3 = bachelor's, 4 = graduate."
+sc_ugds,NCES IPEDS Fall Enrollment (EF) survey component,Fall 2023,Number of degree-seeking undergraduates enrolled.
+sc_adm_rate,NCES IPEDS Admissions (ADM) survey component — institution self-report,Fall 2023 admissions cycle,"Admission rate (admitted / applied). Missing for open-admission institutions, which are exempt from the ADM component."
+sc_sat_avg,NCES IPEDS Admissions (ADM) survey component (scores originally from College Board test records reported by institutions),Fall 2023 entering class,Average SAT equivalent score of admitted students.
+sc_act_mid,NCES IPEDS Admissions (ADM) survey component (scores originally from ACT Inc. test records reported by institutions),Fall 2023 entering class,Midpoint of the ACT cumulative score of admitted students.
+sc_completion_150_4yr,NCES IPEDS Graduation Rates (GR) survey component,Entering cohort ~2017 tracked to 150% of normal time (2023),Completion rate for first-time full-time students at 4-year institutions completing within 6 years.
+sc_retention_ft4,NCES IPEDS Fall Enrollment (EF) survey component — retention section,Fall 2022 cohort retained to Fall 2023,First-time full-time student retention rate at 4-year institutions.
+sc_tuition_in,NCES IPEDS Institutional Characteristics (IC) — Student Charges section,Academic year 2023-24,In-state published tuition and fees.
+sc_tuition_out,NCES IPEDS Institutional Characteristics (IC) — Student Charges section,Academic year 2023-24,Out-of-state published tuition and fees.
+sc_netprice_pub,NCES IPEDS Student Financial Aid (SFA) survey component,Award year 2022-23 (aid reporting lags one year),Average net price for Title IV aid recipients — public institutions.
+sc_netprice_priv,NCES IPEDS Student Financial Aid (SFA) survey component,Award year 2022-23 (aid reporting lags one year),Average net price for Title IV aid recipients — private institutions.
+sc_pct_pell,NCES IPEDS Student Financial Aid (SFA) survey component (Pell disbursement records originate in ED Federal Student Aid),Award year 2022-23 (aid reporting lags one year),Share of undergraduates receiving a Pell Grant — a socioeconomic-composition proxy.
