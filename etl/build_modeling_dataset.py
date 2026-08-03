@@ -209,6 +209,17 @@ METADATA = {
                         "reports it (n~820), else the verified binary ib_flag_v2 (docs/IB_RESCUE.md). "
                         "Clipped to [0, 1]. The v4 replacement for the never-confirmed ib_flag_candidate; "
                         "enters the crdc_coursework component rather than a standalone IB component"),
+    "ib_flag_v2": ("Adjudicated IB crosswalk (docs/IB_RESCUE.md; llm_adjudicate_matches.py)", "school",
+                   "IB scraper pull date not confirmed in repo; match adjudication is the 2026-07 pass",
+                   "verified (human/LLM-adjudicated match)",
+                   "Verified binary IB flag: 1 if the school is a confirmed IB World School per the "
+                   "human/LLM-adjudicated crosswalk (docs/IB_RESCUE.md), else 0. The trustworthy replacement "
+                   "for the never-confirmed ib_flag_candidate; is the fallback signal inside ib_intensity_v2 "
+                   "when CRDC IB enrollment is absent"),
+    "crdc_ib_enrollment": ("CRDC (SY2021-22)", "school", "School Year 2021-2022", "confirmed",
+                           "Count of students enrolled in IB programs as reported by CRDC. Numerator of "
+                           "ib_intensity_v2 where present; the CRDC IB item is sparsely populated (~2.6% "
+                           "coverage), which is why ib_intensity_v2 falls back to the verified ib_flag_v2"),
 }
 
 # --- v4 rigor features -------------------------------------------------------
