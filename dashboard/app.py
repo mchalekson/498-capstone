@@ -64,7 +64,10 @@ def _newest(stem, version=None):
     version None    -> try <stem>_v*_*.csv, then <stem>_*.csv (date-only tags like the
                        v5 aux files), then an exact <stem>.csv.
     """
-    patterns = [f"{stem}_{version}_*.csv"] if version else [f"{stem}_v*_*.csv", f"{stem}_*.csv"]
+    # [0-9]* before the catch-all so a date-tagged file (college_clustering_2026-...)
+    # isn't shadowed by a sibling sharing its prefix (college_clustering_coverage_...).
+    patterns = ([f"{stem}_{version}_*.csv"] if version
+                else [f"{stem}_v*_*.csv", f"{stem}_[0-9]*.csv", f"{stem}_*.csv"])
     for pat in patterns:
         dated = sorted(glob.glob(os.path.join(CSV, pat)))
         if dated:
@@ -394,13 +397,53 @@ def page_rigor_v5(v5, v5w, v5val, v5ses, audit, fn):
         st.dataframe(v5val, use_container_width=True, hide_index=True)
 
 
+def page_college_clustering(cc, prof, cov, fn):
+    st.header("College clustering")
+    st.caption(f"{fn} · OPE↔CEEB junction → College Scorecard/IPEDS, enriched with IPEDS HD2023 "
+               "(locale, lat/long, Carnegie). Groups colleges by location, academics, price, "
+               "and student funding.")
+
+    seg = st.radio("Segmentation", ["Fine segments (k=6)", "Natural split (k=2)"], horizontal=True)
+    col = "cluster_fine" if seg.startswith("Fine") else "cluster"
+    sub = cc.dropna(subset=[col, "latitude", "longitude"]).copy()
+    sub["segment"] = sub[col].astype(int).astype(str)
+
+    c1, c2 = st.columns(2)
+    c1.metric("Colleges clustered", fmt_int(cc[col].notna().sum()))
+    c2.metric("Segments", fmt_int(sub["segment"].nunique()))
+
+    st.subheader("Where they are — colored by segment")
+    fig = px.scatter_geo(sub, lat="latitude", lon="longitude", color="segment",
+                         scope="usa", hover_name="org_name",
+                         hover_data={"state": True, "sc_ugds": True, "latitude": False,
+                                     "longitude": False, "segment": True})
+    fig.update_traces(marker=dict(size=5, opacity=0.65))
+    fig.update_layout(height=430, margin=dict(t=10, b=10, l=0, r=0), legend_title="segment")
+    st.plotly_chart(fig, use_container_width=True)
+
+    st.subheader(f"Segment profiles — {seg.split(' (')[0].lower()}")
+    st.caption("Median size/price, mean Pell + selectivity/outcome overlays. Admission rate, SAT and "
+               "completion are overlays (thinly covered), NOT clustering inputs.")
+    which = prof["fine"] if col == "cluster_fine" else prof["main"]
+    if which is not None:
+        st.dataframe(which, use_container_width=True, hide_index=True)
+
+    if cov is not None:
+        st.subheader("Feature coverage / gaps")
+        st.caption("Share non-null over the degree-granting universe. `sc_act_mid` is dropped "
+                   "(0% populated); selectivity is thin by design (open-admission & 2-yr schools "
+                   "are exempt from the IPEDS admissions component).")
+        st.dataframe(cov, use_container_width=True, hide_index=True, height=300)
+
+
 # ─────────────────────────────────────────────────────────────────────────────
 # Main
 # ─────────────────────────────────────────────────────────────────────────────
 def main():
     st.sidebar.title("🎓 Rigor dashboard")
     page = st.sidebar.radio("Page", ["Overview", "Rigor explorer (v4)", "Rigor v5", "Clustering",
-                                     "Benchmarking", "Crosswalk & junctions", "School lookup"])
+                                     "College clustering", "Benchmarking", "Crosswalk & junctions",
+                                     "School lookup"])
 
     model, model_fn = load_csv("modeling_dataset")
     rigor, rigor_fn = load_csv("rigor_classification", version="v4")  # pin: keep v5 off v4 pages
@@ -455,6 +498,16 @@ def main():
             page_rigor_v5(v5, v5w, v5val, v5ses, audit, v5_fn)
     elif page == "Clustering":
         page_clustering(clust, profiles, gap, files)
+    elif page == "College clustering":
+        cc, cc_fn = load_csv("college_clustering")
+        if cc is None:
+            st.warning("College clustering outputs not found. Run "
+                       "`python etl/build_college_clustering.py <merged_clean.csv>`.")
+        else:
+            pmain, _ = load_csv("college_cluster_profiles")
+            pfine, _ = load_csv("college_cluster_profiles_fine")
+            ccov, _ = load_csv("college_clustering_coverage")
+            page_college_clustering(cc, {"main": pmain, "fine": pfine}, ccov, cc_fn)
     elif page == "Benchmarking":
         page_benchmarking(bench, files)
     elif page == "Crosswalk & junctions":

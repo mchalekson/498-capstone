@@ -1,0 +1,7 @@
+cluster,size,top_control,top_degree,top_urbanicity,top_region,med_ugds,med_net_price,mean_pct_pell,mean_adm_rate,mean_sat_avg,mean_completion
+0,729,public,associate,City,South,7629,10400.0,0.313,0.761,1159.0,0.512
+1,173,private nonprofit,bachelor's,City,South,536,13996.0,0.669,0.706,982.0,0.367
+2,415,private nonprofit,bachelor's,City,South,1097,22870.0,0.347,0.761,1142.0,0.556
+3,465,public,associate,Town,South,1710,10075.0,0.312,0.823,1103.0,0.422
+4,300,private nonprofit,bachelor's,City,Northeast,3439,32106.0,0.19,0.522,1357.0,0.78
+5,211,private nonprofit,bachelor's,Town,Midwest,958,22139.0,0.321,0.715,1154.0,0.547

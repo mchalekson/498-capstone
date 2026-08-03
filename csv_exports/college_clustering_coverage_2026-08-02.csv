@@ -1,0 +1,17 @@
+dimension,feature,pct_covered
+location,state,100.0
+location,region,100.0
+location,urbanicity,99.9
+location,latitude,100.0
+academic,sc_adm_rate,62.2
+academic,sc_sat_avg,42.5
+academic,sc_completion_150_4yr,73.8
+academic,sc_retention_ft4,68.0
+academic,sc_preddeg,100.0
+financial,sc_tuition_in,97.9
+financial,sc_tuition_out,97.9
+financial,net_price,96.7
+student_funding,sc_pct_pell,99.7
+size_sector,sc_ugds,100.0
+size_sector,sc_control,100.0
+size_sector,iclevel,100.0
