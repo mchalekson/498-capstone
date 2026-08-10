@@ -137,19 +137,26 @@ blocking us:**
   7-digit) doesn't match any federal ID we have (0% match against NCES's
   7-digit school ID) and isn't fully unique (84 duplicate values) — it's an
   internal identifier from whatever system this export came from, not
-  something with cross-referencing value here. **But investigating its
-  duplicates surfaced something we weren't looking for:** 62 of those 84
-  duplicate pairs are two clearly different schools whose CEEB codes are
-  related by an exact leading-zero/trailing-zero shift (e.g. `050003` vs.
-  `500030`) — the classic signature of a 6-digit zero-padded code getting
-  stored as a number somewhere upstream and re-padded on the wrong side.
-  Scanning the whole file the same way flags 644 CEEB codes total with a
-  same-file counterpart fitting this pattern (some fraction of those are
-  probably coincidental, not all bugged — the 62 are the confirmed ones).
-  Flagged (not auto-corrected — no reliable way to tell which side of a
-  pair is right) via `ceeb_suspected_padding_shift` in
-  `etl/load_nu_master.py`, applied to `nu_master_org_data`. Worth a look on
-  your end if you know which export step introduces this.
+  something with cross-referencing value here. **Investigating its duplicates
+  surfaced a CEEB pattern we initially misread as a bug — now resolved as a
+  false alarm.** 58 of the 84 duplicate pairs are two different schools whose
+  CEEB codes are arithmetic mirror images (e.g. `050003` vs. `500030` — same
+  five core digits, zero moved from front to back). We first read this as the
+  signature of a zero-padded code stored as a number upstream and re-padded on
+  the wrong side, and flagged 644 such codes file-wide.
+  **This turned out to be wrong.** Adam manually checked the flagged codes
+  against the College Board SAT school-code search and an ACT 6-digit
+  high-school code list (2026-08-10) and found the codes correct; our re-run
+  against that ACT list agrees — 643 of the 644 stored codes are valid and
+  match the real school, and 641 of the "mirror" codes are themselves real,
+  different schools. So the pattern is a coincidence of a densely populated
+  6-digit code space, **not** CEEB corruption; the CEEB column is fine.
+  The one real residue is in `custom_id`, not CEEB: 73 of the 84 duplicate
+  custom_id values pair CEEBs that collapse to the same integer once you drop
+  leading zeros and a trailing digit (`int(a) == int(b) // 10`) — the actual
+  numeric-storage artifact, which only reconfirms `custom_id` is unusable as a
+  key. Retained as the informational `ceeb_has_arithmetic_twin` column in
+  `etl/load_nu_master.py` (unused downstream); no action needed on your end.
 
 ## Bottom line for Bob
 
@@ -157,9 +164,9 @@ The NU school list is in — thanks. The data dictionary you and Adam asked
 about is ready to review (see above). Two things still need your input
 (per-variable vintage, the funding-proxy sign-off) — rigor labels and the
 two data-provenance questions from the meeting turned out to be answerable
-from the data itself and didn't need your time after all. One new thing
-worth your attention: a likely CEEB formatting bug in your export, affecting
-at least 62 confirmed schools (see above) — flagged, not fixed, since we
-can't tell which side of each pair is correct without knowing your source
-system. The College Board access escalation is still on you, separately.
+from the data itself and didn't need your time after all. A CEEB "formatting
+bug" we raised earlier has since been checked against College Board and ACT
+and resolved as a false alarm (see the custom_id note above) — the codes are
+correct, no action needed. The College Board access escalation is still on
+you, separately.
 The ELSI re-pull is on us and doesn't need your time.

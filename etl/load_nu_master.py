@@ -26,40 +26,45 @@ def _normalize_col(c: str) -> str:
     return re.sub(r"_+", "_", c).strip("_").lower()
 
 
-def flag_ceeb_padding_shift(df):
+def flag_ceeb_arithmetic_twin(df):
     """
-    Investigated the "custom_id" column's 84 duplicate values (raised in the 2026-07-14
-    meeting: "custom ID variable from Org Data -- probably some custom thing in system").
-    custom_id doesn't match any federal ID we have (0% match against NCES's 7-digit school
-    ID) and isn't fully unique, so it's not usable as a join key -- but 62 of those 84
-    duplicate pairs turned out to share a specific, mechanical relationship between the two
-    rows' CEEB codes: one is the exact left-shift of the other (e.g. "050003" / "500030" --
-    strip a leading zero, append a trailing zero), the classic signature of a 6-digit
-    zero-padded code getting stored as a number somewhere upstream (losing the leading
-    zero) and then re-padded on the wrong side. Across the full file, 644 CEEB codes ending
-    in "0" have a leading-zero counterpart also present elsewhere in the file -- some
-    fraction of these are certainly real, unrelated CEEBs that coincidentally fit the
-    pattern, but the 62 pairs confirmed via the independent custom_id collision make clear
-    this is a real upstream data issue in Bob's export, not our own ETL (CEEB is read
-    directly from the source .xlsx as text, unmodified, above).
+    Marks CEEB codes that have an "arithmetic twin" elsewhere in the file: a code of the
+    form "abcde0" (six digits, ends in 0, does not start with 0) whose mirror "0abcde"
+    (same five core digits, zero moved to the front) is also present, e.g. "525040" and
+    "052504". This began as a suspected data-quality flag ("ceeb_suspected_padding_shift")
+    on the theory that such pairs were the signature of a 6-digit zero-padded CEEB stored
+    as a number upstream (losing the leading zero) and re-padded on the wrong side.
 
-    This flags suspects for downstream caution -- it does NOT attempt to guess which of a
-    pair (if either) is correct, since that would risk silently "fixing" a code with no real
-    evidence for which value is right.
+    That theory was WRONG -- the flag is retained only as a benign, descriptive diagnostic.
+    Adam (client-side) manually checked the flagged codes against the College Board SAT
+    school-code search and an ACT 6-digit high-school code master list (2026-08-10), and we
+    re-ran the full flagged list against that same ACT list: of the 644 flagged codes, 643
+    are valid ACT codes that match the real school by name, and 641 of the "mirror" codes
+    are themselves real, DIFFERENT schools. So essentially every flagged "pair" is just two
+    legitimate schools whose codes happen to be arithmetic mirror images -- an artifact of
+    how densely the 6-digit high-school code space is populated, NOT corruption. The CEEB
+    column is read straight from the source .xlsx as text and is correct.
+
+    Where the numeric-storage damage DID land is the custom_id column, not CEEB: 73 of the
+    84 duplicate custom_id values pair two schools whose CEEBs collapse to the same integer
+    once you drop leading zeros and a trailing digit (int(a) == int(b) // 10). That only
+    confirms custom_id is not a usable key (already known: 0% federal-ID match, non-unique);
+    it says nothing about the CEEBs. This column is informational and is not consumed
+    anywhere downstream (no join, crosswalk, or model reads it).
     """
     ceeb = df["ceeb"].astype(str).str.zfill(6)
     valid_ceebs = set(ceeb[df["ceeb"].notna()])
-    shifted_candidate = "0" + ceeb.str[:-1]
-    suspect = (
+    mirror_candidate = "0" + ceeb.str[:-1]
+    has_twin = (
         df["ceeb"].notna()
         & (ceeb.str[-1] == "0")
         & (ceeb.str[0] != "0")
-        & shifted_candidate.isin(valid_ceebs)
+        & mirror_candidate.isin(valid_ceebs)
     )
-    df["ceeb_suspected_padding_shift"] = suspect
-    print(f"  [ceeb check] {suspect.sum():,} rows flagged with a suspected leading-zero/"
-          f"trailing-zero CEEB shift (see flag_ceeb_padding_shift docstring) -- not corrected, "
-          f"just flagged for caution downstream")
+    df["ceeb_has_arithmetic_twin"] = has_twin
+    print(f"  [ceeb check] {has_twin.sum():,} rows have an arithmetic-twin CEEB elsewhere in "
+          f"the file (benign coincidence, validated against ACT/College Board -- NOT corruption; "
+          f"see flag_ceeb_arithmetic_twin docstring). Informational only, unused downstream.")
     return df
 
 
@@ -70,7 +75,7 @@ def load_nu_master(engine):
     df = pd.read_excel(NU_MASTER_PATH, sheet_name="Export", dtype={"CEEB": str, "GUID": str})
     df = df.drop(columns=[c for c in DIVIDER_COLUMNS if c in df.columns])
     df.columns = [_normalize_col(c) for c in df.columns]
-    df = flag_ceeb_padding_shift(df)
+    df = flag_ceeb_arithmetic_twin(df)
 
     print(f"  {len(df):,} rows, {len(df.columns)} columns")
     df.to_sql("nu_master_org_data", engine, if_exists="replace", index=False,
