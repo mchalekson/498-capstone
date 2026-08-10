@@ -103,10 +103,31 @@ Detail: `csv_exports/cluster_profiles_v4_2026-08-01.csv`; membership: `csv_expor
 
 ---
 
-## Open decisions for the team
+## What was implemented (2026-08-10)
 
-1. `ib_flag_v2_source` — restore the dropped column or retire it from the dictionary.
-2. Correctional facilities — approve exclusion filter (48 schools).
-3. Generic-CEEB schools — approve treating as a non-CEEB-matchable bucket (31 codes / 134 rows).
-4. Clustering — keep the 8-cluster / 17%-coverage result, or re-run with fewer clusters and/or light
+Applied without a full DB rebuild — the modeling layer is CSV-driven, and these are additive columns
+that don't change any model feature (rigor and clustering are untouched):
+
+- **`ib_flag_v2_source` restored** (item 2) in `build_modeling_dataset.py` (`IB_V2_COLS`) and
+  re-attached to `modeling_dataset_v4_2026-08-01.csv` (46.3% non-null). The modeling dataset and its
+  dictionary now match exactly (68 = 68 columns).
+- **`is_correctional_facility` flag added** (item 5) — 48 facilities flagged, **not dropped**, so the
+  model population and all reported numbers are unchanged. Filter on it downstream once NU signs off on
+  excluding them. List: `csv_exports/review_correctional_facilities_modeling_v4.csv`.
+- **Generic-CEEB confirmed as a matching-layer issue only** (items 3/4): none of the 31 placeholder
+  codes survive the HS-universe + min-size freeze, so they never reach the modeling dataset — no flag
+  needed there. They matter only for NU-list matching; see `csv_exports/review_generic_ceeb_codes.csv`.
+
+Note: the raw/DB layer was intentionally **not** rebuilt — Docker was down and no source data changed,
+and re-running the modeling build fresh introduces a spurious 1-row drift (34,393 vs. the frozen
+34,392) that would cascade new numbers into the whole v4 freeze. Augmenting the frozen file in place
+avoids that.
+
+## Still open for the team
+
+1. Correctional facilities — approve moving from flag to hard exclusion (would drop 48 schools and
+   re-freeze rigor/clustering).
+2. Generic-CEEB schools — approve treating as a non-CEEB-matchable bucket in the NU-list match
+   (31 codes / 134 rows).
+3. Clustering — keep the 8-cluster / 17%-coverage result, or re-run with fewer clusters and/or light
    imputation for a cleaner, higher-coverage client story.

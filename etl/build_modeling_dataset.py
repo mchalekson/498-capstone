@@ -25,6 +25,7 @@ Produces: modeling_dataset_<version>_<date>.csv + data_dictionary_modeling_datas
 import argparse
 import datetime as dt
 import os
+import re
 import numpy as np
 import pandas as pd
 
@@ -234,7 +235,11 @@ IB_INTENSITY_WINSOR_PCT = 0.99
 
 
 IB_V2_SOURCE = "schools_combined_enriched_ceeb.csv"
-IB_V2_COLS = ["ib_flag_v2", "crdc_ib_enrollment"]
+# ib_flag_v2_source (provenance of ib_flag_v2) was carried through v4_2026-07-24 and
+# documented in the dictionary, then accidentally dropped in v4_2026-08-01. Restored here
+# (2026-08-10) so the frozen dataset matches its dictionary again; aggregated with max()
+# like the other rescued columns (any confirmed source wins).
+IB_V2_COLS = ["ib_flag_v2", "crdc_ib_enrollment", "ib_flag_v2_source"]
 
 
 def _ceeb_key(s):
@@ -405,6 +410,31 @@ def write_data_dictionary(df, out_path):
     print(f"\nWrote {out_path}")
 
 
+# ---------------------------------------------------------------------------
+# Review flag (2026-08-10, from the 8/3 client note on correctional facilities).
+# Additive boolean column that IDENTIFIES -- but never drops -- correctional
+# facilities. It is not a model feature, so rigor and clustering are unchanged;
+# downstream can filter on it once NU signs off on excluding this population.
+# (The other 8/3 CEEB items -- generic/placeholder codes -- live entirely in the
+# missing-schools/matching layer: none survive the HS-universe + min-size freeze,
+# so they never reach this dataset. See csv_exports/review_generic_ceeb_codes.csv.)
+# ---------------------------------------------------------------------------
+CORRECTIONAL_RE = (
+    r"correction|juvenile|detention|penitentiary|reformatory|"
+    r"youth (?:center|facility|services)|juvenile hall|\bjail\b|\bprison\b|"
+    r"justice center|secure (?:care|facility)"
+)
+
+
+def flag_review_cases(df):
+    """Flag correctional facilities (8/3 notes item 5) -- flagged, not dropped."""
+    name = df["school_name"].fillna("").astype(str)
+    df["is_correctional_facility"] = name.str.contains(CORRECTIONAL_RE, case=False, regex=True)
+    print(f"  [review flags] {int(df['is_correctional_facility'].sum())} correctional facilities "
+          f"flagged (not dropped)")
+    return df
+
+
 if __name__ == "__main__":
     parser = argparse.ArgumentParser()
     parser.add_argument("path", nargs="?", default="schools_features.csv",
@@ -425,6 +455,9 @@ if __name__ == "__main__":
     print("\nDeriving v4 rigor features:")
     df = attach_ib_v2(df, args.path)
     df = derive_rigor_v4_features(df)
+
+    print("\nFlagging review cases (8/3 notes):")
+    df = flag_review_cases(df)
 
     date_tag = dt.date.today().isoformat()
     out_csv = os.path.join(args.outdir, f"modeling_dataset_{args.version}_{date_tag}.csv")
