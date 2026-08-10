@@ -1,0 +1,49 @@
+school_name,state,ceeb,sector,enrollment_9_12,is_public_hs,is_private_hs
+Tuscaloosa County Juvenile Detention Center,AL,,public,,True,False
+Los Padrinos Juvenile Hall,CA,,public,217.0,True,False
+Santa Barbara County Juvenile Court,CA,,public,30.0,True,False
+Betty K Marler Youth Services Center,CO,,public,,True,False
+Grand Mesa Youth Services Center,CO,,public,,True,False
+Marvin W Foote Youth Services Center,CO,,public,30.0,True,False
+Mount View Youth Services Center,CO,,public,,True,False
+Platte Valley Youth Services Center,CO,,public,,True,False
+Spring Creek Youth Services Center,CO,,public,,True,False
+DC Department of Corrections,DC,,public,45.0,True,False
+Maya Angelou Academy at Youth Services Center,DC,,public,74.0,True,False
+BROWARD DETENTION CENTER,FL,,public,48.0,True,False
+DUVAL REGIONAL JUVENILE DETENTION CENTER,FL,,public,86.0,True,False
+FALKENBURG ROAD JAIL,FL,,public,31.0,True,False
+JUVENILE JUSTICE CENTER ALT ED,FL,101764,public,57.0,True,False
+PRETRIAL DETENTION FACILITY,FL,,public,31.0,True,False
+SOUTHWEST FLORIDA JUVENILE DETENTION CENTER,FL,,public,30.0,True,False
+Illinois Youth Center-Warrenville,IL,,public,34.0,True,False
+Warren Regional Juvenile Detention Ctr,KY,,public,33.0,True,False
+Youth Center School,MI,,public,37.0,True,False
+Plymouth Youth Center,MN,,public,96.0,True,False
+JUVENILE DETENTION CTR.,MO,,public,39.0,True,False
+Clark County Detention Ctr J-SHS,NV,,public,44.0,True,False
+Juvenile Detention 6-12 J-SHS,NV,290163,public,98.0,True,False
+MONROE CORRECTIONAL FACILITY,NY,331456,public,33.0,True,False
+COOKE/FANNIN/GRAYSON CO JUVENILE POST AJUD FAC,TX,,public,55.0,True,False
+DALLAS COUNTY JUVENILE JUSTICE,TX,,public,114.0,True,False
+JUVENILE DETENT CTR,TX,,public,44.0,True,False
+JUVENILE DETENT CTR,TX,,public,93.0,True,False
+JUVENILE DETENTION CTR,TX,,public,32.0,True,False
+Benton/Franklin Juvenile Justice Center,WA,,public,32.0,True,False
+Interagency Detention School,WA,,public,40.0,True,False
+DOC: Kettle Moraine Correctional Institu tion,WI,,public,34.0,True,False
+DOC: Racine Youthful Offender Correction al Facility,WI,,public,32.0,True,False
+Abraxas Youth Center,,394632,private,,False,True
+Central Ok Juvenile Trtmnt Ctr,,373489,private,,False,True
+Federal Correction Institute,,471718,private,,False,True
+Federal Penitentiary,,392256,private,,False,True
+Federal Prison Camp,,490007,private,,False,True
+High Plains Youth Center,,060159,private,,False,True
+Integral Youth Services,,380566,private,,False,True
+Maryland Correction Institute,,210608,private,,False,True
+Mid-Atlantic Youth Services,,393981,private,,False,True
+Monroe County Jail,,336031,private,,False,True
+Multi Co Juvenile Attn System,,360786,private,,False,True
+State Of Nj-Juvenile Just Comm,,311493,private,,False,True
+Turning Point Youth Center,,233379,private,,False,True
+United States Penitentiary,,153445,private,,False,True
