@@ -1,16 +1,31 @@
+# --- environments and caches -------------------------------------------------
 .venv/
 __pycache__/
 *.pyc
+.pytest_cache/
 .DS_Store
 ~$*.xlsx
-data/updated-sheng/
-data/updated-sheng/
 
-# Large raw datasets
+# --- agent scratch (keeps the launch config, drops the worktrees) ------------
+.claude/*
+!.claude/launch.json
+
+# --- large raw datasets, fetched separately (see README) ---------------------
+data/updated-sheng/
 data/CRDC/2021-22-crdc-data/SCH/
 data/SY2021_FS150_FS151_DG695_DG696_SCH_data_files/
 data/SY2021_FS185_DG588_SCH_data_files/
 data/SY2021_FS188_DG589_SCH_data_files/
 
-# build_rigor_v5.py intermediate
+# --- build intermediates -----------------------------------------------------
 etl/m5.pkl
+
+# --- LaTeX auxiliaries -------------------------------------------------------
+*.aux
+*.bcf
+*.bbl
+*.blg
+*.log
+*.out
+*.run.xml
+*.toc
