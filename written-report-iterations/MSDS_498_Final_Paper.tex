@@ -148,7 +148,7 @@ No source reviewed here describes a platform that is simultaneously honest about
 
 \subsection{Sources and the two universes}
 
-Sixteen public sources and one client-supplied export feed the platform; Appendix~\ref{app:sources} lists each with the vintage consumed. NCES supplies the school directory \citep{nces_ccd,nces_pss,nces_elsi}; CRDC supplies AP, IB, dual-enrollment, SAT/ACT participation, advanced STEM offerings, and teacher certification \citep{ocr_crdc}; EDFacts supplies graduation rates and assessment participation for school year 2020--21 \citep{edfacts}; the Census Bureau supplies district finance, county poverty, and neighborhood context \citep{census_f33,census_saipe,census_acs}; and state sources cover Illinois and Chicago \citep{isbe_reportcard,cps_opportunity}. On the college side, IPEDS, the College Scorecard, and the OPE identifier database support a separate junction \citep{ipeds_hd2023,college_scorecard,ope_id}.
+Sixteen public sources and one client-supplied export feed the platform; Appendix~\ref{app:sources} lists each with the vintage consumed. NCES supplies the school directory \citep{nces_ccd,nces_pss,nces_elsi}; CRDC supplies AP, IB, dual-enrollment, SAT/ACT participation, advanced STEM offerings, and teacher certification \citep{ocr_crdc}; EDFacts supplies graduation rates and assessment participation for school year 2020--21 \citep{edfacts}; the Census Bureau supplies district finance, county poverty, and neighborhood context \citep{census_f33,census_saipe,census_acs}; and state sources cover Illinois and Chicago \citep{isbe_reportcard,cps_opportunity}. On the college side, IPEDS and the College Scorecard support a separate junction, keyed on the OPE identifiers those files carry \citep{ipeds_hd2023,college_scorecard,ope_id}.
 
 Two points of honesty. The College Board publishes AP data only as national and state aggregates \citep{collegeboard_ap}, so every school-level AP measure in the index comes from CRDC or from the client's own export \citep{nu_org_export}, whose fields are of College Board and Naviance lineage. NAEP \citep{naep} is loaded as national and state context only, because it is not published at school grain.
 
@@ -462,38 +462,40 @@ TF-IDF & Term frequency--inverse document frequency \\
 \section{Source Inventory and Vintages}
 \label{app:sources}
 
-Vintages are those actually consumed by the frozen artifacts, not the publisher's current release.
+Vintages are those actually consumed by the frozen artifacts, not the publisher's current release. \emph{Accessed} is the earliest date the file is demonstrably present in the project repository, derived from git history by \texttt{etl/data\_provenance.py} rather than self-reported. Each source is cited in Section~\ref{sec:data} and listed in the references.
 
 {\small\raggedright
-\begin{longtable}{@{}p{3.4cm}p{2.9cm}p{5.6cm}@{}}
+\begin{longtable}{@{}p{3.1cm}p{2.2cm}p{2.3cm}p{4.7cm}@{}}
 \toprule
-Source & Vintage consumed & Contribution \\
+Source & Vintage & Accessed & Contribution \\
 \midrule
 \endfirsthead
 \toprule
-Source & Vintage consumed & Contribution \\
+Source & Vintage & Accessed & Contribution \\
 \midrule
 \endhead
-NCES CCD \citep{nces_ccd} & current release & Public school universe, enrollment, locale \\
-NCES PSS \citep{nces_pss} & current release & Private school universe (49-state merge) \\
-NCES ELSI \citep{nces_elsi} & current release & Extraction tool; 12-digit NCESSCH re-pull \\
-CRDC \citep{ocr_crdc} & SY 2021--22 & AP, IB, dual enrollment, SAT/ACT, STEM, certification \\
-EDFacts \citep{edfacts} & SY 2020--21 & Graduation rate; assessment participation \\
-Census F-33 \citep{census_f33} & FY 2024 & District revenue \\
-Census SAIPE \citep{census_saipe} & 2024 & County and district child poverty \\
-Census ACS \citep{census_acs} & 2020--2024 & County neighborhood context \\
-NAEP \citep{naep} & 2024 & National and state context (not school grain) \\
-College Board AP \citep{collegeboard_ap} & 2024--25 & National and state aggregates only \\
-IB Organization \citep{ib_org} & 2025--26 scrape & IB World School directory \\
-ISBE Report Card \citep{isbe_reportcard} & 2025 & Illinois ACT and per-pupil expenditure \\
-CPS Opportunity Index \citep{cps_opportunity} & SY 2026 & Chicago pilot region \\
-IPEDS HD2023 \citep{ipeds_hd2023} & 2023 & College geography and Carnegie level \\
-College Scorecard \citep{college_scorecard} & 2023--24 & College outcomes and price \\
-OPE DAPIP \citep{ope_id} & current release & College identifier system \\
-UC Boulder crosswalk \citep{ucboulder_crosswalk} & rev.\ 2025-01-06 & NCES-to-CEEB seed, 21{,}391 schools \\
-NU organization export \citep{nu_org_export} & 2026-07-31 & School-level AP, SAT, placement, context \\
+NCES CCD & current release & 2026-06-26 & Public school universe, enrollment, locale \\
+NCES PSS & current release & 2026-07-02 & Private school universe (49-state merge) \\
+NCES ELSI & current release & 2026-07-05 & Extraction tool; 12-digit NCESSCH re-pull \\
+CRDC & SY 2021--22 & 2026-07-24$^{\dagger}$ & AP, IB, dual enrollment, SAT/ACT, STEM, certification \\
+EDFacts & SY 2020--21 & 2026-06-26$^{\dagger}$ & Graduation rate; assessment participation \\
+Census F-33 & FY 2024 & 2026-06-26 & District revenue \\
+Census SAIPE & 2024 & 2026-06-26 & County and district child poverty \\
+Census ACS & 2020--2024 & 2026-07-20 & County neighborhood context \\
+NAEP & 2024 & 2026-06-26 & National and state context (not school grain) \\
+College Board AP & 2024--25 & 2026-06-26 & National and state aggregates only \\
+IB Organization & 2025--26 scrape & 2026-06-28 & IB World School directory \\
+ISBE Report Card & 2025 & 2026-06-26 & Illinois ACT and per-pupil expenditure \\
+CPS Opportunity Index & SY 2026 & 2026-06-26 & Chicago pilot region \\
+IPEDS HD2023 & 2023 & 2026-08-01 & College geography and Carnegie level \\
+College Scorecard & 2023--24 & 2026-08-02$^{\dagger}$ & College outcomes and price \\
+OPE ID & n/a & n/a & Identifier system carried inside IPEDS and Scorecard \\
+UC Boulder crosswalk & rev.\ 2025-01-06 & 2026-07-06 & NCES-to-CEEB seed, 21{,}391 schools \\
+NU organization export & 2026-07-31 & 2026-07-31 & School-level AP, SAT, placement, context \\
 \bottomrule
 \end{longtable}}\addtocounter{table}{-1}
+
+\noindent $^{\dagger}$ Reaches the project bundled inside the combined schools export rather than as an independent pull, so the date bounds possession rather than recording retrieval.
 
 \clearpage
 \section{Supplementary Figures}
