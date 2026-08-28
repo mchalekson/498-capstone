@@ -42,6 +42,10 @@ keeps its own copies under `written-report-iterations/fig/` and is unaffected.
 `build_deck_figures.py` also writes into `docs/fig/` regardless of your working
 directory, so it will touch the repo even when run from a scratch folder.
 
+**Reviewing the project rather than running it?** Start at
+[`DELIVERABLES.md`](DELIVERABLES.md) — an index of every deliverable, which version is
+current, and the open questions we want pushed on.
+
 ## Quickstart
 
 Every table and view is already exported to CSV in [`csv_exports/`](csv_exports/) —
